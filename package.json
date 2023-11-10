@@ -1,0 +1,14 @@
+{
+  "name": "passsword",
+  "version": "1.0.0",
+  "description": "Lucrare de licenta",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Lung Iris Adriana",
+  "license": "ISC",
+  "dependencies": {
+    "electron": "^27.0.4"
+  }
+}
