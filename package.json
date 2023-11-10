@@ -4,7 +4,7 @@
   "description": "Lucrare de licenta",
   "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start":"electron ."
   },
   "author": "Lung Iris Adriana",
   "license": "ISC",
