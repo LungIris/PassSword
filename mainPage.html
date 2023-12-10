@@ -5,13 +5,24 @@
     <meta charset="UTF-8">
     <meta http-equiv="" X-UA-Compatible " content="IE-edge ">
         <meta name="viewport " content="width=device.width, initial-scale=1.0 ">
-        <title>Animated Login&Registration
+        <title>PassSword
         </title>
         <link rel="stylesheet " type="text/css " href="mainPage.css ">
 
     </head>
+    
     <body>
-        <div class="wrapper">
+      <div class="container" >
+      <div class="logo">
+        <img src="images/Logov2.png" width="100" height="100" margin-right="700">
+      </div>
+      <div class="title">
+          <h1><span>always</span> <span>en</span> <span>garde</span></h1>
+      </div>
+      </div>
+          
+        <div class="wrapper" >
+          
           <div class="form-wrapper sign-in">
             <form action=" ">
               <h2>Login</h2>
@@ -26,12 +37,22 @@
               <div class="remember">
                 <label><input type="checkbox"> Remember me
                 </label>
+                <a href="forgotPassword.html"  class="forgotPasswordBtn-link">Forgot Password?</a>
+
               </div>
-              <button type="submit">Login</button>
+              
+              <button type="submit" onclick="window.location.href='dashboard.html'">Login</button>
+              <h3>OR</h3>
+              <div class="fingerprint">
+                <div class="fingerprintBox">
+                  <img src="images/biometric.png" width="100" height="90", align-items="center">
+                  </div>
+                <p>Login with fingerprint</p>
+                </div>
               <div class="signUp-link">
                 <p>Don't have an account? <a href="# " class="signUpBtn-link">Sign Up</a></p>
               </div>
-              
+
             </form>
           </div> 
           <div class="form-wrapper sign-up ">
@@ -46,6 +67,7 @@
                 <label for="">Email</label>
               </div>
               <div class="input-group ">
+                <div class="icon"><ion-icon name="eye-outline"></ion-icon></div>
                 <input type="password" required>
                 <label for=" ">Password</label>
               </div>
@@ -58,6 +80,7 @@
                 </label>
               </div>
               <button type="submit ">Sign Up</button>
+              
               <div class="signUp-link ">
                 <p>Already have an account? <a href="# " class="signInBtn-link ">Login</a></p>
               </div>
@@ -65,6 +88,8 @@
             </form>
           </div> 
     </div>
-    <script src="rendererMainPage.js"></script>
+    <script type="text/javascript" src="rendererMainPage.js" >
+      
+  </script>
 </body>
 </html>

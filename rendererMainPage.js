@@ -8,3 +8,11 @@ signUpBtnLink.addEventListener('click', () => {
 signInBtnLink.addEventListener('click', () => {
     wrapper.classList.toggle('active');
 })
+/*
+forgotPasswordBtnLink.addEventListener('click', ()=> { 
+    toggle();
+})
+function toggle() {
+    var blur = document.getElementById('blur');
+    blur.classList.toggle('active');
+}*/

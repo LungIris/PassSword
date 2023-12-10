@@ -3,7 +3,6 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    margin: 0;
     font-family: 'Poppins', sans-serif;
 }
 
@@ -16,16 +15,33 @@ body {
     background: #282828;
 }
 
+
+
+.logo{
+    position: absolute;
+    top:60px;
+    left:50%;
+    transform:translateX(-130%);
+}
+.title{
+    position:relative;
+    top:150px;
+}
+
 .wrapper {
-    position: relative;
+    position: absolute;
     justify-content: center;
     width: 400px;
-    height: 600px;
+    height: 595px;
     background: #282828;
-    box-shadow: 0 0 50px #57e5ff;
+    box-shadow: 0 0 30px #57e5ff;
     border-radius: 20px;
-    padding: 30px;
+    padding: 12px;
     overflow: hidden;
+}
+.logo img{
+    width: 400px;
+    height: 400px;
 }
 
 .form-wrapper {
@@ -38,27 +54,73 @@ body {
 }
 
 .wrapper.active .form-wrapper.sign-in{
-    transform:translateY(-500px)
+    transform:translateY(-555px)
 }
 
 .wrapper.form-wrapper.sign-up{
     position: absolute;
-    top: 500px;
+    top: 400px;
     left: 0;
 }
 .wrapper.active .form-wrapper.sign-up{
-    transform:translateY(-525px)
+    transform:translateY(-570px)
 }
 
 .wrapper.form-wrapper.sign-in{
     position: absolute;
-    top: 500px;
+    top: 400px;
     left: 0;
 }
 h2 {
     font-size: 30px;
     color: #fff;
     text-align: center;
+
+}
+
+.title h1 {
+    font-size: 50px;
+    color: #fff;
+    margin-right:625px;
+    margin-top: 100px;
+    font-weight: 500;
+    color: #413a3a;
+    letter-spacing:2px;
+    cursor:pointer;
+
+}
+
+.title h1 span{
+    transition: 0.5s;
+}
+
+.title h1:hover span:nth-child(1){
+    margin-right: 15px;
+}
+
+.title h1:hover span:nth-child(2){
+    margin-right: 17px;
+}
+.title h1:hover span:nth-child(1){
+    margin-right: 19px;
+}
+
+.title h1:hover span{
+    color: #fff;
+    text-shadow: 0 0 10px #57e5ff,
+                 0 0 20px #57e5ff,
+                 0 0 30px #57e5ff,
+                 0 0 40px #57e5ff,
+                 0 0 50px #57e5ff,
+                 0 0 60px #fff;
+
+                 
+}
+h3 {
+    font-size: 15px;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
 }
 
 .input-group {
@@ -100,10 +162,11 @@ h2 {
     font-size: 14px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
 }
 
 .remember label input {
-    accent-color: #0ef;
+    accent-color: #57e5ff;
 }
 
 .remember label {
@@ -112,14 +175,14 @@ h2 {
 }
 
 .remember label input{
-    accent-color: #0ef;
+    accent-color: #57e5ff;
 }
 
 button{
     position:relative;
     width: 100%;
     height: 40px;
-    background: #0ef;
+    background: #57e5ff;
     box-shadow: 0 0 10px #57e5ff;
     font-size:16px;
     color: #000;
@@ -129,11 +192,17 @@ button{
     border:none;
     outline:none;
 }
+button:hover{
+    background: #0031c4;
+    color:#fff;
+    box-shadow: 0 0 10px #57e5ff;
 
+}
 .signUp-link{
     font-size:14px;
     text-align:center;
     margin:15px 0;
+    padding: 5px;
 }
 
 .signUp-link p{
@@ -148,6 +217,65 @@ button{
 }
 
 .signUp-link p a:hover{
-    text-decoration:underline;
+    color:#0031c4;
+}
 
+
+
+.remember a{
+    color:#57e5ff;
+    text-decoration:none;
+    font-weight:500;
+}
+
+.remember a:hover{
+    text-decoration:underline;
+    color:#0031c4;
+}
+
+.signUp-link p a:hover{
+    text-decoration:underline;
+}
+
+.fingerprint{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 15px;
+    cursor: pointer;
+}
+
+.fingerprint .fingerprintBox{
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center;
+    box-shadow: 5px 5px 10 px rgba(0,0,0,0.1),
+    -5px -5px 10 px #fff;
+    border: 3px solid #57e5ff;
+    padding: 10px 0px 10px;
+    border-radius: 15px;
+    background: linear-gradient(315deg, #282828,#413a3a);
+    max-width: 100px;
+    height:115px;
+}
+.fingerprint .fingerprintBox:hover
+{
+    background: #282828;
+}
+
+fingerprint .fingerprintBox img {
+    filter: invert(1);
+    animation: animate 1s linear infinite;
+    padding:20px;
+}
+@keyframes animate{
+    0%,100%
+    {
+        opacity:1;
+    }
+    50%{
+        opacity: 0.5;
+    }
 }
