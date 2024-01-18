@@ -13,6 +13,38 @@ body
     min-height:100vh;
     background: var(--clr);
 }
+.navbar{
+    
+    background:#282828;
+    padding:18px;
+    text-align:center;
+    margin-left: 80px;
+    border-bottom-left-radius:20px;
+    position:relative;
+    width: 100%;
+    transition:0.5s;
+
+}
+.navbar a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0px;
+    font-size: 1.2em;
+    overflow: hidden;
+    position:relative;
+    list-style: none;
+    box-shadow: 0 0 10px #57e5ff;
+    padding: 18px;
+    margin-right:0px;
+}
+.navbar.active{
+    border-bottom-left-radius:-20px;
+    margin-left: 250px;
+    transition:0.5s;
+}
+.navbar a:hover {
+    color: #57e5ff;
+}
 .sidebar{
     position: absolute;
     width:80px;
@@ -34,6 +66,7 @@ body
     position:relative;
     list-style: none;
 }
+
 .sidebar ul li.active
 {
     background: var(--clr);
@@ -168,7 +201,7 @@ body
 .menuToggle
 {
     position: absolute;
-    top: 10px;
+    top: 9px;
     right:20px;
     width:50px;
     height:50px;
@@ -208,3 +241,4 @@ body
     transform: translateY(0px) rotate(-45deg);
     box-shadow: 0 0 10px #57e5ff;
 }
+
