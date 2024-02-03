@@ -13,31 +13,37 @@
     <div class="menuToggle"></div>
     <div class="sidebar">
         <ul>
-            <li class="logo" style="--bg:#333;">
+            <li class="logo"  style="--bg:#333;">
                 <a href="#">
                     <div class="icon">
                         <img src="images/Logov2.png" width="50" height="50">
                     </div>
-                    <div class="text">PassSword</div>
+                   <div class="text">PassSword</div>
                 </a>
             </li>
             <div class="MenuList">
-                <li style="--bg:#57e5ff;" class="active">
-                    <a href="#">
-                        <div class="icon"><ion-icon name="home-outline"></ion-icon></div>
-                    <div class="text">Home</div>
-                    </a>
-                </li>
                 <li style="--bg:#57e5ff;">
                     <a href="#">
-                        <div class="icon"><ion-icon name="person-outline"></ion-icon></div>
+                        <div class="icon"><ion-icon name="person"></ion-icon></div>
                     <div class="text">Profile</div>
                     </a>
                 </li>
                 <li style="--bg:#57e5ff;">
                     <a href="#">
-                        <div class="icon"><ion-icon name="chatbox-outline"></ion-icon></div>
-                    <div class="text">Inbox</div>
+                        <div class="icon"><ion-icon name="key"></ion-icon></div>
+                    <div class="text">PassSwords</div>
+                    </a>
+                </li>
+                <li style="--bg:#57e5ff;" class="active">
+                    <a href="#">
+                        <div class="icon"><ion-icon name="star"></ion-icon></ion-icon></div>
+                    <div class="text">Favorites</div>
+                    </a>
+                </li>
+                <li style="--bg:#57e5ff;">
+                    <a href="#">
+                        <div class="icon"><ion-icon name="folder"></ion-icon></div>
+                    <div class="text">Folders</div>
                     </a>
                 </li>
                 <li style="--bg:#57e5ff;">
@@ -48,8 +54,8 @@
                 </li>
                 <li style="--bg:#57e5ff;">
                     <a href="#">
-                        <div class="icon"><ion-icon name="cart-outline"></ion-icon></div>
-                    <div class="text">Order</div>
+                        <div class="icon"><ion-icon name="trash"></ion-icon></div>
+                    <div class="text">Trash</div>
                     </a>
                 </li>
                 <li style="--bg:#57e5ff;">
@@ -79,11 +85,14 @@
             </div>
         </ul>
     </div>
+   
     <div class="navbar">
         <div class="MenuOptions">
-        <a href="#">Home</a>
-        <a href="#">About</a>
-        <a href="#">Contact</a>
+        <form action="" method="get" class="search-bar">
+        <input  type="text" placeholder="Search" name="Search">
+        <button type="submit"><ion-icon name="search"></ion-icon></button>
+    </form>
+
         </div>
     </div>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
@@ -101,7 +110,9 @@
     function activeLink(){
         MenuList.forEach((item)=> 
             item.classList.remove('active'));  
+        setTimeout(() => {
         this.classList.add('active');
+        }, 100);
     }
     MenuList.forEach((item)=> 
     item.addEventListener('click',activeLink));
