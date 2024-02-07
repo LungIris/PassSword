@@ -86,26 +86,48 @@
         </ul>
     </div>
    
+    <!--top bar-->
     <div class="navbar">
         <div class="MenuOptions">
         <form action="" method="get" class="search-bar">
         <input  type="text" placeholder="Search" name="Search">
         <button type="submit"><ion-icon name="search"></ion-icon></button>
-    </form>
+        </form>
 
         </div>
     </div>
+
+    <!--add password-->
+    <div class="addPassword">
+        <a href="#" style="--clr: #57e5ff; "><span>Add Password</span></a>
+        <div class="passwordTable">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Last Used</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+
+    
+
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 <script>
     let menuToggle=document.querySelector('.menuToggle');
     let sidebar= document.querySelector('.sidebar');
     let navbar=document.querySelector(".navbar");
+    let addPassword=document.querySelector(".addPassword");
     menuToggle.onclick =function(){
         menuToggle.classList.toggle('active');
         sidebar.classList.toggle('active');
         navbar.classList.toggle('active');
+        addPassword.classList.toggle('active');
     }
+
     let MenuList= document.querySelectorAll('.MenuList li');
     function activeLink(){
         MenuList.forEach((item)=> 
@@ -116,6 +138,18 @@
     }
     MenuList.forEach((item)=> 
     item.addEventListener('click',activeLink));
+
+    let button= document.querySelectorAll('.addPassword a');
+    button.forEach(btn =>{
+        btn.onmousemove= function(e){
+            let x= e.pageX - btn.offsetLeft;
+            let y= e.pageY - btn.offsetTop;
+
+            btn.style.setProperty('--x', x + 'px');
+            btn.style.setProperty('--y', y + 'px');
+
+        }
+    })
 </script>
 </body>
 </html>

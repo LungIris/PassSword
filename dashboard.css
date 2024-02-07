@@ -1,3 +1,5 @@
+@media (max-width: 1500px) {
+    
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
 * {
     margin: 0;
@@ -19,40 +21,42 @@ body
     background:#282828;
     padding:18px;
     text-align:center;
-    margin-left: 80px;
     position:absolute;
-    width: 94.15%;
+    width: 100%;
+    margin-left:80px;
     transition:0.5s;
 
 }
 .navbar a {
     color: #fff;
     text-decoration: none;
-    margin: 0px;
     font-size: 1.2em;
     overflow: hidden;
     position:relative;
     list-style: none;
     box-shadow: 0 0 10px #57e5ff;
     padding: 18px;
-    margin-right:0px;
+    
 }
 .navbar.active{
     border-bottom-left-radius:-20px;
-    margin-left: 250px;
+    margin-left: 180px;
     transition:0.5s;
-    width:81.67%;
+    width:100%;
+
 }
 
 .search-bar{
     width: 30%;
-    max-width: 400px;
+    max-width: 360px;
+    width: 400px;
     background:#282828;
     display: flex;
     align-items: center;
+    justify-content: center;
     border-radius:60px;
     padding: 5px;
-    margin-left: 400px;
+    margin-left: 370px;
     position:relative;
     height: 30px;
     backdrop-filter: blur(4px) saturate(100%);
@@ -69,7 +73,7 @@ body
     color:#57e5ff;
 }
 ::placeholder{
-    color:#413a3a
+    color: #999;
 }
 .search-bar button img{
     width: 25px;
@@ -96,7 +100,7 @@ body
 }
 .sidebar.active
 {
-    width:250px;
+    width:210px;
 }
 
 .sidebar ul{
@@ -119,6 +123,7 @@ body
 
 .sidebar ul li:first-child.active::before{
     top: 0px;
+    
 }
 
 
@@ -198,7 +203,7 @@ body
 }
 .sidebar .logo a .text{
     padding-top: 15px;
-    font-size: 20px;
+    font-size: 16px;
     color:#57e5ff
 }
 .sidebar ul li a .text
@@ -308,3 +313,105 @@ body
     box-shadow: 0 0 10px #57e5ff;
 }
 
+.addPassword{
+    display:flex;
+    justify-content: center;
+    align-items:center;
+    min-height: 100vh;
+    background: #413a3a;
+    margin-left:20%;
+}
+
+.addPassword a{
+    
+    position: absolute;
+    padding: 10px 40px;
+    background:#282828;
+    border-radius: 50px;
+    font-size: 1em;
+    text-decoration: none;
+    transition: 0.5s;
+    color: #999;
+    overflow:hidden;
+    margin-top:-30%;
+    margin-left:-190px;
+    box-shadow: 0 7px 25px #282828;
+
+}
+
+.addPassword.active a{
+    margin-left:20px;
+}
+
+.addPassword a:hover{
+    color: var(--clr);
+    text-shadow: 0 0 15px var(--clr),
+    0 0 40px var(--clr);
+
+}
+
+.addPassword a span{
+    position:relative;
+    z-index:1;
+    letter-spacing: 0.2em;;
+}
+
+.addPassword a::before{
+    content: '';
+    position: absolute;
+    top: var(--y);
+    left:var(--x);
+    transform: translate(-50%,-50%);
+    background: radial-gradient(var(--clr),transparent, transparent);
+    width:200px;
+    height:200px;
+    opacity:0;
+    transition: 0.5s,top 0s, left 0s;
+
+}
+
+.addPassword a:hover::before{
+    opacity:1;
+}
+
+.addPassword a::after{
+    content: '';
+    position:absolute;
+    inset:2px;
+    background: #282828;
+    border-radius: 48px;
+}
+
+.addPassword table{
+    position:relative;
+    border-collapse:collapse;
+    margin-left:-150px;
+    transition: 0.5s;
+    margin-top: -20%;
+
+}
+.addPassword.active table{
+    position:relative;
+    margin-left:30px;
+    margin-top: -17%;
+
+}
+
+table, th, td {
+    border: 3px solid #282828;
+    border-top: #413a3a;
+    border-left:#413a3a;
+    border-right: #413a3a;
+}
+
+th, td {
+    padding: 20px;
+    text-align: left;
+}
+
+th {
+    background-color: #413a3a;
+    padding-right: 300px;
+}
+
+}
