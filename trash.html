@@ -7,11 +7,12 @@
         <meta name="viewport " content="width=device.width, initial-scale=1.0 ">
         <title>PassSword
         </title>
-        <link rel="stylesheet " type="text/css " href="addPasswordForm.css">
+        <link rel="stylesheet " type="text/css " href="trash.css">
 </head>
 <body>
-    <div class="menuToggle"></div>
-    <div class="sidebar">
+<div class="wrapper" id="blur">
+    <div class="menuToggle" ></div>
+    <div class="sidebar" >
         <ul>
             <li class="logo"  style="--bg:#333;">
                 <a href="#">
@@ -22,7 +23,7 @@
                 </a>
             </li>
             <div class="MenuList">
-                <li style="--bg:#57e5ff;"class="active">
+                <li style="--bg:#57e5ff;">
                     <a href="dashboard.html">
                         <div class="icon"><ion-icon name="key"></ion-icon></div>
                     <div class="text">PassSwords</div>
@@ -46,8 +47,8 @@
                     <div class="text">Analytics</div>
                     </a>
                 </li>
-                <li style="--bg:#57e5ff;">
-                    <a href="trash.html">
+                <li style="--bg:#ff3131;" class='active'>
+                    <a href="#">
                         <div class="icon"><ion-icon name="trash"></ion-icon></div>
                     <div class="text">Trash</div>
                     </a>
@@ -87,92 +88,95 @@
     </div>
    
     <!--top bar-->
-    <div class="navbar">
+    <div class="navbar" >
         <div class="MenuOptions">
         <form action="" method="get" class="search-bar">
         <input  type="text" placeholder="Search" name="Search">
-        <button type="submit"><ion-icon name="search"></ion-icon></button>
+        <button type="submit"><ion-icon n ame="search"></ion-icon></button>
         </form>
 
         </div>
     </div>
 
-    <div class="passwordForm">
-        <form>
-        <div class="image">
-            <li class="websiteLogo"  style="--bg:#333;">
-                <a href="#">
-                    <div class="icon">
-                        <img src="images/biometric.png" width="50" height="50", align-items="center">
-                    </div>
-                </a>
-            </li>
-        </div>
-        <h2> Website </h2>
-        <div class="inputBox">
-            <input type="text" required="required">
-            <label for=" ">Website Address</label>
-            <i></i>
-        </div>
-        <h2> Login details</h2>
-        <div class="inputBox">
-            <input type="text" required="required">
-            <label for=" ">Username or Email</label>
-            <i></i>
-        </div>
-        <div class="inputBox">
-            <input type="password" required="required">
-            <label for=" ">Password</label>
-            <i></i>
-        </div>
-        <div class="generate">
-            <a href="generatePassword.html"> Generate Password</a>
-        </div>
-        <div class="buttons">
-            <button type="submit" onclick="window.location.href='dashboard.html'">Add</button>
-            <button type="submit" onclick="window.location.href='dashboard.html'">Cancel</button>
-        </div>
+    <!--remove password-->
+    <div class="removePassword"id=>
+        <a href="#" onclick="emptyTrash()" id="popupButton" style="--clr: #ff3131; "><span>Empty</span></a>
         
-    </form>
+        <div class="passwordTable" >
+            <table>
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Last Used</th>
+                    </tr>
+                    <tr>
+                        <td data-cell="website">Facebook</td>
+                        <td data-cell="last-modfied">30 days</td>
+                    </tr>
+                    <tr>
+                        <td data-cell="website">Instagram</td>
+                        <td data-cell="last-modfied">20 days</td>
+                    </tr>
+                </thead>
+            </table>
+        </div>
     </div>
-
+</div>
+    <div class="popup" id="popup">
+        <h2> Empty trash? </h2>
+        <h3> If you proceed, all of your deleted passSwords will be permanently lost.</h3>
+        <div class="buttonC">
+        <button type="submit" onclick="window.location.href='trash.html'" >Cancel</button>
+        </div>
+        <div class="buttonC">
+        <button type="submit" onclick="window.location.href='trash.html'" >Empty</button>
+        </div>
+    </div>
+    
 
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    <script>
-        let menuToggle=document.querySelector('.menuToggle');
-        let sidebar= document.querySelector('.sidebar');
-        let navbar=document.querySelector(".navbar");
-        let passwordForm=document.querySelector(".passwordForm");
-        menuToggle.onclick =function(){
-            menuToggle.classList.toggle('active');
-            sidebar.classList.toggle('active');
-            navbar.classList.toggle('active');
-            passwordForm.classList.toggle('active');
-        }
-    
-        let MenuList= document.querySelectorAll('.MenuList li');
-        function activeLink(){
-            MenuList.forEach((item)=> 
-                item.classList.remove('active'));  
-            setTimeout(() => {
-            this.classList.add('active');
-            }, 100);
-        }
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+<script>
+    let menuToggle=document.querySelector('.menuToggle');
+    let sidebar= document.querySelector('.sidebar');
+    let navbar=document.querySelector(".navbar");
+    let removePassword=document.querySelector(".removePassword");
+    menuToggle.onclick =function(){
+        menuToggle.classList.toggle('active');
+        sidebar.classList.toggle('active');
+        navbar.classList.toggle('active');
+        removePassword.classList.toggle('active');
+    }
+
+    let MenuList= document.querySelectorAll('.MenuList li');
+    function activeLink(){
         MenuList.forEach((item)=> 
-        item.addEventListener('click',activeLink));
-    
-        let button= document.querySelectorAll('.addPassword a');
-        button.forEach(btn =>{
-            btn.onmousemove= function(e){
-                let x= e.pageX - btn.offsetLeft;
-                let y= e.pageY - btn.offsetTop;
-    
-                btn.style.setProperty('--x', x + 'px');
-                btn.style.setProperty('--y', y + 'px');
-    
-            }
-        })
-    </script>
-    </body>
-    </html>
+            item.classList.remove('active'));  
+        setTimeout(() => {
+        this.classList.add('active');
+        }, 100);
+    }
+    MenuList.forEach((item)=> 
+    item.addEventListener('click',activeLink));
+
+    let button= document.querySelectorAll('.removePassword a');
+    button.forEach(btn =>{
+        btn.onmousemove= function(e){
+            let x= e.pageX - btn.offsetLeft;
+            let y= e.pageY - btn.offsetTop;
+
+            btn.style.setProperty('--x', x + 'px');
+            btn.style.setProperty('--y', y + 'px');
+
+        }
+    })
+    function emptyTrash() {
+            var blur = document.getElementById('blur');
+            blur.classList.toggle('active');
+            var popup = document.getElementById('popup');
+            popup.classList.toggle('active');
+        }
+</script>
+
+</body>
+</html>
