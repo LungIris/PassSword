@@ -48,9 +48,12 @@ updateSlider();
 
 const copyPassword = () => {
     navigator.clipboard.writeText(passwordInput.value);
+
     copyIcon.style.color = "#4285f4";
     setTimeout(() => {
+
         copyIcon.style.color = "#707070";
+      
     }, 1500);
 }
 
