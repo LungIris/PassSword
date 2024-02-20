@@ -204,7 +204,7 @@
     .sidebar .logo a .text{
         padding-top: 15px;
         font-size: 16px;
-        color:#57e5ff
+        color:#57e5ff;
     }
     .sidebar ul li a .text
     {
@@ -313,224 +313,49 @@
         box-shadow: 0 0 10px #57e5ff;
     }
     
-    .removePassword{
-        display:flex;
-        justify-content: center;
-        align-items:center;
-        min-height: 100vh;
-        background: #413a3a;
-        margin-left:20%;
-    }
-    
-    .removePassword a, .EmptyTrash{
-        
+    .analytics{
         position: absolute;
-        padding: 10px 40px;
-        background:#282828;
-        border-radius: 50px;
-        font-size: 1em;
-        text-decoration: none;
+        top:66px;
+        width: 95%;
+        left: 80px;
+        min-height: calc(100vh- 60px);
+        background: #413a3a;
         transition: 0.5s;
-        color: #fff;
-        overflow:hidden;
-        margin-top:-30%;
-        margin-left:-190px;
-        box-shadow: 0 7px 25px #282828;
-    
     }
-    
-    .removePassword.active a{
-        margin-left:30px;
-    }
-    
-    .removePassword a:hover{
-        color: var(--clr);
-        text-shadow: 0 0 15px var(--clr),
-        0 0 40px var(--clr);
-    
-    }
-    
-    .removePassword a span{
-        position:relative;
-        z-index:1;
-        letter-spacing: 0.2em;;
-    }
-    
-    .removePassword a::before{
-        content: '';
-        position:absolute;
-        top: var(--y);
-        left:var(--x);
-        transform: translate(-50%,-50%);
-        background: radial-gradient(var(--clr),transparent, transparent);
-        width:200px;
-        height:200px;
-        opacity:0;
-        transition: 0.5s,top 0s, left 0s;
-    
-    }
-    
-    .removePassword a:hover::before{
-        opacity:1;
-    }
-    
-    .removePassword a::after{
-        content: '';
-        position:absolute;
-        inset:2px;
-        background: #282828;
-        border-radius: 48px;
-    }
-    
-    .removePassword table{
-        background: #282828;
+    .analytics.active{
+        left:211px;
         transition: 0.5s;
-        margin-left:-190px;
-        margin-top: -20%;
-        width:900px;
-        border-collapse:collapse;
-        color: #fff;
-        border-color: #282828;
-        box-shadow: 0 0 5px #ff3131;
-        border-bottom: none;
-        overflow-x: auto;
-        table-layout: fixed;
-
+        width: 85%;
     }
-    
-    .removePassword.active table{
-        margin-top:-13%;
-        margin-left: 30px;
+    .cards{
+        width:100%;
+        padding:35px 20px;
+        display:grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-gap: 20px;
     }
-    
-    table, th, td {
-        border: 3px solid #282828;
-        border-top: #413a3a;
-        border-left:#413a3a;
-        border-right: #413a3a;
-        border-collapse:collapse;
-        border-bottom: 1px solid #999;
-
-    }
-    tr:hover td{
-        background-color: #413a3a;
-    }
-    th, td {
-        padding: 10px;
-        text-align: left;
-        word-break: break-all;
-
-    }
-    
-    th {
-        background-color: #000;
-        letter-spacing:1px;
-        text-transform: uppercase;
-        
-    }
-    td{
-        padding:10px;
-        border-bottom: none;
-    }
-    .content {
-        display: flex; 
-        align-items: center; 
-    }
-    .tableImage{
-        padding-left:25px;
-    }
-    .tableImage img {
-       height:35px;
-       width:35px;
-       object-fit:cover;
-       border-radius:50px;
-       border: 1px solid;
-       z-index:1;
-    }
-    td button{
-        outline:none;
-        border:none;
-        border-radius:6px;
-        cursor: pointer;
-        height:30px;
-        width:30px;
-        margin-left:15px;
-        background-color:#ff3131;
-        box-shadow: 0 0 10px #ff3131;
-    }
-    td button:hover{
-        background-color: #a71c1c;
-    }
-    td button ion-icon{
-        width:20px;
-        height:20px;
-    }
-    .tableTitle {
-        font-weight: bold; 
-        padding-left:15px;
-    }
-    tr:hover td{
-        background-color: #413a3a;
-    }
-    tr:nth-of-type(2n){
+    .cards .card{
+        padding:20px;
+        height:90px;
+        display:flex;
+        align-items:center;
+        justify-content: space-between;
         background: #282828;
-    }
-    .wrapper.active{
-        filter: blur(20px);
-        pointer-events: none;
-        user-select: none;
-    }
-    #popup{
-        position:fixed;
-        top:50%;
-        left:50%;
-        transform:translate(-50%,-50%);
-        width:600px;
-        padding:50px;
-        box-shadow: 0 2px 10px #ff3131;
-        background: #282828;
-        visibility: hidden;
-        opacity:0;
-        transition:1s;
-        text-align:center;
-        z-index:1;
-    }
-    #popup.active{
-        top:40%;
-        visibility:visible;
-        opacity:1;
-        transition:1.5s;
+        border-radius:10px;
+        box-shadow: 0 7px 15px 0 #2ed344;
 
     }
-    #popup h2{
-        font-size: 20px;
-        color: #ff3131;
-        padding:10px;
+    .number{
+        font-size: 35px;
+        font-weight: 500;
+        color: #2ed344;
     }
-    #popup h3{
-        font-size: 16px;
-        color: #999;
-        padding:10px;
+    .card-name{
+        color:#999;
+        font-weight:600;
     }
-
-    .buttonC button {
-        width: 50%;
-        height: 40px;
-        background: #ff3131;
-        box-shadow: 0 0 10px #ff3131;
-        font-size:24px;
-        color: #fff;
-        cursor:pointer;
-        border-radius:30px;
-        border:none;
-        outline:none;
-        margin-top: 25px;
+    .icon-box ion-icon{
+        font-size: 35px;
+        color: #2ed344;
     }
-    #buttonC button:hover{
-        background:#af200d;
-        color: #fff;
-    }
-    
-
-    
     }

@@ -7,12 +7,11 @@
         <meta name="viewport " content="width=device.width, initial-scale=1.0 ">
         <title>PassSword
         </title>
-        <link rel="stylesheet " type="text/css " href="trash.css">
+        <link rel="stylesheet " type="text/css " href="analytics.css">
 </head>
 <body>
-<div class="wrapper" id="blur">
-    <div class="menuToggle" ></div>
-    <div class="sidebar" >
+    <div class="menuToggle"></div>
+    <div class="sidebar">
         <ul>
             <li class="logo"  style="--bg:#333;">
                 <a href="#">
@@ -29,32 +28,26 @@
                     <div class="text">PassSwords</div>
                     </a>
                 </li>
-                <li style="--bg:#57e5ff;" >
+                <li style="--bg:#f5d545;" >
                     <a href="favorites.html">
                         <div class="icon"><ion-icon name="star"></ion-icon></ion-icon></div>
                     <div class="text">Favorites</div>
                     </a>
                 </li>
                 <li style="--bg:#57e5ff;">
-                    
                     <a href="#">
                         <div class="icon"><ion-icon name="folder"></ion-icon></div>
-                        <div class="text">Folders
-                            <div class="right"><ion-icon name="chevron-forward-outline"></ion-icon></div>
-                        </div>
-
+                    <div class="text">Folders</div>
                     </a>
-                   
-               
                 </li>
-                <li style="--bg:#57e5ff;">
+                <li style="--bg:#2ed344;"class="active">
                     <a href="#">
                         <div class="icon"><ion-icon name="analytics-outline"></ion-icon></div>
                     <div class="text">Analytics</div>
                     </a>
                 </li>
-                <li style="--bg:#ff3131;" class='active'>
-                    <a href="#">
+                <li style="--bg:#57e5ff;">
+                    <a href="trash.html">
                         <div class="icon"><ion-icon name="trash"></ion-icon></div>
                     <div class="text">Trash</div>
                     </a>
@@ -94,60 +87,57 @@
     </div>
    
     <!--top bar-->
-    <div class="navbar" >
+    <div class="navbar">
         <div class="MenuOptions">
         <form action="" method="get" class="search-bar">
         <input  type="text" placeholder="Search" name="Search">
-        <button type="submit"><ion-icon n ame="search"></ion-icon></button>
+        <button type="submit"><ion-icon name="search"></ion-icon></button>
         </form>
 
         </div>
     </div>
 
-    <!--remove password-->
-    <div class="removePassword"id=>
-        <a href="#" onclick="emptyTrash()" id="popupButton" style="--clr: #ff3131; "><span>Empty</span></a>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Title</th>
-                        <th>Email/ Username</th>
-                        <th>Last modified</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                            <div class="content">
-                                <div class="tableImage"><img src="images/biometric.png" /></div>
-                                <div class="tableTitle">Facebook</div>
-                                                   
-                             </div>
-                        </td>
-                        <td>lungiris</td>
-                        <td>13 days ago</td>
-                        <td>
-                            <button><ion-icon name="save-outline"></ion-icon></i></button>
-                            <button><ion-icon name="trash-outline"></ion-icon></ion-icon></i></button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-    
-    </div>
-</div>
-    <div class="popup" id="popup">
-        <h2> Empty trash? </h2>
-        <h3> If you proceed, all of your deleted passSwords will be permanently lost.</h3>
-        <div class="buttonC">
-        <button type="submit" onclick="window.location.href='trash.html'" >Cancel</button>
-        </div>
-        <div class="buttonC">
-        <button type="submit" onclick="window.location.href='trash.html'" >Empty</button>
+    <!-- analytics items-->
+    <div class="analytics">
+        <div class="cards">
+            <div class="card">
+                <div class="card-content">
+                    <div class="number">1</div>
+                    <div class="card-name">Items</div>
+                </div>
+                <div class="icon-box">
+                    <ion-icon name="clipboard-outline"></ion-icon>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-content">
+                    <div class="number">7</div>
+                    <div class="card-name">Accounts</div>
+                </div>
+                <div class="icon-box">
+                    <ion-icon name="person-outline"></ion-icon>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-content">
+                    <div class="number">6</div>
+                    <div class="card-name">Reused passwords</div>
+                </div>
+                <div class="icon-box">
+                    <ion-icon name="sync-circle-outline"></ion-icon>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-content">
+                    <div class="number">3</div>
+                    <div class="card-name">Deleted Items</div>
+                </div>
+                <div class="icon-box">
+                    <ion-icon name="trash-outline"></ion-icon>
+                </div>
+            </div>
         </div>
     </div>
-    
 
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
@@ -155,12 +145,12 @@
     let menuToggle=document.querySelector('.menuToggle');
     let sidebar= document.querySelector('.sidebar');
     let navbar=document.querySelector(".navbar");
-    let removePassword=document.querySelector(".removePassword");
+    let analytics=document.querySelector(".analytics");
     menuToggle.onclick =function(){
         menuToggle.classList.toggle('active');
         sidebar.classList.toggle('active');
         navbar.classList.toggle('active');
-        removePassword.classList.toggle('active');
+        analytics.classList.toggle('active');
     }
 
     let MenuList= document.querySelectorAll('.MenuList li');
@@ -174,7 +164,7 @@
     MenuList.forEach((item)=> 
     item.addEventListener('click',activeLink));
 
-    let button= document.querySelectorAll('.removePassword a');
+    let button= document.querySelectorAll('.addPassword a');
     button.forEach(btn =>{
         btn.onmousemove= function(e){
             let x= e.pageX - btn.offsetLeft;
@@ -185,13 +175,6 @@
 
         }
     })
-    function emptyTrash() {
-            var blur = document.getElementById('blur');
-            blur.classList.toggle('active');
-            var popup = document.getElementById('popup');
-            popup.classList.toggle('active');
-        }
 </script>
-
 </body>
 </html>

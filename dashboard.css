@@ -320,6 +320,7 @@ body
     min-height: 100vh;
     background: #413a3a;
     margin-left:20%;
+    height:620px;
 }
 
 .addPassword a{
@@ -383,11 +384,10 @@ body
 }
 
 .addPassword table{
-    background: #413a3a;
-    border-radius: 10px;
+    background: #282828;
     transition: 0.5s;
     margin-left:-190px;
-    margin-top: -15%;
+    margin-top: -20%;
     width:900px;
     border-collapse:collapse;
     color: #fff;
@@ -395,7 +395,7 @@ body
     box-shadow: 0 0 5px #57e5ff;
     border-bottom: none;
     overflow-x: auto;
-
+    
 }
 
 .addPassword.active table{
@@ -405,6 +405,7 @@ body
 
 table, th, td {
     border: 3px solid #282828;
+    border-bottom: 1px solid #999;
     border-top: #413a3a;
     border-left:#413a3a;
     border-right: #413a3a;
@@ -413,10 +414,36 @@ table, th, td {
 
 th, td {
     padding: 10px;
-    text-align: left;
-    
+    text-align: center;
+    word-break: break-all;
+}
+td button ion-icon{
+    width:20px;
+    height:20px;
+}
+.content {
+    display: flex; 
+    align-items: center; 
+}
+.tableImage{
+    padding-left:25px;
+}
+.tableImage img {
+   height:35px;
+   width:35px;
+   object-fit:cover;
+   border-radius:50px;
+   border: 1px solid;
+   z-index:1;
 }
 
+.tableTitle {
+    font-weight: bold; 
+    padding-left:15px;
+}
+tr:hover td{
+    background-color: #413a3a;
+}
 th {
     background-color: #000;
     letter-spacing:1px;
@@ -425,9 +452,25 @@ th {
 }
 td{
     padding:10px;
-    border-bottom: none;
+    border-bottom: 1px solid #999;
+    
 }
-tr:nth-of-type(2n){
-    background: #282828;
+td button{
+    outline:none;
+    border:none;
+    border-radius:6px;
+    cursor: pointer;
+    height:30px;
+    width:30px;
+    margin-left:15px;
+    background-color:#57e5ff;
+    box-shadow: 0 0 10px #57e5ff;
 }
+td button:hover{
+    background-color: #1c92a7;
+}
+a{
+    z-index:1;
+}
+
 }

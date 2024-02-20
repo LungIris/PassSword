@@ -204,7 +204,7 @@
     .sidebar .logo a .text{
         padding-top: 15px;
         font-size: 16px;
-        color:#57e5ff
+        color:#57e5ff;
     }
     .sidebar ul li a .text
     {
@@ -313,16 +313,17 @@
         box-shadow: 0 0 10px #57e5ff;
     }
     
-    .removePassword{
+    .favorites{
         display:flex;
         justify-content: center;
         align-items:center;
         min-height: 100vh;
         background: #413a3a;
         margin-left:20%;
+        height:620px;
     }
     
-    .removePassword a, .EmptyTrash{
+    .favorites a{
         
         position: absolute;
         padding: 10px 40px;
@@ -339,24 +340,24 @@
     
     }
     
-    .removePassword.active a{
+    .favorites.active a{
         margin-left:30px;
     }
     
-    .removePassword a:hover{
+    .favorites a:hover{
         color: var(--clr);
         text-shadow: 0 0 15px var(--clr),
         0 0 40px var(--clr);
     
     }
     
-    .removePassword a span{
+    .favorites a span{
         position:relative;
         z-index:1;
         letter-spacing: 0.2em;;
     }
     
-    .removePassword a::before{
+    .favorites a::before{
         content: '';
         position:absolute;
         top: var(--y);
@@ -370,11 +371,11 @@
     
     }
     
-    .removePassword a:hover::before{
+    .favorites a:hover::before{
         opacity:1;
     }
     
-    .removePassword a::after{
+    .favorites a::after{
         content: '';
         position:absolute;
         inset:2px;
@@ -382,7 +383,7 @@
         border-radius: 48px;
     }
     
-    .removePassword table{
+    .favorites table{
         background: #282828;
         transition: 0.5s;
         margin-left:-190px;
@@ -391,47 +392,37 @@
         border-collapse:collapse;
         color: #fff;
         border-color: #282828;
-        box-shadow: 0 0 5px #ff3131;
+        box-shadow: 0 0 5px #f5d545;
         border-bottom: none;
-        overflow-x: auto;
-        table-layout: fixed;
-
+        overflow: auto;
+    
     }
     
-    .removePassword.active table{
+    .favorites.active table{
         margin-top:-13%;
         margin-left: 30px;
     }
     
+    thead th{
+        position: sticky;
+        top:0;
+    
+    }
     table, th, td {
         border: 3px solid #282828;
+        border-bottom: 1px solid #999;
         border-top: #413a3a;
         border-left:#413a3a;
         border-right: #413a3a;
         border-collapse:collapse;
-        border-bottom: 1px solid #999;
-
-    }
-    tr:hover td{
-        background-color: #413a3a;
-    }
-    th, td {
-        padding: 10px;
-        text-align: left;
-        word-break: break-all;
-
     }
     
-    th {
-        background-color: #000;
-        letter-spacing:1px;
-        text-transform: uppercase;
-        
+    th, td {
+        padding: 10px;
+        text-align: center;
+        word-break: break-all;
     }
-    td{
-        padding:10px;
-        border-bottom: none;
-    }
+    
     .content {
         display: flex; 
         align-items: center; 
@@ -447,6 +438,25 @@
        border: 1px solid;
        z-index:1;
     }
+    
+    .tableTitle {
+        font-weight: bold; 
+        padding-left:15px;
+    }
+    tr:hover td{
+        background-color: #413a3a;
+    }
+    th {
+        background-color: #000;
+        letter-spacing:1px;
+        text-transform: uppercase;
+        
+    }
+    td{
+        padding:10px;
+        border-bottom: 1px solid #999;
+        
+    }
     td button{
         outline:none;
         border:none;
@@ -455,82 +465,19 @@
         height:30px;
         width:30px;
         margin-left:15px;
-        background-color:#ff3131;
-        box-shadow: 0 0 10px #ff3131;
-    }
-    td button:hover{
-        background-color: #a71c1c;
+        background-color:#f5d545;
+        box-shadow: 0 0 10px #f5d545;
     }
     td button ion-icon{
         width:20px;
         height:20px;
     }
-    .tableTitle {
-        font-weight: bold; 
-        padding-left:15px;
+    
+    td button:hover{
+        background-color: #caaf13;
     }
-    tr:hover td{
-        background-color: #413a3a;
-    }
-    tr:nth-of-type(2n){
-        background: #282828;
-    }
-    .wrapper.active{
-        filter: blur(20px);
-        pointer-events: none;
-        user-select: none;
-    }
-    #popup{
-        position:fixed;
-        top:50%;
-        left:50%;
-        transform:translate(-50%,-50%);
-        width:600px;
-        padding:50px;
-        box-shadow: 0 2px 10px #ff3131;
-        background: #282828;
-        visibility: hidden;
-        opacity:0;
-        transition:1s;
-        text-align:center;
+    a{
         z-index:1;
     }
-    #popup.active{
-        top:40%;
-        visibility:visible;
-        opacity:1;
-        transition:1.5s;
-
-    }
-    #popup h2{
-        font-size: 20px;
-        color: #ff3131;
-        padding:10px;
-    }
-    #popup h3{
-        font-size: 16px;
-        color: #999;
-        padding:10px;
-    }
-
-    .buttonC button {
-        width: 50%;
-        height: 40px;
-        background: #ff3131;
-        box-shadow: 0 0 10px #ff3131;
-        font-size:24px;
-        color: #fff;
-        cursor:pointer;
-        border-radius:30px;
-        border:none;
-        outline:none;
-        margin-top: 25px;
-    }
-    #buttonC button:hover{
-        background:#af200d;
-        color: #fff;
-    }
-    
-
     
     }
