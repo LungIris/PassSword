@@ -131,6 +131,26 @@
             </table>
         </div>
     </div>
+    <!-- Add this div for item information -->
+<div class="itemInfo">
+    <div class="itemContent">
+        <div class="closeBtn"><ion-icon name="close-circle-outline"></ion-icon></div>
+        <div class="itemDetails">
+            <div class="itemImage">
+                <li class="websiteLogo"  style="--bg:#333;">
+                        <div class="icon">
+                            <img src="" alt="" width="50" height="50", align-items="center">
+                        </div>
+                </li>
+            </div>
+            <div class="itemTitle"></div>
+            <div class="itemWebsite"></div>
+            <div class="itemFolder"></div>
+            <div class="editButton"><button type="submit" onclick="window.location.href='editItem.html'">Edit</button></div>
+        </div>
+    </div>
+</div>
+
 
     
 
@@ -170,6 +190,44 @@
 
         }
     })
+    document.addEventListener('DOMContentLoaded', function() {
+    // Get the elements
+    const itemInfo = document.querySelector('.itemInfo');
+    const closeBtn = document.querySelector('.itemInfo .closeBtn');
+    const tableRows = document.querySelectorAll('.passwordTable tbody tr');
+
+    // Function to open item info
+    function openItemInfo() {
+        // Get data from the clicked table row
+        const title = this.querySelector('.tableTitle').textContent;
+        const website = ''; // You should add logic to fetch website address
+        const folder = ''; // You should add logic to fetch folder
+        const imageSrc = ''; // You should add logic to fetch image source
+
+        // Populate item info
+        itemInfo.querySelector('.itemTitle').textContent = title;
+        itemInfo.querySelector('.itemWebsite').textContent = `Website: ${website}`;
+        itemInfo.querySelector('.itemFolder').textContent = `Folder: ${folder}`;
+        itemInfo.querySelector('.itemImage img').src = imageSrc;
+
+        // Show item info
+        itemInfo.classList.add('active');
+    }
+
+    // Function to close item info
+    function closeItemInfo() {
+        itemInfo.classList.remove('active');
+    }
+
+    // Add click event listeners to table rows
+    tableRows.forEach(row => {
+        row.addEventListener('click', openItemInfo);
+    });
+
+    // Add click event listener to close button
+    closeBtn.addEventListener('click', closeItemInfo);
+});
+
 </script>
 </body>
 </html>
