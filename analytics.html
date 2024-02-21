@@ -137,6 +137,19 @@
                 </div>
             </div>
         </div>
+
+        <div class="charts">
+            <div class="chart">
+                <h2>Account logins</h2>
+                    <canvas id="lineChart"></canvas>
+            </div>
+            <div class="chart" id="doughnut-chart">
+                <h2>Passwords strength</h2>
+                <canvas id="doughnut"></canvas>
+
+            </div>
+
+        </div>
     </div>
 
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
@@ -176,5 +189,8 @@
         }
     })
 </script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="chartA.js"></script>
+<script src="chartB.js"></script>
 </body>
 </html>

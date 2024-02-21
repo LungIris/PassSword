@@ -358,4 +358,28 @@
         font-size: 35px;
         color: #2ed344;
     }
+
+    .charts{
+        display:grid;
+        grid-template-columns: 2fr 1fr;
+        grid-gap: 20px;
+        width: 100%;
+        padding: 20px;
+        padding-top:0;
+    }
+    .chart{
+        background: #282828;
+        padding:20px;
+        border-radius:10px;
+        box-shadow: 0 7px 15px 0 #2ed344;
+        width:100%;
+      
+    }
+    .chart h2{
+        margin-bottom: 5px;
+        font-size:20px;
+        color: #999;
+        text-align:center;
+    }
+    
     }
