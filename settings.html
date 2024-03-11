@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="" X-UA-Compatible " content="IE-edge ">
+        <meta name="viewport " content="width=device.width, initial-scale=1.0 ">
+        <title>PassSword
+        </title>
+        <link rel="stylesheet " type="text/css " href="settings.css">
+</head>
+<body>
+    <div class="menuToggle"></div>
+    <div class="sidebar">
+        <ul>
+            <li class="logo"  style="--bg:#333;">
+                <a href="#">
+                    <div class="icon">
+                        <img src="images/Logov2.png" width="50" height="50">
+                    </div>
+                   <div class="text">PassSword</div>
+                </a>
+            </li>
+            <div class="MenuList">
+                <li style="--bg:#57e5ff;"class="active">
+                    <a href="dashboard.html">
+                        <div class="icon"><ion-icon name="key"></ion-icon></div>
+                    <div class="text">PassSwords</div>
+                    </a>
+                </li>
+                <li style="--bg:#57e5ff;" >
+                    <a href="favorites.html">
+                        <div class="icon"><ion-icon name="star"></ion-icon></ion-icon></div>
+                    <div class="text">Favorites</div>
+                    </a>
+                </li>
+                <li style="--bg:#57e5ff;">
+                    <a href="#">
+                        <div class="icon"><ion-icon name="folder"></ion-icon></div>
+                        <div class="text">Folders</div>
+                    </a>
+                </li>
+                <li style="--bg:#57e5ff;">
+                    <a href="analytics.html">
+                        <div class="icon"><ion-icon name="analytics-outline"></ion-icon></div>
+                    <div class="text">Analytics</div>
+                    </a>
+                </li>
+                <li style="--bg:#57e5ff;">
+                    <a href="trash.html">
+                        <div class="icon"><ion-icon name="trash"></ion-icon></div>
+                    <div class="text">Trash</div>
+                    </a>
+                </li>
+                <li style="--bg:#57e5ff;">
+                    <a href="#">
+                        <div class="icon"><ion-icon name="settings-outline"></ion-icon></div>
+                    <div class="text">Settings</div>
+                    </a>
+                </li>
+              
+            </div>
+            <div class="bottom">
+                <li style="--bg:#333;">
+                    <a href="#">
+                        <div class="icon">
+                            <div class="imgBx">
+                                <img src="images/check.png" width="100" heigt="100">
+                            </div>
+                        </div>
+                        <div class="text">Iris Lung</div>
+                    </a>
+                </li>
+                <li style="--bg:#333;">
+                    <a href="mainPage.html">
+                        <div class="icon"><ion-icon name="log-out-outline" ></ion-icon></div>
+                    <div class="text">Logout</div>
+                    </a>
+                </li>
+            </div>
+        </ul>
+    </div>
+    
+    <!--top bar-->
+    <div class="navbar">
+        <div class="MenuOptions">
+        <form action="" method="get" class="search-bar">
+        <input  type="text" placeholder="Search" name="Search">
+        <button type="submit"><ion-icon name="search"></ion-icon></button>
+        </form>
+
+        </div>
+    </div>
+    
+    <!--settings section-->
+    <div class="settings">
+        <section id="account">
+            <h2>Account</h2>
+            <div class="section">
+                <div class="label">
+                    <label for=" ">Email</label>
+                </div>
+                <div class="input">
+                    <h3>lung_iris@yahoo.com</h3>
+                </div>
+            </div>
+            <div class="section">
+                <div class="label">
+                    <label for=" ">Change Profile Picture</label>
+                </div>
+                <div class="input">
+                    <button type="submit"><ion-icon name="chevron-forward-outline"></ion-icon></button>
+                </div>
+            </div>
+        </section>
+    
+        <section id="security">
+            <h2>Security</h2>
+          <div class="section">
+            <div class="label">
+                <label for=" ">Change Master Password</label>
+            </div>
+            <div class="input">
+                <button type="submit"><ion-icon name="chevron-forward-outline"></ion-icon></button>
+            </div>
+          </div>
+            
+        <div class="section">
+            <div class="label">
+                <label for=" ">Multi-Factor Authentication</label>
+            </div>
+            <div class="input">
+                <button type="submit"><ion-icon name="chevron-forward-outline"></ion-icon></button>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="label">
+                <label for=" ">Biometric Authentication</label>
+            </div>
+            <div class="input">
+                <button type="toggle"><ion-icon name="chevron-forward-outline"></ion-icon></button>
+            </div>
+
+        </div>
+        
+         
+        </section>
+    
+        <section id="language">
+            <h2>Language</h2>
+            <div class="section">
+                <div class="label">
+                    <label for=" ">Choose App Language</label>
+                </div>
+                <div class="input">
+                            <select name="app-language">
+                                <option value="english">English</option>
+                                <option value="spanish">Spanish</option>
+                                <option value="spanish">French</option>
+                                <option value="spanish">Italian</option>
+                                <option value="spanish">Romanian</option>
+                
+                            </select>    
+                </div>
+            </div>
+            
+            
+        </section>
+    
+        <section id="autofill-autosave">
+            <h2>Autofill & Autosave</h2>
+            <div class="section">
+                <div class="label">
+                    <label for=" ">Add PassSword browser extension</label>
+                </div>
+                <div class="input">
+                    <button type="submit"><ion-icon name="chevron-forward-outline"></ion-icon></button>
+                </div>
+            </div>
+            <div class="section">
+                <div class="label">
+                    <label for=" ">Instant Login</label>
+                </div>
+                <div class="input">
+                    <button type="toggle"><ion-icon name="chevron-forward-outline"></ion-icon></button>
+                </div>
+            </div>
+            
+        </section>
+        <div class="scroll-bg">
+            <div class="scroll-div">
+                
+            </div>
+        </div>
+    </div>
+
+   
+
+
+    
+
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+<script>
+    let menuToggle=document.querySelector('.menuToggle');
+    let sidebar= document.querySelector('.sidebar');
+    let navbar=document.querySelector(".navbar");
+    let settings=document.querySelector(".settings");
+    menuToggle.onclick =function(){
+        menuToggle.classList.toggle('active');
+        sidebar.classList.toggle('active');
+        navbar.classList.toggle('active');
+        settings.classList.toggle('active');
+    }
+
+   
+    let MenuList= document.querySelectorAll('.MenuList li');
+    function activeLink(){
+        MenuList.forEach((item)=> 
+            item.classList.remove('active'));  
+        setTimeout(() => {
+        this.classList.add('active');
+        }, 100);
+    }
+    MenuList.forEach((item)=> 
+    item.addEventListener('click',activeLink));
+
+
+</script>
+</body>
+</html>
