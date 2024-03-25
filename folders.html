@@ -7,7 +7,7 @@
         <meta name="viewport " content="width=device.width, initial-scale=1.0 ">
         <title>PassSword
         </title>
-        <link rel="stylesheet " type="text/css " href="settings.css">
+        <link rel="stylesheet " type="text/css " href="dashboard.css">
 </head>
 <body>
     <div class="menuToggle"></div>
@@ -34,7 +34,7 @@
                     <div class="text">Favorites</div>
                     </a>
                 </li>
-                <li style="--bg:#57e5ff;">
+                <li style="--bg:#57e5ff;"class="active">
                     <a href="#">
                         <div class="icon"><ion-icon name="folder"></ion-icon></div>
                         <div class="text">Folders</div>
@@ -52,8 +52,8 @@
                     <div class="text">Trash</div>
                     </a>
                 </li>
-                <li style="--bg:#57e5ff; "class="active">
-                    <a href="#">
+                <li style="--bg:#57e5ff;">
+                    <a href="settings.html">
                         <div class="icon"><ion-icon name="settings-outline"></ion-icon></div>
                     <div class="text">Settings</div>
                     </a>
@@ -92,113 +92,7 @@
         </div>
     </div>
     
-    <!--settings section-->
-    <div class="settings">
-        <section id="account">
-            <h2>Account</h2>
-            <div class="section">
-                <div class="label">
-                    <label for=" ">Email</label>
-                </div>
-                <div class="input">
-                    <h3>lung_iris@yahoo.com</h3>
-                </div>
-            </div>
-            <div class="section">
-                <div class="label">
-                    <label for=" ">Change Profile Picture</label>
-                </div>
-                <div class="input">
-                    <button type="submit"><ion-icon name="chevron-forward-outline"></ion-icon></button>
-                </div>
-            </div>
-        </section>
-    
-        <section id="security">
-            <h2>Security</h2>
-          <div class="section">
-            <div class="label">
-                <label for=" ">Change Master Password</label>
-            </div>
-            <div class="input">
-                <button type="submit"><ion-icon name="chevron-forward-outline"></ion-icon></button>
-            </div>
-          </div>
-            
-        <div class="section">
-            <div class="label">
-                <label for=" ">Multi-Factor Authentication</label>
-            </div>
-            <div class="input">
-                <button type="submit"><ion-icon name="chevron-forward-outline"></ion-icon></button>
-            </div>
-        </div>
-
-        <div class="section">
-            <div class="label">
-                <label for=" ">Biometric Authentication</label>
-            </div>
-            <div class="input">
-                <button type="toggle"><ion-icon name="chevron-forward-outline"></ion-icon></button>
-            </div>
-
-        </div>
-        
-         
-        </section>
-    
-        <section id="language">
-            <h2>Language</h2>
-            <div class="section">
-                <div class="label">
-                    <label for=" ">Choose App Language</label>
-                </div>
-                <div class="input">
-                            <select name="app-language">
-                                <option value="english">English</option>
-                                <option value="spanish">Spanish</option>
-                                <option value="spanish">French</option>
-                                <option value="spanish">Italian</option>
-                                <option value="spanish">Romanian</option>
-                
-                            </select>    
-                </div>
-            </div>
-            
-            
-        </section>
-    
-        <section id="autofill-autosave">
-            <h2>Autofill & Autosave</h2>
-            <div class="section">
-                <div class="label">
-                    <label for=" ">Add PassSword browser extension</label>
-                </div>
-                <div class="input">
-                    <button type="submit"><ion-icon name="chevron-forward-outline"></ion-icon></button>
-                </div>
-            </div>
-            <div class="section">
-                <div class="label">
-                    <label for=" ">Instant Login</label>
-                </div>
-                <div class="input">
-                    <button type="toggle"><ion-icon name="chevron-forward-outline"></ion-icon></button>
-                </div>
-            </div>
-            
-        </section>
-        <div class="scroll-bg">
-            <div class="scroll-div">
-                
-            </div>
-        </div>
-    </div>
-
-   
-
-
-    
+      
 
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
@@ -206,12 +100,12 @@
     let menuToggle=document.querySelector('.menuToggle');
     let sidebar= document.querySelector('.sidebar');
     let navbar=document.querySelector(".navbar");
-    let settings=document.querySelector(".settings");
+    let addPassword=document.querySelector(".addPassword");
     menuToggle.onclick =function(){
         menuToggle.classList.toggle('active');
         sidebar.classList.toggle('active');
         navbar.classList.toggle('active');
-        settings.classList.toggle('active');
+        addPassword.classList.toggle('active');
     }
 
    
@@ -226,6 +120,59 @@
     MenuList.forEach((item)=> 
     item.addEventListener('click',activeLink));
 
+    let button= document.querySelectorAll('.addPassword a');
+    button.forEach(btn =>{
+        btn.onmousemove= function(e){
+            let x= e.pageX - btn.offsetLeft;
+            let y= e.pageY - btn.offsetTop;
+
+            btn.style.setProperty('--x', x + 'px');
+            btn.style.setProperty('--y', y + 'px');
+
+        }
+    })
+    document.addEventListener('DOMContentLoaded', function() {
+    // Get the elements
+    const itemInfo = document.querySelector('.itemInfo');
+    const closeBtn = document.querySelector('.itemInfo .closeBtn');
+    const tableRows = document.querySelectorAll('.passwordTable tbody tr');
+
+    // Function to open item info
+    function openItemInfo() {
+        // Show item info
+        itemInfo.classList.remove('inactive');
+        itemInfo.classList.add('active');
+        // Get data from the clicked table row
+        const title = this.querySelector('.tableTitle').textContent;
+        const website = ''; // You should add logic to fetch website address
+        const folder = ''; // You should add logic to fetch folder
+        const imageSrc = ''; // You should add logic to fetch image source
+
+        // Populate item info
+        itemInfo.querySelector('.itemTitle').textContent = title;
+        itemInfo.querySelector('.itemWebsite').textContent = `Website: ${website}`;
+        itemInfo.querySelector('.itemFolder').textContent = `Folder: ${folder}`;
+        itemInfo.querySelector('.itemImage img').src = imageSrc;
+
+        
+    }
+
+    // Function to close item info
+    function closeItemInfo() {
+        itemInfo.classList.remove('active');
+        itemInfo.classList.add('inactive');    
+    }
+
+    // Add click event listeners to table rows
+    tableRows.forEach(row => {
+        row.addEventListener('click', openItemInfo);
+    });
+
+    // Add click event listener to close button
+    closeBtn.addEventListener('click', closeItemInfo);
+
+  
+});
 
 </script>
 </body>

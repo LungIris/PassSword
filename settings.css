@@ -381,4 +381,44 @@
     width:0px;
     height:0px;
    }
+  
+  
+  /* Style for heading */
+  #language h2 {
+    font-size: 1em;
+  }
+  
+  
+  /* Style for select dropdown */
+  #language select {
+    width: 100%;
+    padding: 6px;
+    font-size: 16px;
+    color: #999;
+    border-radius: 5px;
+    border: 1px solid #57e5ff;
+    box-shadow: 0 0 5px #57e5ff;
+    background:#282828;
+  }
+  #language select option:hover{
+    background:#413a3a;
+  }
+  
+  /* Style for option elements */
+  #language select option {
+    padding: 10px;
+  }
+  
+  
+  /* Adjust margin between input elements */
+  #language .input select {
+    margin-top: 5px;
+    background:#282828;
+
+  }
+  #language .input select:hover{
+    background:#413a3a;
+
+  }
+  
 }

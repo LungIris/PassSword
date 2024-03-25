@@ -10,6 +10,7 @@
         <link rel="stylesheet " type="text/css " href="dashboard.css">
 </head>
 <body>
+<div class="wrapper" id="blur">
     <div class="menuToggle"></div>
     <div class="sidebar">
         <ul>
@@ -22,6 +23,7 @@
                 </a>
             </li>
             <div class="MenuList">
+
                 <li style="--bg:#57e5ff;"class="active">
                     <a href="dashboard.html">
                         <div class="icon"><ion-icon name="key"></ion-icon></div>
@@ -34,12 +36,23 @@
                     <div class="text">Favorites</div>
                     </a>
                 </li>
-                <li style="--bg:#57e5ff;">
+
+                <li style="--bg:#57e5ff;"class="dropdown">
+                <div class="title">
                     <a href="#">
                         <div class="icon"><ion-icon name="folder"></ion-icon></div>
                         <div class="text">Folders</div>
+                        <div class="arrow"><ion-icon name="chevron-down-outline"></ion-icon></div>
+                        <button class="openPopup"><ion-icon name="add-circle-outline"></ion-icon></button>
                     </a>
+                </div>
+                <div class="submenu">
+                    <a href="#" class="submenu-title">Folders</a>
+                    <a href="#" class="link">Social Media</a>
+                </div>
                 </li>
+
+
                 <li style="--bg:#57e5ff;">
                     <a href="analytics.html">
                         <div class="icon"><ion-icon name="analytics-outline"></ion-icon></div>
@@ -129,7 +142,7 @@
 
 
     <!-- Add this div for item information -->
-<div class="itemInfo inactive">
+    <div class="itemInfo inactive">
     <div class="itemContent">
         <div class="closeBtn"><ion-icon name="close-circle-outline"></ion-icon></div>
         <div class="itemDetails">
@@ -171,6 +184,20 @@
             <div class="editButton"><button type="submit" onclick="window.location.href='editPassword.html'">Edit</button></div>
         </div>
     </div>
+    
+</div>
+</div>
+<div class="popup" id="popup">
+    <h2> Add new folder </h2>
+    <h3> Enter new folder name:</h3>
+    <input  type="text">
+    <div class="buttonC">
+        <button type="submit" onclick="window.location.href='dashboard.html'" >Add Folder</button>
+        </div>
+    <div class="buttonC">
+    <button type="submit" onclick="window.location.href='dashboard.html'" >Cancel</button>
+    </div>
+    
 </div>
 
 
@@ -183,11 +210,23 @@
     let sidebar= document.querySelector('.sidebar');
     let navbar=document.querySelector(".navbar");
     let addPassword=document.querySelector(".addPassword");
+    let submenu=document.querySelector(".submenu");
     menuToggle.onclick =function(){
-        menuToggle.classList.toggle('active');
-        sidebar.classList.toggle('active');
-        navbar.classList.toggle('active');
-        addPassword.classList.toggle('active');
+        
+        if(!sidebar.classList.contains('active')){
+            menuToggle.classList.add('active');
+            sidebar.classList.add('active');
+            navbar.classList.add('active');
+            addPassword.classList.add('active');
+        }else{
+            sidebar.classList.remove('active');
+            navbar.classList.remove('active');
+            addPassword.classList.remove('active');
+            menuToggle.classList.remove('active');
+        }
+        submenu.classList.remove('active');
+        sidebar.classList.remove('inactive');
+    
     }
 
    
@@ -196,7 +235,9 @@
         MenuList.forEach((item)=> 
             item.classList.remove('active'));  
         setTimeout(() => {
+        if (!this.classList.contains('dropdown')) {
         this.classList.add('active');
+    }
         }, 100);
     }
     MenuList.forEach((item)=> 
@@ -253,7 +294,43 @@
     // Add click event listener to close button
     closeBtn.addEventListener('click', closeItemInfo);
 
-  
+
+    const arrowIcon = document.querySelector('.title .arrow');
+    const submenu = document.querySelector('.dropdown .submenu');
+    let dropdown=document.querySelector('.dropdown');
+    arrowIcon.addEventListener('click', function() {
+        submenu.classList.toggle('active');
+        dropdown.classList.toggle('active');
+        arrowIcon.classList.toggle('flip');
+    });
+
+    const foldersIcon=document.querySelector('.dropdown .title .icon');
+    foldersIcon.addEventListener('click',function(event){
+        if(!sidebar.classList.contains('active')){
+            menuToggle.classList.add('active');
+            sidebar.classList.add('active');
+            navbar.classList.add('active');
+            addPassword.classList.add('active');
+            submenu.classList.add('active');
+        }else{
+            sidebar.classList.remove('active');
+            navbar.classList.remove('active');
+            addPassword.classList.remove('active');
+            menuToggle.classList.remove('active');
+            submenu.classList.remove('active');
+        }
+    });
+
+    const openPopup=document.querySelector('.openPopup');
+    const blur = document.getElementById('blur');
+    const popup = document.getElementById('popup');
+
+    openPopup.addEventListener("click",function(){
+            blur.classList.toggle('active'),
+            popup.classList.toggle('active')
+    });
+        
+
 });
 
 </script>
