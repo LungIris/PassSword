@@ -10,93 +10,100 @@
         <link rel="stylesheet " type="text/css " href="favorites.css">
 </head>
 <body>
-    <div class="menuToggle"></div>
-    <div class="sidebar">
-        <ul>
-            <li class="logo"  style="--bg:#333;">
-                <a href="#">
-                    <div class="icon">
-                        <img src="images/Logov2.png" width="50" height="50">
-                    </div>
-                   <div class="text">PassSword</div>
-                </a>
-            </li>
-            <div class="MenuList">
-                <li style="--bg:#57e5ff;">
-                    <a href="dashboard.html">
-                        <div class="icon"><ion-icon name="key"></ion-icon></div>
-                    <div class="text">PassSwords</div>
-                    </a>
-                </li>
-                <li style="--bg:#f5d545;"class="active" >
-                    <a href="favorites.html">
-                        <div class="icon"><ion-icon name="star"></ion-icon></ion-icon></div>
-                    <div class="text">Favorites</div>
-                    </a>
-                </li>
-                <li style="--bg:#57e5ff;">
-                    <a href="#">
-                        <div class="icon"><ion-icon name="folder"></ion-icon></div>
-                    <div class="text">Folders</div>
-                    </a>
-                </li>
-                <li style="--bg:#57e5ff;">
-                    <a href="#">
-                        <div class="icon"><ion-icon name="analytics-outline"></ion-icon></div>
-                    <div class="text">Analytics</div>
-                    </a>
-                </li>
-                <li style="--bg:#57e5ff;">
-                    <a href="trash.html">
-                        <div class="icon"><ion-icon name="trash"></ion-icon></div>
-                    <div class="text">Trash</div>
-                    </a>
-                </li>
-                <li style="--bg:#57e5ff;">
-                    <a href="#">
-                        <div class="icon"><ion-icon name="settings-outline"></ion-icon></div>
-                    <div class="text">Settings</div>
-                    </a>
-                </li>
-                <li style="--bg:#57e5ff;">
-                    <a href="#">
-                        <div class="icon"><ion-icon name="person"></ion-icon></div>
-                    <div class="text">Profile</div>
-                    </a>
-                </li>
-            </div>
-            <div class="bottom">
-                <li style="--bg:#333;">
+    <div class="wrapper" id="blur">
+        <div class="sidebar">
+            <ul>
+                <li class="logo"  style="--bg:#333;">
                     <a href="#">
                         <div class="icon">
-                            <div class="imgBx">
-                                <img src="images/check.png" width="100" heigt="100">
-                            </div>
+                            <img src="images/Logov2.png" width="50" height="50">
                         </div>
-                        <div class="text">Iris Lung</div>
+                       <div class="text">PassSword</div>
                     </a>
                 </li>
-                <li style="--bg:#333;">
-                    <a href="mainPage.html">
-                        <div class="icon"><ion-icon name="log-out-outline" ></ion-icon></div>
-                    <div class="text">Logout</div>
-                    </a>
-                </li>
-            </div>
-        </ul>
-    </div>
-   
-    <!--top bar-->
-    <div class="navbar">
-        <div class="MenuOptions">
-        <form action="" method="get" class="search-bar">
-        <input  type="text" placeholder="Search" name="Search">
-        <button type="submit"><ion-icon name="search"></ion-icon></button>
-        </form>
-
+                <div class="MenuList">
+    
+                    <li style="--bg:#57e5ff;">
+                        <a href="dashboard.html">
+                            <div class="icon"><ion-icon name="key"></ion-icon></div>
+                        <div class="text">PassSwords</div>
+                        </a>
+                    </li>
+                    <li style="--bg:#e4f03a;" class="active">
+                        <a href="favorites.html">
+                            <div class="icon"><ion-icon name="star"></ion-icon></ion-icon></div>
+                        <div class="text">Favorites</div>
+                        </a>
+                    </li>
+    
+                    <li style="--bg:#57e5ff;"class="dropdown">
+                    <div class="title">
+                        <a href="#">
+                            <div class="icon"><ion-icon name="folder"></ion-icon></div>
+                            <div class="text">Folders</div>
+                            <div class="arrow"><ion-icon name="chevron-down-outline"></ion-icon></div>
+                            <button class="openPopup"><ion-icon name="add-circle-outline"></ion-icon></button>
+                        </a>
+                    </div>
+                    <div class="submenu">
+                        <a href="#" class="submenu-title">Folders</a>
+                        <a href="folders.html?title=Social Media" class="link">Social Media</a>
+                    </div>
+                    </li>
+    
+    
+                    <li style="--bg:#48e47c;">
+                        <a href="analytics.html">
+                            <div class="icon"><ion-icon name="analytics-outline"></ion-icon></div>
+                        <div class="text">Analytics</div>
+                        </a>
+                    </li>
+                    <li style="--bg:#cf2a1e;">
+                        <a href="trash.html">
+                            <div class="icon"><ion-icon name="trash"></ion-icon></div>
+                        <div class="text">Trash</div>
+                        </a>
+                    </li>
+                    <li style="--bg:#57e5ff;">
+                        <a href="settings.html">
+                            <div class="icon"><ion-icon name="settings-outline"></ion-icon></div>
+                        <div class="text">Settings</div>
+                        </a>
+                    </li>
+                  
+                </div>
+                <div class="bottom">
+                    <li style="--bg:#333;">
+                        <a href="#">
+                            <div class="icon">
+                                <div class="imgBx">
+                                    <img src="images/check.png" width="100" heigt="100">
+                                </div>
+                            </div>
+                            <div class="text">Iris Lung</div>
+                        </a>
+                    </li>
+                    <li style="--bg:#333;">
+                        <a href="mainPage.html">
+                            <div class="icon"><ion-icon name="log-out-outline" ></ion-icon></div>
+                        <div class="text">Logout</div>
+                        </a>
+                    </li>
+                </div>
+            </ul>
         </div>
-    </div>
-
+        
+        <!--top bar-->
+        <div class="navbar">
+            <div class="MenuOptions">
+            <form action="" method="get" class="search-bar">
+            <input  type="text" placeholder="Search" name="Search">
+            <button type="submit"><ion-icon name="search"></ion-icon></button>
+            </form>
+    
+            </div>
+        </div>
+        
     <!--add password-->
     <div class="favorites">
         <a href="dashboard.html" style="--clr: #f5d545; "><span>Add Favorite</span></a>
@@ -132,28 +139,80 @@
         </div>
     </div>
 
-    
+    <!-- Add this div for item information -->
+    <div class="itemInfo inactive">
+        <div class="itemContent">
+            <div class="closeBtn"><ion-icon name="close-circle-outline"></ion-icon></div>
+            <div class="itemDetails">
+                <div class="itemImage">
+                            <div class="icon">
+                                <img src="" alt="" width="50" height="50", align-items="center">
+                            </div>
+                </div>
+                <div class="itemTitle"></div>
+                <div class="cards">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="card-name">Delete</div>
+                        </div>
+                        <div class="icon-box">
+                            <ion-icon name="trash-outline"></ion-icon>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="card-name">Share</div>
+                        </div>
+                        <div class="icon-box">
+                            <ion-icon name="share-outline"></ion-icon>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="card-name">More</div>
+                        </div>
+                        <div class="icon-box">
+                            <ion-icon name="menu-outline"></ion-icon>
+                        </div>
+                    </div>
+                   
+                </div>
+                <div class="itemWebsite"></div>
+                <div class="itemFolder"></div>
+                <div class="editButton"><button type="submit" onclick="window.location.href='editPassword.html'">Edit</button></div>
+            </div>
+        </div>
+
+    </div>
+    <div class="popup" id="popup">
+        <h2> Add new folder </h2>
+        <h3> Enter new folder name:</h3>
+        <input  type="text">
+        <div class="buttonC">
+            <button type="submit" onclick="window.location.href='favorites.html'" >Add Folder</button>
+            </div>
+        <div class="buttonC">
+        <button type="submit" onclick="window.location.href='favorites.html'" >Cancel</button>
+        </div>
+        
+    </div>
 
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 <script>
-    let menuToggle=document.querySelector('.menuToggle');
     let sidebar= document.querySelector('.sidebar');
     let navbar=document.querySelector(".navbar");
     let favorites=document.querySelector(".favorites");
-    menuToggle.onclick =function(){
-        menuToggle.classList.toggle('active');
-        sidebar.classList.toggle('active');
-        navbar.classList.toggle('active');
-        favorites.classList.toggle('active');
-    }
+  
 
     let MenuList= document.querySelectorAll('.MenuList li');
     function activeLink(){
         MenuList.forEach((item)=> 
             item.classList.remove('active'));  
         setTimeout(() => {
+        if (!this.classList.contains('dropdown')) {
         this.classList.add('active');
+    }
         }, 100);
     }
     MenuList.forEach((item)=> 
@@ -170,6 +229,69 @@
 
         }
     })
+    const arrowIcon = document.querySelector('.title .arrow');
+    const submenu = document.querySelector('.dropdown .submenu');
+    let dropdown=document.querySelector('.dropdown');
+    arrowIcon.addEventListener('click', function() {
+        submenu.classList.toggle('active');
+        dropdown.classList.toggle('active');
+        arrowIcon.classList.toggle('flip');
+    });
+
+    const foldersIcon=document.querySelector('.dropdown .title .icon');
+    const openPopup=document.querySelector('.openPopup');
+    const blur = document.getElementById('blur');
+    const popup = document.getElementById('popup');
+
+    openPopup.addEventListener("click",function(){
+            blur.classList.toggle('active'),
+            popup.classList.toggle('active')
+    });
+    const itemInfo = document.querySelector('.itemInfo');
+    const closeBtn = document.querySelector('.itemInfo .closeBtn');
+    const tableRows = document.querySelectorAll('.passwordTable tbody tr');
+
+    // Function to open item info
+    function openItemInfo() {
+        // Show item info
+        itemInfo.classList.remove('inactive');
+        itemInfo.classList.add('active');
+        // Get data from the clicked table row
+        const title = this.querySelector('.tableTitle').textContent;
+        const website = ''; // You should add logic to fetch website address
+        const folder = ''; // You should add logic to fetch folder
+        const imageSrc = ''; // You should add logic to fetch image source
+
+        // Populate item info
+        itemInfo.querySelector('.itemTitle').textContent = title;
+        itemInfo.querySelector('.itemWebsite').textContent = `Website: ${website}`;
+        itemInfo.querySelector('.itemFolder').textContent = `Folder: ${folder}`;
+        itemInfo.querySelector('.itemImage img').src = imageSrc;
+
+        
+    }
+
+    // Function to close item info
+    function closeItemInfo() {
+        itemInfo.classList.remove('active');
+        itemInfo.classList.add('inactive');    
+    }
+
+    // Add click event listeners to table rows
+    tableRows.forEach(row => {
+        row.addEventListener('click', openItemInfo);
+    });
+
+    // Add click event listener to close button
+    closeBtn.addEventListener('click', closeItemInfo);
+    document.querySelectorAll('.link').forEach(link => {
+    link.addEventListener('click', function(event) {
+        event.preventDefault(); 
+        const title = this.textContent; 
+        window.location.href = `folders.html?title=${encodeURIComponent(title)}`; 
+    });
+});
+
 </script>
 </body>
 </html>
