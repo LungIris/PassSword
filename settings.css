@@ -333,9 +333,7 @@
   
   
   /* Style for heading */
-  #language h2 {
-    font-size: 1em;
-  }
+ 
   
   
   /* Style for select dropdown */
@@ -517,4 +515,271 @@
     user-select: none;
 }
 
+.popupChangePassword{
+    position:fixed;
+        top:50%;
+        left:50%;
+        transform:translate(-50%,-50%);
+        width:600px;
+        padding:50px;
+        box-shadow: 0 2px 10px #ff3131;
+        background: #282828;
+        visibility: hidden;
+        opacity:0;
+        transition:1s;
+        text-align:center;
+        z-index:1;
+        display:flex;
+  
+}
+.popupChangePassword.active {
+    width: 600px;
+    height:500px;
+    background:#282828;
+    padding: 20px 40px;
+    border-radius: 8px;
+    z-index: 2;
+    display:flex;
+    flex-direction:column;
+    box-shadow: 0 0 10px #57e5ff;
+    top:50%;
+        visibility:visible;
+        opacity:1;
+        transition:1.5s;
+}
+
+.popupChangePassword h2{
+    color:#fff;
+    font-weight:300;
+    font-size:20px;
+    text-align:left;
+    letter-spacing: 0.1em;
+    padding-top:30px;
+    padding-bottom:0px;
+}
+.popupChangePassword  .inputBox{
+    position:relative;
+    width:550px;
+    margin-top: 15px;
+    display:flex;
+    justify-content:left;
+    align-items:center;
+
+}
+
+.popupChangePassword  .inputBox  input{
+    position:relative;
+    width:300px;
+    margin-left: 10px;
+    padding: 20px 10px 10px;
+    background: transparent;
+    outline: none;
+    box-shadow: none;
+    color: #999;
+    font-size: 1em;
+    letter-spacing:0.05em;
+    transition: 0.5s;
+    z-index:10;
+    border: none;
+}
+.popupChangePassword  .inputBox  label{
+    position:absolute;
+    left:0;
+    padding:20px 10px 10px;
+    pointer-events: none;
+    color: #999;
+    font-size: 1em;
+    letter-spacing:0.05em;
+    transition: 0.5s;
+}
+.popupChangePassword .inputBox label{
+    position:absolute;
+    left:0;
+    padding:20px 10px 10px;
+    pointer-events: none;
+    color: #999;
+    font-size: 1em;
+    letter-spacing:0.05em;
+    transition: 0.5s;
+
+}
+
+.popupChangePassword  .inputBox input:valid ~label,
+.popupChangePassword  .inputBox input:focus ~label{
+    color: #999;
+    font-size: 0.75em;
+    transform: translateY(-27px);
+}
+
+.popupChangePassword  .inputBox i{
+    position:absolute;
+    left:0;
+    bottom:0;
+    width:100%;
+    height:1px;
+    background: #645b5b;
+    border-radius:4px;
+    transition: 0.5s;
+    pointer-events: none;
+
+}
+.show1{
+    position:absolute;
+    top:0;
+    right:0;
+    width:60px;
+    height: 100%;
+    background: #282828;
+    cursor:pointer;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+.show2{
+    position:absolute;
+    top:0;
+    right:0;
+    width:60px;
+    height: 100%;
+    background: #282828;
+    cursor:pointer;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+.show3{
+    position:absolute;
+    top:0;
+    right:0;
+    width:60px;
+    height: 100%;
+    background: #282828;
+    cursor:pointer;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+.popupChangePassword .strengthMeter{
+    display:flex;
+    height:3px;
+    background: #222;
+    position:absolute;
+    width:550px;
+    margin-top: 45px;
+    display:flex;
+    justify-content:left;
+    align-items:center;
+}
+.popupChangePassword .strengthMeter::before{
+    content:'';
+    position: absolute;
+    width:0;
+    height:100%;
+    transition: 0.5s;
+}
+.popupChangePassword.weak .strengthMeter::before{
+    width:20%;
+    background: #f00;
+    filter: drop-shadow(0 0 5px #f00) drop-shadow(0 0 10px #f00)
+    drop-shadow(0 0 20px #f00);
+}
+.popupChangePassword.medium .strengthMeter::before{
+    width:66%;
+    background: #ffa500;
+    filter: drop-shadow(0 0 5px #ffa500) drop-shadow(0 0 10px #ffa500)
+    drop-shadow(0 0 20px #ffa500);
+}
+.popupChangePassword.strong .strengthMeter::before{
+    width:100%;
+    background: #0f0;
+    filter: drop-shadow(0 0 5px #0f0) drop-shadow(0 0 10px #0f0)
+    drop-shadow(0 0 20px #0f0);
+}
+.popupChangePassword .strengthMeter::after{
+    position:absolute;
+    top:-45px;
+    transition:0.5s;
+
+}
+
+.show1::before{
+    content: 'Show';
+    font-size:14px;
+    position:absolute;
+    color: #fff;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    z-index:1;
+}
+.show1.hide::before{
+    content: 'Hide';
+}
+.show2::before{
+    content: 'Show';
+    font-size:14px;
+    position:absolute;
+    color: #fff;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    z-index:1;
+}
+.show2.hide::before{
+    content: 'Hide';
+}
+.show3::before{
+    content: 'Show';
+    font-size:14px;
+    position:absolute;
+    color: #fff;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    z-index:1;
+}
+.show3.hide::before{
+    content: 'Hide';
+}
+.popupChangePassword button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left:170px;
+
+}
+.popupChangePassword button[type="submit"]{
+
+    width: 200px;
+    height: 40px;
+    background: #57e5ff;
+    box-shadow: 0 0 10px #57e5ff;
+    font-size:16px;
+    color: #000;
+    font-weight:500;
+    cursor:pointer;
+    border-radius:30px;
+    margin-top:30px;
+    margin-right:50px;
+    border:none;
+    outline:none;
+}
+.popupChangePassword button[type="submit"]:hover{
+    background: #2a8b9c;
+    box-shadow: 0 0 10px #2a8b9c; 
+}
+.popupChangePassword .generate{
+    display: flex;
+    justify-content: space-between;
+   
+
+
+}
+.popupChangePassword .generate a{
+    margin: 20px 0;
+    font-size:0.75em;
+    color: #57e5ff;
+    text-decoration:none;
+
+}
+.popupChangePassword  .generate a:hover{
+    color: #fff;
+}
 }

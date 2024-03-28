@@ -610,6 +610,11 @@ outline:none;
     text-shadow: 0 0 15px #000;
 
 }
+.folderItems h1:hover{
+    color:#57e5ff;
+    text-shadow: 0 0 15px #57e5ff;
+
+}
 
 .folderItems a{
     

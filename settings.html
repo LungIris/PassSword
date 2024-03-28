@@ -133,7 +133,7 @@
                 <label for=" ">Change Master Password</label>
             </div>
             <div class="input">
-                <button type="submit"><ion-icon name="chevron-forward-outline"></ion-icon></button>
+                <button type="submit" onclick="changePassword()" id="buttonChangePassword"><ion-icon name="chevron-forward-outline"></ion-icon></button>
             </div>
           </div>
             
@@ -148,7 +148,7 @@
 
         <div class="section">
             <div class="label">
-                <label for=" ">Biometric Authentication</label>
+                <label for=" ">Set Up Biometric Authentication</label>
             </div>
             <div class="input">
                 <button type="toggle"><ion-icon name="chevron-forward-outline"></ion-icon></button>
@@ -206,13 +206,37 @@
             </div>
         </div>
     </div>
-    </div>
-    <div class="popup" id="popup">
-        <h2> Add new folder </h2>
-        <h3> Enter new folder name:</h3>
-        <input  type="text">
+</div>
+    <div class="popupChangePassword" id="popupChangePassword">
+        <h2> Change master password: </h2>
+        <div class="inputBox">
+            <input type="password" required="required" id="myPassword1">
+            <label for=" ">Enter old PassSword</label>
+            <div class="show1"></div>
+            <i></i>
+        </div>
+        <div class="inputBox">
+            <input type="password"  required="required" id="myPassword2">
+            <label for=" ">Confirm old PassSword</label>
+            <div class="show2"></div>
+            <i></i>
+        </div>
+        <div class="inputBox">
+            <div class="passwordInput">
+                <input type="password" required="required" id="myPassword3">
+                <label for=" ">
+                    Enter new PassSword</label>
+                <div class="show3"></div>
+                </div>
+            <i></i>
+            <div class="strengthMeter"></div>
+            <i></i>
+        </div>
+        <div class="generate">
+            <a href="generatePassword.html"> Generate Password</a>
+        </div>
         <div class="buttonC">
-            <button type="submit" onclick="window.location.href='settings.html'" >Add Folder</button>
+            <button type="submit" onclick="window.location.href='settings.html'" >Confirm</button>
             </div>
         <div class="buttonC">
         <button type="submit" onclick="window.location.href='settings.html'" >Cancel</button>
@@ -271,7 +295,97 @@
         const title = this.textContent; 
         window.location.href = `folders.html?title=${encodeURIComponent(title)}`; 
     });
-});
+    });
+    let passwordForm=document.querySelector(".popupChangePassword");
+
+    function changePassword() {
+            var blur = document.getElementById('blur');
+            blur.classList.toggle('active');
+            var popupChangePassword = document.getElementById('popupChangePassword');
+            popupChangePassword.classList.toggle('active');
+        }
+    
+        function Strength(password){
+            let i= 0;
+            if(password.length> 6){
+                i++;
+            }
+            if(password.length>= 10){
+                i++;
+            }
+            if(/[A-Z]/.test(password)){
+                i++;
+            }
+            
+            if(/[a-z]/.test(password)){
+                i++;
+            }
+            if(/[0-9]/.test(password)){
+                i++;
+            }
+            if(/[A-Za-z0-9]/.test(password)){
+                i++;
+            }
+            return i;
+        }
+        let container= document.querySelector('.popupChangePassword');
+        let meter=document.querySelector('.passwordInput');
+        meter.addEventListener("keyup",function(e){
+            let password=document.querySelector('#myPassword3').value;
+            let strength=Strength(password);
+            if(strength ==0){
+                container.classList.remove('weak');
+                container.classList.remove('medium');
+                container.classList.remove('strong');
+            }
+            if(strength <=2){
+                container.classList.add('weak');
+                container.classList.remove('medium');
+                container.classList.remove('strong');
+            }
+            else if(strength >=2 && strength <=4){
+                container.classList.remove('weak');
+                container.classList.add('medium');
+                container.classList.remove('strong');
+            }else{
+                container.classList.remove('weak');
+                container.classList.remove('medium');
+                container.classList.add('strong');
+            }
+        })
+        let pass1=document.querySelector('#myPassword1');
+        let show1= document.querySelector('.show1');
+        show1.onclick= function(){
+            if(pass1.type==='password'){
+                pass1.setAttribute('type','text');
+                show1.classList.add('hide');
+            }else{
+                pass1.setAttribute('type','password');
+                show1.classList.remove('hide');
+            }
+        }
+        let pass2=document.querySelector('#myPassword2');
+        let show2= document.querySelector('.show2');
+        show2.onclick= function(){
+            if(pass2.type==='password'){
+                pass2.setAttribute('type','text');
+                show2.classList.add('hide');
+            }else{
+                pass2.setAttribute('type','password');
+                show2.classList.remove('hide');
+            }
+        }
+        let pass3=document.querySelector('#myPassword3');
+        let show3= document.querySelector('.show3');
+        show3.onclick= function(){
+            if(pass3.type==='password'){
+                pass3.setAttribute('type','text');
+                show3.classList.add('hide');
+            }else{
+                pass3.setAttribute('type','password');
+                show3.classList.remove('hide');
+            }
+        }
 
 </script>
 </body>
