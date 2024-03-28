@@ -129,8 +129,8 @@
                             <td>lungiris</td>
                             <td>13 days ago</td>
                             <td>
-                                <button><ion-icon name="remove-circle-outline"></ion-icon></button>
-                            <button><ion-icon name="rocket-outline"></ion-icon></button>
+                            <button class="tooltip" data-tooltip="Remove from folder"><ion-icon name="remove-circle-outline"></ion-icon></button>
+                            <button class="tooltip" data-tooltip="Launch Website"><ion-icon name="rocket-outline"></ion-icon></button>
                             <button><ion-icon name="trash-outline"></ion-icon></ion-icon></button></td>
                         </tr>
                         <!-- Add more table rows as needed -->
@@ -315,7 +315,22 @@ document.querySelectorAll('.link').forEach(link => {
         window.location.href = `folders.html?title=${encodeURIComponent(title)}`; 
     });
 });
-
+const actionButtons = document.querySelectorAll('.passwordTable tbody tr td:last-child button');
+    actionButtons.forEach(button => {
+        button.addEventListener('click', function(event) {
+            // Stop event propagation to prevent opening item info
+            event.stopPropagation();
+            // Handle button click here
+            // You can add different functions for different buttons
+            if (button.contains('folder')) {
+                // Handle folder button click
+            } else if (button.contains('rocket')) {
+                // Handle rocket button click
+            } else if (button.contains('trash')) {
+                // Handle trash button click
+            }
+        });
+    });
 </script>
 </body>
 </html>

@@ -322,7 +322,9 @@
         width:20px;
         color: #57e5ff;
         z-index:0;
+        cursor:pointer;
     }
+  
    .scroll-bg{
     background:#57e5ff;
    }
@@ -331,12 +333,7 @@
     height:0px;
    }
   
-  
-  /* Style for heading */
- 
-  
-  
-  /* Style for select dropdown */
+
   #language select {
     width: 100%;
     padding: 6px;
@@ -346,6 +343,7 @@
     border: 1px solid #57e5ff;
     box-shadow: 0 0 5px #57e5ff;
     background:#282828;
+    cursor:pointer;
   }
   #language select option:hover{
     background:#413a3a;
@@ -505,6 +503,24 @@
 }
 
 .popup button:hover {
+    background: #1c92a7;
+    color: #fff;
+}
+.popupBiometric button {
+    width: 150px;
+    height: 30px;
+    background: #57e5ff;
+    box-shadow: 0 0 10px #57e5ff;
+    font-size: 20px;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 30px;
+    border: none;
+    outline: none;
+    margin-top: 80px;
+}
+
+.popupBiometric button:hover {
     background: #1c92a7;
     color: #fff;
 }
@@ -782,4 +798,160 @@
 .popupChangePassword  .generate a:hover{
     color: #fff;
 }
+.toggle{
+    height:12px;
+    cursor:pointer;
+    width:55px;
+    border-radius:25px;
+    background-color:#282828;
+    box-shadow: 0 1px 10px #000;
+    position:relative;
+}
+.toggle::before{
+    content:"";
+    position:absolute;
+    height:20px;
+    width:20px;
+    background-color:#282828;
+    border:5px solid #f00;
+    box-shadow: 0 1px 10px #f00;
+    border-radius:50%;
+    top:50%;
+    transform: translateY(-50%);
+    left:0;
+    transition:all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    
+}
+.toggle.active::before{
+    left:25px;
+    border-color:#0f0;
+    box-shadow: 0 1px 10px #0f0;
+}
+
+    .inspiration {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    font-family: 'Gill Sans', sans-serif;
+    font-size: 12px;
+    color: #7f7f7f;
+  }
+  .popupBiometric{
+    position:fixed;
+        top:50%;
+        left:50%;
+        transform:translate(-50%,-50%);
+        width:600px;
+        padding:50px;
+        box-shadow: 0 2px 10px #ff3131;
+        background: #282828;
+        visibility: hidden;
+        opacity:0;
+        transition:1s;
+        text-align:center;
+        z-index:1;
+        display:flex;
+  }
+  .popupBiometric.active{
+    width: 400px;
+    height:400px;
+    background:#282828;
+    padding: 20px 40px;
+    border-radius: 8px;
+    z-index: 2;
+    display:flex;
+    flex-direction:column;
+    box-shadow: 0 0 10px #57e5ff;
+    top:50%;
+    visibility:visible;
+    opacity:1;
+    transition:1.5s;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .popupBiometric .fingerprint path.clone {
+    transition: stroke-dashoffset 2s ease-out;
+    -webkit-animation: try 2.5s ease-out;
+            animation: try 2.5s ease-out;
+  }
+  .popupBiometric .fingerprint.active {
+    transform: scale(0.97);
+  }
+  .popupBiometric .fingerprint.active path.clone {
+    stroke-dashoffset: 0;
+  }
+  h1 {
+    font-size: 25px;
+    margin-top:40px;
+    color:#999;
+    transform: translateY(-20px);
+  }
+  .scan,
+  .scan-success {
+    font-size: 15px;
+    transform: translateY(50px);
+    color: #666;
+  }
+  .scan-success {
+    display: none;
+  }
+  .popupBiometric .fingerprint,
+  .popupBiometric .icon-success {
+    width: 135px;
+    height: 135px;
+    overflow: visible;
+  }
+  .popupBiometric .icon-success {
+    position: absolute;
+    top: 40px;
+  }
+  .popupBiometric .icon-success circle {
+    transform-origin: 50% 50%;
+    transform: scale(0);
+    transition: transform 200ms cubic-bezier(0.18, 0.89, 0.32, 1.28);
+  }
+  .popupBiometric .icon-success path {
+    opacity: 0;
+    transition: stroke-dashoffset 350ms 100ms ease;
+  }
+  .popupBiometric.success .fingerprint {
+    transform: scale(0);
+  }
+  .popupBiometric.success .icon-success circle {
+    transform: scale(1);
+  }
+  .popupBiometric.success .icon-success path {
+    stroke-dashoffset: 0;
+    opacity: 1;
+    transition: opacity 0s, stroke-dashoffset 0.5s;
+  }
+  .popupBiometric.success .scan {
+    display: none;
+  }
+  .popupBiometric.success .scan-success {
+    display: block;
+  }
+  @-webkit-keyframes try {
+    0%, 100% {
+      stroke-dashoffset: 178;
+    }
+    50% {
+      stroke-dashoffset: 100;
+    }
+  }
+  @keyframes try {
+    0%, 100% {
+      stroke-dashoffset: 178;
+    }
+    50% {
+      stroke-dashoffset: 100;
+    }
+  }
 }

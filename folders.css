@@ -695,6 +695,7 @@ table, th, td {
     border-left:#413a3a;
     border-right: #413a3a;
     border-collapse:collapse;
+    cursor:pointer;
 }
 
 th, td {
@@ -753,8 +754,33 @@ td button{
 }
 
 td button:hover{
-    background-color: #57e5ff;
+    background-color: #2dc5ff;
 }
 a{
     z-index:1;
+}
+.tooltip {
+    position: relative;
+}
+
+.tooltip::before {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: calc(100% + 5px);
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 5px 10px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    border-radius: 5px;
+    font-size: 14px;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    width:150px;
+}
+
+.tooltip:hover::before {
+    visibility: visible;
+    opacity: 1;
 }
