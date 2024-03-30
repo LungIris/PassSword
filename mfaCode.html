@@ -7,18 +7,12 @@
         <meta name="viewport " content="width=device.width, initial-scale=1.0 ">
         <title>PassSword
         </title>
-        <link rel="stylesheet " type="text/css " href="biometricScan.css ">
+        <link rel="stylesheet " type="text/css " href="mfaCode.css ">
 
 </head>
     
 <body>
       
-    <div class="popup" id="blur">
-        <div class="fingerprintScan"></div>
-        <h3 onclick="verifyCode()">Scanning...</h3>
-        <button type="submit" onclick="window.location.href='mainPage.html'" >Cancel</button>
-
-    </div>
     <div class="mfa-card" id="code">
         <h1> Multi-Factor Authentication</h1>
         <p>Verification code has been sent to </p>
@@ -34,14 +28,6 @@
     </div>
 
     <script>
-       let popup=document.querySelector(".popup");
-        let codePopup=document.getElementById('code');
-
-        function verifyCode(){
-            let blur=document.getElementById("blur");
-            blur.classList.toggle('active');
-            codePopup.classList.toggle('active');
-        }
        const inputs=document.querySelectorAll('.mfa-inputs input');
        const button=document.querySelector('.mfa-card button');
        inputs.forEach(input =>{
