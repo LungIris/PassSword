@@ -167,12 +167,17 @@
                             <ion-icon name="share-outline"></ion-icon>
                         </div>
                     </div>
-                    <div class="card">
+                    <div class="card" id="dropdown-card">
                         <div class="card-content">
                             <div class="card-name">More</div>
+                            
                         </div>
                         <div class="icon-box">
                             <ion-icon name="menu-outline"></ion-icon>
+                        </div>
+                        <div class="dropdown-menu" id="dropdown-menu">
+                            <a href="#" id="move-option">Move to folder</a>
+                            <a href="#" id="remove-option">Remove from folder</a>
                         </div>
                     </div>
                    
@@ -307,6 +312,11 @@
                 // Handle trash button click
             }
         });
+    });
+    const card=document.getElementById('dropdown-card');
+    card.addEventListener("click",function(){
+        var dropdownMenu = document.getElementById('dropdown-menu');
+        dropdownMenu.classList.toggle('active');
     });
 });
 

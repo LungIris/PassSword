@@ -771,4 +771,27 @@
         visibility: visible;
         opacity: 1;
     }
-    
+    .dropdown-menu{
+        display:none;
+    }
+    .dropdown-menu.active {
+        position: absolute;
+        top: 45%;
+        right: 70;
+        background-color: #282828;
+        border: 1px solid #f5d545;
+        border-radius: 4px;
+        padding: 5px 0;
+        z-index: 1000;
+        display:block;
+        box-shadow:#f5d545;
+    }
+    .dropdown-menu a  {
+        display: block;
+        padding: 10px;
+        text-decoration: none;
+        color: #999;
+    }
+    .dropdown-menu a:hover {
+        background-color: #413a3a;
+    }
