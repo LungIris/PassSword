@@ -39,8 +39,9 @@
 
         function verifyCode(){
             let blur=document.getElementById("blur");
-            blur.classList.toggle('active');
             codePopup.classList.toggle('active');
+            blur.classList.toggle('active');
+            
         }
        const inputs=document.querySelectorAll('.mfa-inputs input');
        const button=document.querySelector('.mfa-card button');

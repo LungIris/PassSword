@@ -277,11 +277,12 @@
         justify-content:left;
         margin-left:350px;
         width:1000px;
+        height:800px;
         padding-top:90px;
         transition: 0.5s;
-        overflow-y:scroll;
-       max-height:600px;
-       z-index:0;
+        overflow:scroll;
+        z-index:0;
+        max-height:700px;
 
     }
    
