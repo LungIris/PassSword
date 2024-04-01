@@ -193,15 +193,12 @@
     </div>       
     <div class="popup" id="popup">
         <h2> Add new folder </h2>
+        <div class="closeBtn" ><ion-icon name="close-circle-outline"></ion-icon></div>
         <h3> Enter new folder name:</h3>
         <input  type="text">
         <div class="buttonC">
-            <button type="submit" onclick="window.location.href='dashboard.html'" >Add Folder</button>
-            </div>
-        <div class="buttonC">
-        <button type="submit" onclick="window.location.href='dashboard.html'" >Cancel</button>
-        </div>
-        
+            <button type="submit" onclick="window.location.href='folders.html'" >Add Folder</button>
+            </div>  
     </div>
 
 
@@ -341,6 +338,13 @@ const actionButtons = document.querySelectorAll('.passwordTable tbody tr td:last
         var dropdownMenu = document.getElementById('dropdown-menu');
         dropdownMenu.classList.toggle('active');
     });
+    const closeAddFolder=document.querySelector('.popup .closeBtn');
+    const blur=document.getElementById('blur');
+    closeAddFolder.addEventListener('click',function(){
+        blur.classList.toggle('active');
+        popup.classList.toggle('active');
+        
+    })
 </script>
 </body>
 </html>

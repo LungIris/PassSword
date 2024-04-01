@@ -808,3 +808,13 @@ a{
 .dropdown-menu a:hover {
     background-color: #413a3a;
 }
+.popup .closeBtn{
+    top: 20px;
+    right: 20px;
+    cursor: pointer;
+    
+}
+.popup .closeBtn ion-icon{
+    width:30px;
+    height:30px;
+}

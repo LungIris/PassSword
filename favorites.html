@@ -176,8 +176,8 @@
                             <ion-icon name="menu-outline"></ion-icon>
                         </div>
                         <div class="dropdown-menu" id="dropdown-menu">
-                            <a href="#" id="move-option">Move to folder</a>
-                            <a href="#" id="remove-option">Remove from folder</a>
+                            <a href="#" id="move-option"onclick="moveToFolder()">Move to folder</a>
+                            <a href="#" id="remove-option" onclick="removeFromFolder()">Remove from folder</a>
                         </div>
                     </div>
                    
@@ -192,17 +192,47 @@
     </div>
     <div class="popup" id="popup">
         <h2> Add new folder </h2>
+        <div class="closeBtn" ><ion-icon name="close-circle-outline"></ion-icon></div>
         <h3> Enter new folder name:</h3>
         <input  type="text">
         <div class="buttonC">
             <button type="submit" onclick="window.location.href='favorites.html'" >Add Folder</button>
             </div>
-        <div class="buttonC">
-        <button type="submit" onclick="window.location.href='favorites.html'" >Cancel</button>
+        
+        
+    </div>
+    <div class="createAndMove" id="createAndMove">
+        <h2> Add new folder </h2>
+        <div class="closeBtn" ><ion-icon name="close-circle-outline"></ion-icon></div>
+        <h3> Enter new folder name:</h3>
+        <input  type="text">
+            <button type="submit" onclick="window.location.href='favorites.html'" >Create and Move</button>
         </div>
         
     </div>
-
+    <div class="popupMoveToFolder" id="move-popup">
+        <h2>Title</h2>
+        <div class="closeBtn"><ion-icon name="close-circle-outline"></ion-icon></div>
+        <select id="folder-list">
+            <option value="New Folder">New Folder</option>
+            <option value="Social Media">Social Media</option>
+            <option value="Work">Work</option>
+            <option value="Personal">Personal</option>
+        </select>
+        <button id="move-btn">Move to Folder</button>
+    </div>
+    
+    <div class="popupRemoveFromFolder" id="remove-popup">
+        <p id="remove-message"></p>
+    </div>
+     
+    <div class="moveMessage" id="moveMessage">
+        <p id="move-message"></p>
+    </div>
+    <div class="createMessage" id="createMessage">
+        <p id="create-message"></p>
+    </div>
+    
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 <script>
@@ -318,6 +348,71 @@
         var dropdownMenu = document.getElementById('dropdown-menu');
         dropdownMenu.classList.toggle('active');
     });
+    // Function to show popup
+    function showPopup(popupId) {
+        document.getElementById(popupId).style.display = "block";
+    }
+
+
+    // Move to folder option
+    document.getElementById('move-option').addEventListener('click', function(event) {
+        event.preventDefault();
+        showPopup('move-popup');
+        blur.classList.toggle('active');
+
+    });
+    // Function to hide popup
+    function hidePopup(popupId) {
+        document.getElementById(popupId).style.display = "none";
+
+    }
+
+    document.getElementById('remove-option').addEventListener('click', function(event) {
+        event.preventDefault();
+        document.getElementById('remove-message').innerText = "Item removed from folder.";
+        showPopup('remove-popup');
+        setTimeout(function() {
+            hidePopup('remove-popup');
+        }, 1000);
+    });
+
+    document.getElementById('move-btn').addEventListener('click', function(event) {
+        var folderSelect = document.getElementById('folder-list');
+        var selectedFolder = folderSelect.options[folderSelect.selectedIndex].value;
+        if (selectedFolder === 'New Folder') {
+            event.preventDefault();
+            let create=document.getElementById('createAndMove');
+            create.classList.add('active');
+            showPopup('createAndMove');
+
+        } else {
+           event.preventDefault();
+           document.getElementById('move-message').innerText="Item moved to folder";
+            hidePopup('move-popup');
+            blur.classList.toggle('active');
+            showPopup('moveMessage');
+            setTimeout(function() {
+            hidePopup('moveMessage');
+        }, 1000);
+
+        }
+    });
+    const closeBtnMoveToFolder = document.querySelector('.popupMoveToFolder .closeBtn');
+    closeBtnMoveToFolder.addEventListener('click', function () {
+            hidePopup('move-popup');
+            blur.classList.toggle('active');
+
+        });
+
+    const closeCreateAndMove=document.querySelector('.createAndMove .closeBtn');
+    closeCreateAndMove.addEventListener('click',function(){
+        hidePopup('createAndMove');
+    })
+    const closeAddFolder=document.querySelector('.popup .closeBtn');
+    closeAddFolder.addEventListener('click',function(){
+        popup.classList.toggle('active');
+        blur.classList.toggle('active');
+    })
 });
 
 </script>

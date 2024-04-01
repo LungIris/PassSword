@@ -825,5 +825,15 @@
         visibility: visible;
         opacity: 1;
     }
-    
+    .popupFolder .closeBtn{
+        position:absolute;
+        top: 20px;
+        right: 20px;
+        cursor: pointer;
+        
+    }
+    .popupFolder .closeBtn ion-icon{
+        width:30px;
+        height:30px;
+    }
     

@@ -209,14 +209,13 @@
 </div>
 <div class="popup" id="popup">
     <h2> Add new folder </h2>
+    <div class="closeBtn" ><ion-icon name="close-circle-outline"></ion-icon></div>
     <h3> Enter new folder name:</h3>
     <input  type="text">
     <div class="buttonC">
         <button type="submit" onclick="window.location.href='settings.html'" >Add Folder</button>
         </div>
-    <div class="buttonC">
-    <button type="submit" onclick="window.location.href='settings.html'" >Cancel</button>
-    </div>
+    
     
 </div>
     <div class="popupChangePassword" id="popupChangePassword">
@@ -432,7 +431,11 @@
             popupBiometric.classList.toggle('active');
         }
 
-
+        const closeAddFolder=document.querySelector('.popup .closeBtn');
+    closeAddFolder.addEventListener('click',function(){
+        popup.classList.toggle('active');
+        blur.classList.toggle('active');
+    })
 
 </script>
 <script src="setBiometric.js"></script>  

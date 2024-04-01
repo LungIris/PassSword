@@ -954,4 +954,15 @@
       stroke-dashoffset: 100;
     }
   }
+  .popup .closeBtn{
+    position:absolute;
+    top: 20px;
+    right: 20px;
+    cursor: pointer;
+    
+}
+.popup .closeBtn ion-icon{
+    width:30px;
+    height:30px;
+}
 }
