@@ -4,11 +4,12 @@
   "description": "Lucrare de licenta",
   "main": "main.js",
   "scripts": {
-    "start":"electron ."
+    "start": "electron ."
   },
   "author": "Lung Iris Adriana",
   "license": "ISC",
   "dependencies": {
-    "electron": "^27.0.4"
+    "electron": "^27.0.4",
+    "sqlite3": "^5.1.7"
   }
 }
