@@ -1,0 +1,970 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+@media (max-width: 1500px) {
+    
+  
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+    
+    }
+    :root{
+        --clr: #413a3a;
+    }
+    body
+    {
+        max-height:100vh;
+        background: var(--clr);
+    }
+    .navbar{
+    
+        background:#282828;
+        padding:18px;
+        text-align:center;
+        position:absolute;
+        width: calc(100%);
+    
+    }
+    .navbar a {
+        color: #fff;
+        text-decoration: none;
+        font-size: 1.2em;
+        overflow: hidden;
+        position:relative;
+        list-style: none;
+        box-shadow: 0 0 10px #57e5ff;
+        padding: 18px;
+        border-bottom-left-radius:-20px;
+        margin-left: 200px;
+        width:100%;
+    
+    }
+    
+    
+    
+    .search-bar{
+        width: 30%;
+        max-width: 360px;
+        width: 400px;
+        background:#282828;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius:60px;
+        padding: 5px;
+        margin-left: 45%;
+        position:relative;
+        height: 30px;
+        backdrop-filter: blur(4px) saturate(100%);
+        box-shadow: 0 0 5px #57e5ff;
+    
+    }
+    .search-bar input{
+        background: transparent;
+        flex: 1;
+        border: 0;
+        outline: none;
+        padding: 24px 20px;
+        font-size: 15px;
+        color:#57e5ff;
+    }
+    ::placeholder{
+        color: #999;
+    }
+    .search-bar button img{
+        width: 25px;
+    
+    }
+    .search-bar button{
+        border:0;
+        border-radius: 50%;
+        width: 25px;
+        height:25px;
+        background:#282828;
+        cursor:pointer;
+    
+    }
+    .sidebar{
+        position: absolute;
+        width:220px;
+        height:100vh;
+        background: #282828;
+        transition: 0.5s;
+        padding-left: 10px;
+        overflow: hidden;
+        z-index:1;
+    }
+    
+    
+    .sidebar ul{
+        position: relative;
+        height:100vh;
+    }
+    
+    
+    .sidebar ul li{
+        position:relative;
+        list-style: none;
+    }
+    
+    .sidebar ul li.active
+    {
+        background: var(--clr);
+        border-top-left-radius:40px;
+        border-bottom-left-radius:40px;
+    }
+    
+    .sidebar ul li:first-child.active::before{
+        top: 0px;
+        
+    }
+    
+    
+    .sidebar ul li.active::before
+    {
+        content:'';
+        position:absolute;
+        top: -20px;
+        right:0;
+        width:20px;
+        height:20px;
+        border-bottom-right-radius: 20px;
+        box-shadow: 5px 5px 0 5px var(--clr);
+        background: transparent;
+    }
+    .sidebar ul li.active::after
+    {
+        content:'';
+        position:absolute;
+        bottom: -20px;
+        right:0;
+        width:20px;
+        height:20px;
+        border-top-right-radius: 20px;
+        box-shadow: 5px -5px 0 5px var(--clr);
+        background: transparent;
+    }
+    
+    .sidebar ul li .logo
+    {
+        margin-bottom: 50px;
+        height:100px;
+    
+    }
+    .sidebar ul li .logo .icon
+    {
+        font-size: 2em;
+        color: var(--clr);
+    }
+    .sidebar ul li .logo .text
+    {
+        font-size: 1.2em;
+        font-weight:300;
+        color: var(--clr);
+    }
+    .sidebar ul li a
+    {
+        position: relative;
+        display:flex;
+        white-space: nowrap;
+        text-decoration:none;
+    }
+    
+    .sidebar ul li a .icon
+    {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-width: 60px;
+        padding-left:2px;
+        height:45px;
+        width:45px;
+        font-size:1.5em;
+        color: #fff;
+        transition: 0.5s;
+    }
+    
+    .sidebar .logo{
+        padding-bottom:16px;
+    }
+    .sidebar .logo a{
+        height:50px;
+    }
+    .sidebar .logo a .icon{
+        padding-top:15px;
+    }
+    .sidebar .logo a .text{
+        padding-top: 15px;
+        font-size: 16px;
+        color:#57e5ff
+    }
+    .sidebar ul li a .text
+    {
+        position: relative;
+        height: 45px;
+        display: flex;
+        align-items: center;
+        font-size: 1em;
+        color: #fff;
+        padding-left:15px;
+        letter-spacing: 0.05em;
+        transition: 0.5s;
+    }
+    .sidebar ul li.active a .icon
+    {
+        color: #fff;
+    }
+    .sidebar ul li.active a .text
+    {
+        color: var(--bg);
+    }
+    .sidebar ul li:hover a .icon,
+    .sidebar ul li:hover a .text
+    {
+        color: var(--bg);
+        
+    }
+    .sidebar ul li.active a .icon::before
+    {
+        content:'';
+        position: absolute;
+        inset: 5px;
+        width:50px;
+        background: var(--bg);
+        border-radius: 50%;
+        transition: 0.5s;
+    }
+    .sidebar ul li:hover.active a .icon::before
+    {
+        background: #fff;
+    }
+    
+    .bottom 
+    {
+        position: absolute;
+        bottom: 0;
+        width:100%;
+        padding-bottom:20px;
+    }
+    .imgBx{
+        position:relative;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        overflow:hidden;
+    }
+    .imgBx img
+    {
+        position: absolute;
+        top:0;
+        left:0;
+        width:100%;
+        height:100%;
+        object-fit:cover;
+    }
+  
+     .MenuList ul li{
+        position:absolute;
+        left:350px;
+        background:#1c92a7;
+        z-index:1001;
+    }
+
+    .settings{
+        display:block;
+        align-items: left;
+        justify-content:left;
+        margin-left:350px;
+        width:1000px;
+        height:800px;
+        padding-top:90px;
+        transition: 0.5s;
+        overflow:scroll;
+        z-index:0;
+        max-height:700px;
+
+    }
+   
+    .settings h2{
+        color:#57e5ff;
+        font-weight:300;
+        font-size:20px;
+        text-align:left;
+        letter-spacing: 0.1em;
+        padding-top:30px;
+        padding-bottom:10px;
+    }
+    .section{
+        padding:20px;
+        height:70px;
+        display:flex;
+        align-items:center;
+        justify-content: space-between;
+        background: #282828;
+        border-radius:20px;
+        border: solid 1px #413a3a;
+        width:900px;
+    }
+    .section label{
+        pointer-events: none;
+        padding-bottom:40px;
+        color: #fff;
+        font-size: 1em;
+        letter-spacing:0.05em;
+    }
+    .section .input button{
+        background:#282828;
+        border:none;
+    }
+    .section .input ion-icon{
+        background:#282828;
+        height:20px;
+        width:20px;
+        color: #57e5ff;
+        z-index:0;
+        cursor:pointer;
+    }
+  
+   .scroll-bg{
+    background:#57e5ff;
+   }
+   ::-webkit-scrollbar{
+    width:0px;
+    height:0px;
+   }
+  
+
+  #language select {
+    width: 100%;
+    padding: 6px;
+    font-size: 16px;
+    color: #999;
+    border-radius: 5px;
+    border: 1px solid #57e5ff;
+    box-shadow: 0 0 5px #57e5ff;
+    background:#282828;
+    cursor:pointer;
+  }
+  #language select option:hover{
+    background:#413a3a;
+  }
+  
+  /* Style for option elements */
+  #language select option {
+    padding: 10px;
+  }
+  
+  
+  /* Adjust margin between input elements */
+  #language .input select {
+    margin-top: 5px;
+    background:#282828;
+
+  }
+  #language .input select:hover{
+    background:#413a3a;
+
+  }
+  .sidebar .submenu{
+    display:none;
+    transition: all .5 ease;
+    background-color:#282828;
+}
+
+.submenu.active{
+    width: unset;
+    height: unset;
+    opacity:1;
+    display:flex;
+    flex-direction:column;
+    padding: 6px 6px 14px 80px;
+    background-color:#282828;
+    border-bottom-left-radius: 20px;
+}
+.submenu .link{
+    font-size:16px;
+    padding: 8px 0;
+    transition: all .5s ease;
+    color: #999;
+}
+.submenu .link:hover{
+    color: #57e5ff;
+}
+.dropdown.active .title{
+    background-color:#413a3a;
+    border-top-left-radius:20px;
+}
+.dropdown.active .submenu.active{
+    background-color: #413a3a;
+}
+.submenu .submenu-title{
+    display:none;
+}
+.sidebar .arrow{
+    display:none;
+}
+.sidebar .openPopup {
+    display:none;
+}
+.sidebar .arrow{
+    display:flex;
+    padding:15px;
+    margin-left:2px;
+    color: #999; 
+}
+.sidebar .openPopup {
+    display:flex;
+    color: #999;
+    background:#282828;
+    box-shadow: none;
+    border:0px;
+    margin-top:15px;
+    width:25px;
+    height:25px;
+}
+.sidebar .openPopup:hover{
+    color: #57e5ff;
+}
+.sidebar .arrow:hover{
+    color:#57e5ff;
+}
+.submenu.active .arrow{
+    display:flex;
+    padding:15px;
+    margin-left:15px;
+    color: #57e5ff;
+    transition: 0.5s;
+
+}
+.arrow.flip{
+    transform: scaleY(-1);
+    transition: 0.5s;
+}
+.popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    padding: 50px;
+    box-shadow: 0 2px 10px #1c92a7;
+    background: #282828;
+    visibility: hidden;
+    opacity: 0;
+    transition: 1s;
+    text-align: center;
+    z-index: 1;
+}
+
+.popup.active {
+    top: 40%;
+    visibility: visible;
+    opacity: 1;
+    transition: 1.5s;
+}
+
+.popup h2 {
+    font-size: 20px;
+    color: #1c92a7;
+    padding: 10px;
+    text-align: left;
+}
+
+.popup h3 {
+    font-size: 16px;
+    color: #999;
+    padding: 10px;
+    text-align: left;
+
+}
+.popup input {
+    width: 320px;
+    height: 40px;
+    font-size: 16px;
+    color: #fff;
+    padding: 0 5px;
+    background: transparent;
+    border: 2px solid #1c92a7;
+    border-radius:20px;
+    align-items: left; 
+}
+.popup button {
+    width: 50%;
+    height: 40px;
+    background: #1c92a7;
+    box-shadow: 0 0 10px #1c92a7;
+    font-size: 24px;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 30px;
+    border: none;
+    outline: none;
+    margin-top: 25px;
+}
+
+.popup button:hover {
+    background: #1c92a7;
+    color: #fff;
+}
+.popupBiometric button {
+    width: 150px;
+    height: 30px;
+    background: #57e5ff;
+    box-shadow: 0 0 10px #57e5ff;
+    font-size: 20px;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 30px;
+    border: none;
+    outline: none;
+    margin-top: 80px;
+}
+
+.popupBiometric button:hover {
+    background: #1c92a7;
+    color: #fff;
+}
+
+#blur.active {
+    filter: blur(20px);
+    pointer-events: none;
+    user-select: none;
+}
+
+.popupChangePassword{
+    position:fixed;
+        top:50%;
+        left:50%;
+        transform:translate(-50%,-50%);
+        width:600px;
+        padding:50px;
+        box-shadow: 0 2px 10px #ff3131;
+        background: #282828;
+        visibility: hidden;
+        opacity:0;
+        transition:1s;
+        text-align:center;
+        z-index:1;
+        display:flex;
+  
+}
+.popupChangePassword.active {
+    width: 600px;
+    height:500px;
+    background:#282828;
+    padding: 20px 40px;
+    border-radius: 8px;
+    z-index: 2;
+    display:flex;
+    flex-direction:column;
+    box-shadow: 0 0 10px #57e5ff;
+    top:50%;
+        visibility:visible;
+        opacity:1;
+        transition:1.5s;
+}
+
+.popupChangePassword h2{
+    color:#fff;
+    font-weight:300;
+    font-size:20px;
+    text-align:left;
+    letter-spacing: 0.1em;
+    padding-top:30px;
+    padding-bottom:0px;
+}
+.popupChangePassword  .inputBox{
+    position:relative;
+    width:550px;
+    margin-top: 15px;
+    display:flex;
+    justify-content:left;
+    align-items:center;
+
+}
+
+.popupChangePassword  .inputBox  input{
+    position:relative;
+    width:300px;
+    margin-left: 10px;
+    padding: 20px 10px 10px;
+    background: transparent;
+    outline: none;
+    box-shadow: none;
+    color: #999;
+    font-size: 1em;
+    letter-spacing:0.05em;
+    transition: 0.5s;
+    z-index:10;
+    border: none;
+}
+.popupChangePassword  .inputBox  label{
+    position:absolute;
+    left:0;
+    padding:20px 10px 10px;
+    pointer-events: none;
+    color: #999;
+    font-size: 1em;
+    letter-spacing:0.05em;
+    transition: 0.5s;
+}
+.popupChangePassword .inputBox label{
+    position:absolute;
+    left:0;
+    padding:20px 10px 10px;
+    pointer-events: none;
+    color: #999;
+    font-size: 1em;
+    letter-spacing:0.05em;
+    transition: 0.5s;
+
+}
+
+.popupChangePassword  .inputBox input:valid ~label,
+.popupChangePassword  .inputBox input:focus ~label{
+    color: #999;
+    font-size: 0.75em;
+    transform: translateY(-27px);
+}
+
+.popupChangePassword  .inputBox i{
+    position:absolute;
+    left:0;
+    bottom:0;
+    width:100%;
+    height:1px;
+    background: #645b5b;
+    border-radius:4px;
+    transition: 0.5s;
+    pointer-events: none;
+
+}
+.show1{
+    position:absolute;
+    top:0;
+    right:0;
+    width:60px;
+    height: 100%;
+    background: #282828;
+    cursor:pointer;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+.show2{
+    position:absolute;
+    top:0;
+    right:0;
+    width:60px;
+    height: 100%;
+    background: #282828;
+    cursor:pointer;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+.show3{
+    position:absolute;
+    top:0;
+    right:0;
+    width:60px;
+    height: 100%;
+    background: #282828;
+    cursor:pointer;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+.popupChangePassword .strengthMeter{
+    display:flex;
+    height:3px;
+    background: #222;
+    position:absolute;
+    width:550px;
+    margin-top: 45px;
+    display:flex;
+    justify-content:left;
+    align-items:center;
+}
+.popupChangePassword .strengthMeter::before{
+    content:'';
+    position: absolute;
+    width:0;
+    height:100%;
+    transition: 0.5s;
+}
+.popupChangePassword.weak .strengthMeter::before{
+    width:20%;
+    background: #f00;
+    filter: drop-shadow(0 0 5px #f00) drop-shadow(0 0 10px #f00)
+    drop-shadow(0 0 20px #f00);
+}
+.popupChangePassword.medium .strengthMeter::before{
+    width:66%;
+    background: #ffa500;
+    filter: drop-shadow(0 0 5px #ffa500) drop-shadow(0 0 10px #ffa500)
+    drop-shadow(0 0 20px #ffa500);
+}
+.popupChangePassword.strong .strengthMeter::before{
+    width:100%;
+    background: #0f0;
+    filter: drop-shadow(0 0 5px #0f0) drop-shadow(0 0 10px #0f0)
+    drop-shadow(0 0 20px #0f0);
+}
+.popupChangePassword .strengthMeter::after{
+    position:absolute;
+    top:-45px;
+    transition:0.5s;
+
+}
+
+.show1::before{
+    content: 'Show';
+    font-size:14px;
+    position:absolute;
+    color: #fff;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    z-index:1;
+}
+.show1.hide::before{
+    content: 'Hide';
+}
+.show2::before{
+    content: 'Show';
+    font-size:14px;
+    position:absolute;
+    color: #fff;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    z-index:1;
+}
+.show2.hide::before{
+    content: 'Hide';
+}
+.show3::before{
+    content: 'Show';
+    font-size:14px;
+    position:absolute;
+    color: #fff;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    z-index:1;
+}
+.show3.hide::before{
+    content: 'Hide';
+}
+.popupChangePassword button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left:170px;
+
+}
+.popupChangePassword button[type="submit"]{
+
+    width: 200px;
+    height: 40px;
+    background: #57e5ff;
+    box-shadow: 0 0 10px #57e5ff;
+    font-size:16px;
+    color: #000;
+    font-weight:500;
+    cursor:pointer;
+    border-radius:30px;
+    margin-top:30px;
+    margin-right:50px;
+    border:none;
+    outline:none;
+}
+.popupChangePassword button[type="submit"]:hover{
+    background: #2a8b9c;
+    box-shadow: 0 0 10px #2a8b9c; 
+}
+.popupChangePassword .generate{
+    display: flex;
+    justify-content: space-between;
+   
+
+
+}
+.popupChangePassword .generate a{
+    margin: 20px 0;
+    font-size:0.75em;
+    color: #57e5ff;
+    text-decoration:none;
+
+}
+.popupChangePassword  .generate a:hover{
+    color: #fff;
+}
+.toggle{
+    height:12px;
+    cursor:pointer;
+    width:55px;
+    border-radius:25px;
+    background-color:#282828;
+    box-shadow: 0 1px 10px #000;
+    position:relative;
+}
+.toggle::before{
+    content:"";
+    position:absolute;
+    height:20px;
+    width:20px;
+    background-color:#282828;
+    border:5px solid #f00;
+    box-shadow: 0 1px 10px #f00;
+    border-radius:50%;
+    top:50%;
+    transform: translateY(-50%);
+    left:0;
+    transition:all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    
+}
+.toggle.active::before{
+    left:25px;
+    border-color:#0f0;
+    box-shadow: 0 1px 10px #0f0;
+}
+
+    .inspiration {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    font-family: 'Gill Sans', sans-serif;
+    font-size: 12px;
+    color: #7f7f7f;
+  }
+  .popupBiometric{
+    position:fixed;
+        top:50%;
+        left:50%;
+        transform:translate(-50%,-50%);
+        width:600px;
+        padding:50px;
+        box-shadow: 0 2px 10px #ff3131;
+        background: #282828;
+        visibility: hidden;
+        opacity:0;
+        transition:1s;
+        text-align:center;
+        z-index:1;
+        display:flex;
+  }
+  .popupBiometric.active{
+    width: 400px;
+    height:400px;
+    background:#282828;
+    padding: 20px 40px;
+    border-radius: 8px;
+    z-index: 2;
+    display:flex;
+    flex-direction:column;
+    box-shadow: 0 0 10px #57e5ff;
+    top:50%;
+    visibility:visible;
+    opacity:1;
+    transition:1.5s;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .popupBiometric .fingerprint path.clone {
+    transition: stroke-dashoffset 2s ease-out;
+    -webkit-animation: try 2.5s ease-out;
+            animation: try 2.5s ease-out;
+  }
+  .popupBiometric .fingerprint.active {
+    transform: scale(0.97);
+  }
+  .popupBiometric .fingerprint.active path.clone {
+    stroke-dashoffset: 0;
+  }
+  h1 {
+    font-size: 25px;
+    margin-top:40px;
+    color:#999;
+    transform: translateY(-20px);
+  }
+  .scan,
+  .scan-success {
+    font-size: 15px;
+    transform: translateY(50px);
+    color: #666;
+  }
+  .scan-success {
+    display: none;
+  }
+  .popupBiometric .fingerprint,
+  .popupBiometric .icon-success {
+    width: 135px;
+    height: 135px;
+    overflow: visible;
+  }
+  .popupBiometric .icon-success {
+    position: absolute;
+    top: 40px;
+  }
+  .popupBiometric .icon-success circle {
+    transform-origin: 50% 50%;
+    transform: scale(0);
+    transition: transform 200ms cubic-bezier(0.18, 0.89, 0.32, 1.28);
+  }
+  .popupBiometric .icon-success path {
+    opacity: 0;
+    transition: stroke-dashoffset 350ms 100ms ease;
+  }
+  .popupBiometric.success .fingerprint {
+    transform: scale(0);
+  }
+  .popupBiometric.success .icon-success circle {
+    transform: scale(1);
+  }
+  .popupBiometric.success .icon-success path {
+    stroke-dashoffset: 0;
+    opacity: 1;
+    transition: opacity 0s, stroke-dashoffset 0.5s;
+  }
+  .popupBiometric.success .scan {
+    display: none;
+  }
+  .popupBiometric.success .scan-success {
+    display: block;
+  }
+  @-webkit-keyframes try {
+    0%, 100% {
+      stroke-dashoffset: 178;
+    }
+    50% {
+      stroke-dashoffset: 100;
+    }
+  }
+  @keyframes try {
+    0%, 100% {
+      stroke-dashoffset: 178;
+    }
+    50% {
+      stroke-dashoffset: 100;
+    }
+  }
+  .popup .closeBtn{
+    position:absolute;
+    top: 20px;
+    right: 20px;
+    cursor: pointer;
+    
+}
+.popup .closeBtn ion-icon{
+    width:30px;
+    height:30px;
+}
+}
