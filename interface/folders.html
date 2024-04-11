@@ -45,9 +45,8 @@
                             <button class="openPopup"><ion-icon name="add-circle-outline"></ion-icon></button>
                         </a>
                     </div>
-                    <div class="submenu">
+                    <div class="submenu" id="submenu">
                         <a href="#" class="submenu-title">Folders</a>
-                        <a href="folders.html?title=Social Media" class="link">Social Media</a>
                     </div>
                     </li>
     
@@ -195,10 +194,12 @@
         <h2> Add new folder </h2>
         <div class="closeBtn" ><ion-icon name="close-circle-outline"></ion-icon></div>
         <h3> Enter new folder name:</h3>
-        <input  type="text">
-        <div class="buttonC">
-            <button type="submit" onclick="window.location.href='folders.html'" >Add Folder</button>
-            </div>  
+        <form id="addFolderForm">
+            <input type="text" name="newFolderName">
+            <div class="buttonC">
+                <button type="submit">Add Folder</button>
+            </div>
+        </form>
     </div>
     <div class="createAndMove" id="createAndMove">
         <h2> Add new folder </h2>
@@ -214,9 +215,6 @@
         <div class="closeBtn"><ion-icon name="close-circle-outline"></ion-icon></div>
         <select id="folder-list">
             <option value="New Folder">New Folder</option>
-            <option value="Social Media">Social Media</option>
-            <option value="Work">Work</option>
-            <option value="Personal">Personal</option>
         </select>
         <button id="move-btn">Move to Folder</button>
     </div>
@@ -232,6 +230,7 @@
         <p id="create-message"></p>
     </div>
     
+    <script type="module" src="rendererFolder.js"></script>
 
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
@@ -341,13 +340,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // You can use the title to fetch data and populate the table accordingly
 });
 
-document.querySelectorAll('.link').forEach(link => {
-    link.addEventListener('click', function(event) {
-        event.preventDefault(); 
-        const title = this.textContent; 
-        window.location.href = `folders.html?title=${encodeURIComponent(title)}`; 
-    });
-});
+
 const actionButtons = document.querySelectorAll('.passwordTable tbody tr td:last-child button');
     actionButtons.forEach(button => {
         button.addEventListener('click', function(event) {

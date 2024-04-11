@@ -45,9 +45,8 @@
                             <button class="openPopup"><ion-icon name="add-circle-outline"></ion-icon></button>
                         </a>
                     </div>
-                    <div class="submenu">
+                    <div class="submenu" id="submenu">
                         <a href="#" class="submenu-title">Folders</a>
-                        <a href="folders.html?title=Social Media" class="link">Social Media</a>
                     </div>
                     </li>
     
@@ -283,7 +282,7 @@
 
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-<script type="module" src="renderer.js"></script>
+<script type="module" src="rendererFolder.js"></script>
 <script>
 
     let sidebar= document.querySelector('.sidebar');
@@ -324,13 +323,7 @@
             blur.classList.toggle('active'),
             popup.classList.toggle('active')
     });
-    document.querySelectorAll('.link').forEach(link => {
-    link.addEventListener('click', function(event) {
-        event.preventDefault(); 
-        const title = this.textContent; 
-        window.location.href = `folders.html?title=${encodeURIComponent(title)}`; 
-    });
-    });
+   
     let passwordForm=document.querySelector(".popupChangePassword");
 
     function changePassword() {

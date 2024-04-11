@@ -45,9 +45,8 @@
                         <button class="openPopup"><ion-icon name="add-circle-outline"></ion-icon></button>
                     </a>
                 </div>
-                <div class="submenu">
+                <div class="submenu" id="submenu">
                     <a href="#" class="submenu-title">Folders</a>
-                    <a href="folders.html?title=Social Media" class="link">Social Media</a>
                 </div>
                 </li>
 
@@ -194,10 +193,12 @@
     <h2> Add new folder </h2>
     <div class="closeBtn" ><ion-icon name="close-circle-outline"></ion-icon></div>
     <h3> Enter new folder name:</h3>
-    <input  type="text">
-    <div class="buttonC">
-        <button type="submit" onclick="window.location.href='dashboard.html'" >Add Folder</button>
+    <form id="addFolderForm">
+        <input type="text" name="newFolderName">
+        <div class="buttonC">
+            <button type="submit">Add Folder</button>
         </div>
+    </form>
 </div>
 <div class="createAndMove" id="createAndMove">
     <h2> Add new folder </h2>
@@ -213,9 +214,7 @@
     <div class="closeBtn"><ion-icon name="close-circle-outline"></ion-icon></div>
     <select id="folder-list">
         <option value="New Folder">New Folder</option>
-        <option value="Social Media">Social Media</option>
-        <option value="Work">Work</option>
-        <option value="Personal">Personal</option>
+        
     </select>
     <button id="move-btn">Move to Folder</button>
 </div>
@@ -230,6 +229,7 @@
 <div class="createMessage" id="createMessage">
     <p id="create-message"></p>
 </div>
+<script type="module" src="rendererFolder.js"></script>
 
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
@@ -341,13 +341,7 @@
             blur.classList.toggle('active'),
             popup.classList.toggle('active')
     });
-    document.querySelectorAll('.link').forEach(link => {
-    link.addEventListener('click', function(event) {
-        event.preventDefault(); 
-        const title = this.textContent; 
-        window.location.href = `folders.html?title=${encodeURIComponent(title)}`; 
-    });
-    }); 
+    
     const card=document.getElementById('dropdown-card');
     card.addEventListener("click",function(){
         var dropdownMenu = document.getElementById('dropdown-menu');

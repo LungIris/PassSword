@@ -45,9 +45,8 @@
                         <button class="openPopup"><ion-icon name="add-circle-outline"></ion-icon></button>
                     </a>
                 </div>
-                <div class="submenu">
+                <div class="submenu" id="submenu">
                     <a href="#" class="submenu-title">Folders</a>
-                    <a href="folders.html?title=Social Media" class="link">Social Media</a>
 
                 </div>
                 </li>
@@ -143,7 +142,7 @@
         
     </div>
 </div>
-    <div class="popup" id="popup">
+    <div class="popupEmpty" id="popupEmpty">
         <h2> Empty trash? </h2>
         <h3> If you proceed, all of your deleted passSwords will be permanently lost.</h3>
         <div class="buttonC">
@@ -153,16 +152,18 @@
         <button type="submit" onclick="window.location.href='trash.html'" >Empty</button>
         </div>
     </div>
-    <div class="popupFolder" id="popupFolder">
+    <div class="popup" id="popup">
         <h2> Add new folder </h2>
         <div class="closeBtn" ><ion-icon name="close-circle-outline"></ion-icon></div>
         <h3> Enter new folder name:</h3>
-        <input  type="text">
-        <div class="buttonC">
-            <button type="submit" onclick="window.location.href='trash.html'" >Add Folder</button>
+        <form id="addFolderForm">
+            <input type="text" name="newFolderName">
+            <div class="buttonC">
+                <button type="submit" id="addFolderBtn">Add Folder</button>
             </div>
-        
+        </form>
     </div>
+    <script type="module" src="rendererFolder.js"></script>
 
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
@@ -199,8 +200,8 @@
     function emptyTrash() {
             var blur = document.getElementById('blur');
             blur.classList.toggle('active');
-            var popup = document.getElementById('popup');
-            popup.classList.toggle('active');
+            var popupEmpty = document.getElementById('popupEmpty');
+            popupEmpty.classList.toggle('active');
         }
         const arrowIcon = document.querySelector('.title .arrow');
     const submenu = document.querySelector('.dropdown .submenu');
@@ -214,11 +215,11 @@
     const foldersIcon=document.querySelector('.dropdown .title .icon');
     const openPopup=document.querySelector('.openPopup');
     const blur = document.getElementById('blur');
-    const popupFolder = document.getElementById('popupFolder');
+    const popup = document.getElementById('popup');
 
     openPopup.addEventListener("click",function(){
             blur.classList.toggle('active'),
-            popupFolder.classList.toggle('active')
+            popup.classList.toggle('active')
     });
         
     document.addEventListener('DOMContentLoaded', function() {
@@ -228,13 +229,8 @@
     const tableRows = document.querySelectorAll('.passwordTable tbody tr');
 
     
-    document.querySelectorAll('.link').forEach(link => {
-    link.addEventListener('click', function(event) {
-        event.preventDefault(); 
-        const title = this.textContent; 
-        window.location.href = `folders.html?title=${encodeURIComponent(title)}`; 
-    });
-});
+    
+
  // Add click event listeners to buttons in the action column
  const actionButtons = document.querySelectorAll('.passwordTable tbody tr td:last-child button');
     actionButtons.forEach(button => {
@@ -252,9 +248,9 @@
             }
         });
     });
-    const closeAddFolder=document.querySelector('.popupFolder .closeBtn');
+    const closeAddFolder=document.querySelector('.popup .closeBtn');
     closeAddFolder.addEventListener('click',function(){
-        popupFolder.classList.toggle('active');
+        popup.classList.toggle('active');
         blur.classList.toggle('active');
     })
 

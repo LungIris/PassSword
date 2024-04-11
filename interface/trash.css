@@ -89,7 +89,7 @@
         background: #282828;
         transition: 0.5s;
         padding-left: 10px;
-        overflow: hidden;
+        overflow-y: auto;        
         z-index:1;
     }
     
@@ -103,6 +103,7 @@
     .sidebar ul li{
         position:relative;
         list-style: none;
+        
     }
     
     .sidebar ul li.active
@@ -423,7 +424,7 @@
         pointer-events: none;
         user-select: none;
     }
-    #popup{
+    #popupEmpty{
         position:fixed;
         top:50%;
         left:50%;
@@ -438,19 +439,19 @@
         text-align:center;
         z-index:1;
     }
-    #popup.active{
+    #popupEmpty.active{
         top:40%;
         visibility:visible;
         opacity:1;
         transition:1.5s;
 
     }
-    #popup h2{
+    #popupEmpty h2{
         font-size: 20px;
         color: #ff3131;
         padding:10px;
     }
-    #popup h3{
+    #popupEmpty h3{
         font-size: 16px;
         color: #999;
         padding:10px;
@@ -477,6 +478,7 @@
         display:none;
         transition: all .5 ease;
         background-color:#282828;
+        
     }
     
     .submenu.active{
@@ -488,7 +490,13 @@
         padding: 6px 6px 14px 80px;
         background-color:#282828;
         border-bottom-left-radius: 20px;
+        overflow-y: auto;
+        height: 150px;
     }
+    ::-webkit-scrollbar{
+        width:0px;
+        height:0px;
+       }
     .submenu .link{
         font-size:16px;
         padding: 8px 0;
@@ -548,7 +556,7 @@
         transform: scaleY(-1);
         transition: 0.5s;
     }
-    .popupFolder {
+    .popup {
         position: fixed;
         top: 50%;
         left: 50%;
@@ -564,28 +572,28 @@
         z-index: 1;
     }
     
-    .popupFolder.active {
+    .popup.active {
         top: 40%;
         visibility: visible;
         opacity: 1;
         transition: 1.5s;
     }
     
-    .popupFolder h2 {
+    .popup h2 {
         font-size: 20px;
         color: #1c92a7;
         padding: 10px;
         text-align: left;
     }
     
-    .popupFolder h3 {
+    .popup h3 {
         font-size: 16px;
         color: #999;
         padding: 10px;
         text-align: left;
     
     }
-    .popupFolder input {
+    .popup input {
         width: 320px;
         height: 40px;
         font-size: 16px;
@@ -596,7 +604,7 @@
         border-radius:20px;
         align-items: left; 
     }
-    .popupFolder button {
+    .popup button {
         width: 50%;
         height: 40px;
         background: #1c92a7;
@@ -610,7 +618,7 @@
         margin-top: 25px;
     }
     
-    .popupFolder button:hover {
+    .popup button:hover {
         background: #1c92a7;
         color: #fff;
     }
@@ -825,14 +833,14 @@
         visibility: visible;
         opacity: 1;
     }
-    .popupFolder .closeBtn{
+    .popup .closeBtn{
         position:absolute;
         top: 20px;
         right: 20px;
         cursor: pointer;
         
     }
-    .popupFolder .closeBtn ion-icon{
+    .popup .closeBtn ion-icon{
         width:30px;
         height:30px;
     }

@@ -19,6 +19,7 @@ const createWindow = () => {
     sequelize.sync().then(() => {
         console.log('Connection established');
         folders.newFolder()
+        folders.populateSubmenu()
     })
     
     
