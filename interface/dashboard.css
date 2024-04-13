@@ -333,7 +333,6 @@ body
 .addPassword table{
     background: #282828;
     transition: 0.5s;
-    margin-top:-13%;
     margin-left: 30px;
     width:900px;
     border-collapse:collapse;

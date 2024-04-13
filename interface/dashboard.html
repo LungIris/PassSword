@@ -106,17 +106,17 @@
     <!--add password-->
     <div class="addPassword">
         <a href="addPasswordForm.html" style="--clr: #57e5ff; "><span>Add Password</span></a>
-        <div class="passwordTable">
-            <table>
+        <div class="passwordTable" >
+            <table >
                 <thead>
                     <tr>
                         <th>Title</th>
-                        <th>Email/ Username</th>
-                        <th>Last modified</th>
+                        <th>Website</th>
+                        <th>Email/Username</th>
                         <th>Action</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="passwordTbl">
                     <tr>
                         <td>
                             <div class="content">
@@ -231,6 +231,7 @@
 <div class="createMessage" id="createMessage">
     <p id="create-message"></p>
 </div>
+<script type="module" src="rendererTables.js"></script>
 <script type="module" src="rendererFolder.js"></script>
 
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>

@@ -2,6 +2,7 @@ const { app, BrowserWindow } = require('electron');
 const {sequelize} = require('./models');
 const path = require("path");
 const folders = require("./controllers/folders");
+const passwords = require("./controllers/passwords");
 const createWindow = () => {
     const mainWindow = new BrowserWindow({
       width: 900,
@@ -20,6 +21,8 @@ const createWindow = () => {
         console.log('Connection established');
         folders.newFolder()
         folders.populateSubmenu()
+        passwords.newPassword()
+        passwords.populateTable()
     })
     
     
