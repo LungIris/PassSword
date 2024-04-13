@@ -609,6 +609,7 @@ outline:none;
 
 .submenu.active{
     width: unset;
+    max-height: 150px;
     height: unset;
     opacity:1;
     display:flex;
@@ -617,7 +618,7 @@ outline:none;
     background-color:#282828;
     border-bottom-left-radius: 20px;
     overflow-y: auto;
-    height: 150px;
+    
 }
 ::-webkit-scrollbar{
     width:0px;

@@ -36,7 +36,7 @@
                         </a>
                     </li>
     
-                    <li style="--bg:#57e5ff;"class="dropdown" class="active">
+                    <li style="--bg:#57e5ff;"class="dropdown">
                     <div class="title">
                         <a href="#">
                             <div class="icon"><ion-icon name="folder"></ion-icon></div>
@@ -205,8 +205,10 @@
         <h2> Add new folder </h2>
         <div class="closeBtn" ><ion-icon name="close-circle-outline"></ion-icon></div>
         <h3> Enter new folder name:</h3>
-        <input  type="text">
-            <button type="submit" onclick="window.location.href='folders.html'" >Create and Move</button>
+        <form id="fldrForm">
+        <input  type="text" name="newFldrName">
+            <button type="submit">Create and Move</button>
+        </form>
         </div>
         
     </div>

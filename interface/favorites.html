@@ -204,8 +204,10 @@
         <h2> Add new folder </h2>
         <div class="closeBtn" ><ion-icon name="close-circle-outline"></ion-icon></div>
         <h3> Enter new folder name:</h3>
-        <input  type="text">
-            <button type="submit" onclick="window.location.href='favorites.html'" >Create and Move</button>
+        <form id="fldrForm">
+        <input  type="text" name="newFldrName">
+            <button type="submit">Create and Move</button>
+        </form>
         </div>
         
     </div>
@@ -230,6 +232,7 @@
         <p id="create-message"></p>
     </div>
     <script type="module" src="rendererFolder.js"></script>
+    <script type="module" src="rendererMove.js"></script>
 
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>

@@ -383,7 +383,7 @@
     background-color:#282828;
     border-bottom-left-radius: 20px;
     overflow-y: auto;
-    height: 150px;
+    max-height: 150px;
 }
 
 .submenu .link{

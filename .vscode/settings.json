@@ -2,9 +2,8 @@
     "sqltools.useNodeRuntime": true,
     "sqltools.connections": [
         {
-            "previewLimit": 50,
             "driver": "SQLite",
-            "name": "folders",
+            "name": "database",
             "database": "${workspaceFolder:PassSword}/data.db"
         }
     ]

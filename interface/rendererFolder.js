@@ -4,8 +4,6 @@ const folderForm = document.querySelector('#addFolderForm')
 const popup = document.querySelector('#popup');
 const blur = document.querySelector('#blur');
 const submenu = document.querySelector('#submenu');
-const createAndMovePopup = document.querySelector('#createAndMove');
-const movePopup = document.querySelector('#move-popup');
 const folderList = document.querySelector('#folder-list');
 
 function addFolder(e) {
@@ -35,10 +33,6 @@ ipcRenderer.on('folders-data', (event, foldersTable) => {
         });
         submenu.appendChild(folderLink);
         
-            const option = document.createElement('option');
-            option.value = folder.dataValues.folder_name;
-            option.textContent = folder.dataValues.folder_name;
-            folderList.appendChild(option);
         
     });
    
@@ -51,17 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
     addButton.addEventListener('click', () => {
         window.location.reload();
     });
-    const createAndMoveButton = document.querySelector('#createAndMove button[type="submit"]');
-    createAndMoveButton.addEventListener('click', () => {
-        const folderNameInput = document.querySelector('.createAndMove input[type="text"]');
-        const folderName = folderNameInput.value.trim();
-        if (folderName !== '') {
-            // Send folder name to the main process for creation
-            ipcRenderer.send('new-folder', { folder_name: folderName });
-            // Clear input field
-            folderNameInput.value = '';
-        }
-    });
+    
     
 
 });
