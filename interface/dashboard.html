@@ -117,21 +117,7 @@
                     </tr>
                 </thead>
                 <tbody id="passwordTbl">
-                    <tr>
-                        <td>
-                            <div class="content">
-                                <div class="tableImage"><img src="images/biometric.png" /></div>
-                                <div class="tableTitle">Facebook</div>
-                                                   
-                             </div>
-                        </td>
-                        <td>lungiris</td>
-                        <td>13 days ago</td>
-                        <td>                         
-                            <button class="tooltip" data-tooltip="Launch Website"><ion-icon name="rocket-outline"></ion-icon></button>
-                            <button><ion-icon name="trash-outline"></ion-icon></ion-icon></i></button>
-                        </td>
-                    </tr>
+                   
                 </tbody>
             </table>
         </div>
@@ -196,7 +182,7 @@
     <form id="addFolderForm">
         <input type="text" name="newFolderName">
         <div class="buttonC">
-            <button type="submit">Add Folder</button>
+            <button type="submit" id="addFolderBtn">Add Folder</button>
         </div>
     </form>
 </div>
@@ -216,7 +202,6 @@
     <div class="closeBtn"><ion-icon name="close-circle-outline"></ion-icon></div>
     <select id="folder-list">
         <option value="New Folder">New Folder</option>
-        
     </select>
     <button id="move-btn">Move to Folder</button>
 </div>
@@ -232,7 +217,7 @@
     <p id="create-message"></p>
 </div>
 <script type="module" src="rendererTables.js"></script>
-<script type="module" src="rendererFolder.js"></script>
+<script type="module" src="rendererMove.js"></script>
 
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
@@ -269,41 +254,7 @@
         }
     })
     document.addEventListener('DOMContentLoaded', function() {
-    // Get the elements
-    const itemInfo = document.querySelector('.itemInfo');
-    const closeBtn = document.querySelector('.itemInfo .closeBtn');
-    const tableRows = document.querySelectorAll('.passwordTable tbody tr');
 
-    // Function to open item info
-    function openItemInfo() {
-        // Show item info
-        itemInfo.classList.remove('inactive');
-        itemInfo.classList.add('active');
-        // Get data from the clicked table row
-        const title = this.querySelector('.tableTitle').textContent;
-        const website = ''; // You should add logic to fetch website address
-        const folder = ''; // You should add logic to fetch folder
-        const imageSrc = ''; // You should add logic to fetch image source
-
-        // Populate item info
-        itemInfo.querySelector('.itemTitle').textContent = title;
-        itemInfo.querySelector('.itemWebsite').textContent = `Website: ${website}`;
-        itemInfo.querySelector('.itemFolder').textContent = `Folder: ${folder}`;
-        itemInfo.querySelector('.itemImage img').src = imageSrc;
-
-        
-    }
-
-    // Function to close item info
-    function closeItemInfo() {
-        itemInfo.classList.remove('active');
-        itemInfo.classList.add('inactive');    
-    }
-
-    // Add click event listeners to table rows
-    tableRows.forEach(row => {
-        row.addEventListener('click', openItemInfo);
-    });
      // Add click event listeners to buttons in the action column
      const actionButtons = document.querySelectorAll('.passwordTable tbody tr td:last-child button');
     actionButtons.forEach(button => {
@@ -322,8 +273,6 @@
         });
     });
 
-    // Add click event listener to close button
-    closeBtn.addEventListener('click', closeItemInfo);
 
 
     const arrowIcon = document.querySelector('.title .arrow');
@@ -377,6 +326,7 @@
             hidePopup('remove-popup');
         }, 1000);
     });
+    const itemInfo = document.querySelector('.itemInfo');
 
     document.getElementById('move-btn').addEventListener('click', function(event) {
         var folderSelect = document.getElementById('folder-list');
@@ -395,7 +345,11 @@
             showPopup('moveMessage');
             setTimeout(function() {
             hidePopup('moveMessage');
+            window.location.reload();
+
         }, 1000);
+        
+
 
         }
     });

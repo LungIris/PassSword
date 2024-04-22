@@ -86,7 +86,7 @@ body
 .sidebar{
     position: absolute;
     width:220px;
-    height:100vh;
+    height:104vh;
     background: #282828;
     transition: 0.5s;
     padding-left: 10px;
@@ -267,16 +267,15 @@ body
 .addPassword{
     display:flex;
     justify-content: center;
-    align-items:center;
-    min-height: 100vh;
     background: #413a3a;
-    margin-left:20%;
-    height:70%;
+    margin-left:250px;
+    height:700px;
 }
 
 .addPassword a{
     
     position: absolute;
+    margin-top:125px;
     padding: 10px 40px;
     background:#282828;
     border-radius: 50px;
@@ -285,8 +284,8 @@ body
     transition: 0.5s;
     color: #fff;
     overflow:hidden;
-    margin-top:-30%;
     margin-left:30px;
+    margin-bottom:450px;
     box-shadow: 0 7px 25px #282828;
 
 }
@@ -331,9 +330,11 @@ body
 }
 
 .addPassword table{
+    position:relative;
+    margin-top:200px;
+    margin-left:30px;
     background: #282828;
     transition: 0.5s;
-    margin-left: 30px;
     width:900px;
     border-collapse:collapse;
     color: #fff;
@@ -341,7 +342,8 @@ body
     box-shadow: 0 0 5px #57e5ff;
     border-bottom: none;
     overflow-x: auto;
-    
+    max-height:500px;
+    overflow-y:auto;
 }
 
 
@@ -423,7 +425,7 @@ a{
     margin-top:66px;
     right: 0;
     width: 850px;
-    height: 620px;
+    height: 644px;
     background: #282828;
     z-index: 1000;
     overflow-y: auto;

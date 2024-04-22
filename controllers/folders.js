@@ -26,6 +26,7 @@ const populateSubmenu = () => {
             event.sender.send('folders-data', { error: err.message });
         }
         
-        })     
+    })   
+    
 }
 module.exports={newFolder,populateSubmenu}

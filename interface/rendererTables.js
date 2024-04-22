@@ -1,5 +1,4 @@
 const { ipcRenderer } = require("electron");
-
 ipcRenderer.on('passwords-data', (event, passwordData) => {
     const passwordTable = document.querySelector('#passwordTbl');
 
@@ -15,6 +14,8 @@ ipcRenderer.on('passwords-data', (event, passwordData) => {
 
         const userCell = document.createElement('td');
         userCell.textContent = password.dataValues.user;
+        newRow.setAttribute('data-folder', password.dataValues.folder);
+
 
         const actionCell = document.createElement('td');
         actionCell.innerHTML = `<button class="tooltip" data-tooltip="Launch Website"><ion-icon name="rocket-outline"></ion-icon></button>
@@ -24,13 +25,73 @@ ipcRenderer.on('passwords-data', (event, passwordData) => {
         newRow.appendChild(userCell);
         newRow.appendChild(actionCell);
         passwordTable.appendChild(newRow);
+        newRow.addEventListener('click', openItemInfo);
     });
 });
 
 document.addEventListener('DOMContentLoaded', () => {
     ipcRenderer.send('request-passwords-data');
+
     const addButton = document.querySelector('#addFolderBtn');
     addButton.addEventListener('click', () => {
         window.location.reload();
     });
 });
+
+
+const itemInfo = document.querySelector('.itemInfo');
+const closeBtn = document.querySelector('.itemInfo .closeBtn');
+const movePopupTitle = document.querySelector('#move-popup h2');
+
+function updateItemInfo(title, user, website, folder, imageSrc) {
+    itemInfo.querySelector('.itemTitle').textContent = title;
+    itemInfo.querySelector('.itemWebsite').textContent = `Website: ${website}`;
+    itemInfo.querySelector('.itemImage img').src = imageSrc;
+    itemInfo.querySelector('.itemFolder').textContent = `Folder: ${folder}`;
+    itemInfo.classList.remove('inactive');
+    itemInfo.classList.add('active');
+}
+function openItemInfo() {
+    const title = this.querySelector('.tableTitle').textContent;
+    const user = this.querySelector('td:nth-child(3)').textContent;
+    const website = this.querySelector('td:nth-child(2)').textContent;
+    const imageSrc = this.querySelector('.tableImage img').src;
+    const folder = this.getAttribute('data-folder'); // assuming data-folder attribute is set
+    movePopupTitle.textContent = title;
+    updateItemInfo(title, user, website, folder, imageSrc);
+}
+// Function to close item info
+function closeItemInfo() {
+    itemInfo.classList.remove('active');
+    itemInfo.classList.add('inactive');    
+}
+    // Add click event listener to close button
+    closeBtn.addEventListener('click', closeItemInfo);
+
+ document.getElementById('move-btn').addEventListener('click', function(event) {
+        var folderSelect = document.getElementById('folder-list');
+        var selectedFolder = folderSelect.options[folderSelect.selectedIndex].value;
+           
+     if (selectedFolder === 'New Folder') {
+            event.preventDefault();
+            let create=document.getElementById('createAndMove');
+            create.classList.add('active');
+            showPopup('createAndMove');
+
+        } else {
+         event.preventDefault();
+         const movePopupTitle = document.querySelector('#move-popup h2').textContent;
+         const selectedItem = movePopupTitle;     
+
+        ipcRenderer.send('move-to-folder',{selectedItem,selectedFolder})
+          
+        document.getElementById('move-message').innerText = "Item moved to folder";
+        hidePopup('move-popup');
+        blur.classList.toggle('active');
+        showPopup('moveMessage');
+        setTimeout(function() {
+            hidePopup('moveMessage');
+            }, 1000);
+
+        }
+    });

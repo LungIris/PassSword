@@ -33,5 +33,15 @@ const populateTable = () => {
             event.sender.send('passwords-data', { error: err.message });
         }
     })
+    ipcMain.on('move-to-folder', async (event, { selectedItem, selectedFolder }) => {
+
+        passwords.update({ folder: selectedFolder }, { where: { title: selectedItem} })
+            .then(() => {
+                console.log('Item moved to folder:', selectedFolder);
+            })
+            .catch(error => {
+                console.error('Error moving item to folder:', error);
+            });
+    });
 }
 module.exports={newPassword,populateTable}

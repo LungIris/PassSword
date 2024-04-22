@@ -901,7 +901,7 @@
   .scan,
   .scan-success {
     font-size: 15px;
-    transform: translateY(50px);
+    transform: translateY(10px);
     color: #666;
   }
   .scan-success {
@@ -915,7 +915,7 @@
   }
   .popupBiometric .icon-success {
     position: absolute;
-    top: 40px;
+    top: 80px;
   }
   .popupBiometric .icon-success circle {
     transform-origin: 50% 50%;
