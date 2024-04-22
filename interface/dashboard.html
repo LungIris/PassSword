@@ -161,8 +161,8 @@
                         <ion-icon name="menu-outline"></ion-icon>
                     </div>
                     <div class="dropdown-menu" id="dropdown-menu">
-                        <a href="#" id="move-option" onclick="moveToFolder()">Move to folder</a>
-                        <a href="#" id="remove-option"onclick="removeFromFolder()">Remove from folder</a>
+                        <a href="#" id="move-option" >Move to folder</a>
+                        <a href="#" id="remove-option">Remove from folder</a>
                     </div>
                 </div>
                
@@ -192,7 +192,7 @@
     <h3> Enter new folder name:</h3>
     <form id="fldrForm">
     <input  type="text" name="newFldrName">
-        <button type="submit">Create and Move</button>
+        <button type="submit" id="createMove">Create and Move</button>
     </form>
     </div>
     
@@ -303,7 +303,17 @@
     function showPopup(popupId) {
         document.getElementById(popupId).style.display = "block";
     }
+    document.getElementById('remove-option').addEventListener('click',function(event){
+        event.preventDefault();
+        showPopup('remove-popup');
+        document.getElementById('remove-message').innerText = "Item removed";
+        setTimeout(function() {
+            hidePopup('remove-popup');
+            window.location.reload();
 
+        }, 1000);
+
+    })
 
     // Move to folder option
     document.getElementById('move-option').addEventListener('click', function(event) {
@@ -318,14 +328,7 @@
 
     }
 
-    document.getElementById('remove-option').addEventListener('click', function(event) {
-        event.preventDefault();
-        document.getElementById('remove-message').innerText = "Item removed from folder.";
-        showPopup('remove-popup');
-        setTimeout(function() {
-            hidePopup('remove-popup');
-        }, 1000);
-    });
+   
     const itemInfo = document.querySelector('.itemInfo');
 
     document.getElementById('move-btn').addEventListener('click', function(event) {
@@ -339,7 +342,6 @@
 
         } else {
            event.preventDefault();
-           document.getElementById('move-message').innerText="Item moved to folder";
             hidePopup('move-popup');
             blur.classList.toggle('active');
             showPopup('moveMessage');

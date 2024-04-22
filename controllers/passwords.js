@@ -43,5 +43,16 @@ const populateTable = () => {
                 console.error('Error moving item to folder:', error);
             });
     });
+    ipcMain.on('remove-item-from-folder', async (event, { itemTitle }) => {
+        passwords.update({ folder: null }, { where: { title: itemTitle } })
+            .then(() => {
+                console.log('Item removed from folder');
+                event.sender.send('folder-removed', { success: true });
+        })
+        .catch(error => {
+            console.error('Error removing item from folder:', error);
+            event.sender.send('folder-removed', { success: false, error: error.message });
+        });
+    });
 }
 module.exports={newPassword,populateTable}

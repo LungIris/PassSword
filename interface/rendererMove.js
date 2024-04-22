@@ -10,9 +10,20 @@ function addFolder(e) {
     e.preventDefault()
     const formData = new FormData(fldrForm)
     const folder_name = formData.get('newFldrName')
-    
+    const selectedItem = document.querySelector('.itemInfo .itemTitle').textContent;
+    const selectedFolder = folder_name;
     ipcRenderer.send('new-folder', { folder_name })
+    ipcRenderer.send('move-to-folder',{selectedItem,selectedFolder})
     fldrForm.reset();
+    document.getElementById('move-message').innerText = "Item moved to folder "+selectedFolder;
+        hidePopup('move-popup');
+        blur.classList.toggle('active');
+        showPopup('moveMessage');
+        setTimeout(function() {
+            hidePopup('moveMessage');
+            }, 1000);
+
+
 }
 fldrForm.addEventListener('submit', addFolder);
 fldrForm.addEventListener('submit', () => {
@@ -40,7 +51,7 @@ ipcRenderer.on('folders-data', (event, foldersTable) => {
         folderList.appendChild(option);
     })
 })
-// Request folders data when DOM content is loaded
+
 document.addEventListener('DOMContentLoaded', () => {
     ipcRenderer.send('request-folders-data');
     const addButton = document.querySelector('#addFolderBtn');
@@ -50,3 +61,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
+
+
+
+
+ipcRenderer.on('item-moved-to-folder', (event, { success, error }) => {
+    if (success) {
+        console.log("Item successfully moved to the new folder.");
+    } else {
+        console.error("Failed to move item to folder:", error);
+    }
+});
