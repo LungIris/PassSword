@@ -218,8 +218,7 @@
 </div>
 <script type="module" src="rendererTables.js"></script>
 <script type="module" src="rendererMove.js"></script>
-
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 <script>
     let sidebar= document.querySelector('.sidebar');
@@ -263,7 +262,7 @@
             event.stopPropagation();
             // Handle button click here
             // You can add different functions for different buttons
-            if (button.contains('folder')) {
+            if (button.contains('star')) {
                 // Handle folder button click
             } else if (button.contains('rocket')) {
                 // Handle rocket button click
@@ -372,7 +371,17 @@
         popup.classList.toggle('active');
         blur.classList.toggle('active');
     })
+    const favoriteBtn = actionCell.children[0];
 
+    favoriteBtn.addEventListener('click', function(event) {
+
+        document.getElementById('move-message').innerText = "Item moved to favorites";
+        showPopup('moveMessage');
+        setTimeout(function() {
+            hidePopup('moveMessage');
+            }, 1000);
+
+    });
 })
 
 

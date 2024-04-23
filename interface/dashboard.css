@@ -892,7 +892,7 @@ outline:none;
     background-color: #282828;
     padding: 20px;
     border-radius: 5px;
-    z-index: 1000;
+    z-index: 5000;
     display: none;
     box-shadow: 0 0 10px #1c92a7;
     transition:0.5s;

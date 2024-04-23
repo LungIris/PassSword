@@ -1,9 +1,8 @@
 const { ipcRenderer } = require("electron");
-
-ipcRenderer.on('passwords-data', (event, passwordData) => {
+ipcRenderer.on('favorites-data', (event, favoritesData) => {
     const passwordTable = document.querySelector('#passwordTbl');
 
-    passwordData.forEach(password => {
+    favoritesData.forEach(password => {
         const newRow = document.createElement('tr');
         const titleCell = document.createElement('td');
         titleCell.innerHTML = `<div class="content">
@@ -23,7 +22,7 @@ ipcRenderer.on('passwords-data', (event, passwordData) => {
         }
 
         const actionCell = document.createElement('td');
-        actionCell.innerHTML = `<button class"tooltip" data-tooltip="Add to favorites"><ion-icon name="star-outline"></ion-icon></button>
+        actionCell.innerHTML = `<button class"tooltip" data-tooltip="Remove from favorites"><ion-icon name="remove-circle-outline"></ion-icon></button>
         <button class="tooltip" data-tooltip="Launch Website"><ion-icon name="rocket-outline"></ion-icon></button>
         <button><ion-icon name="trash-outline"></ion-icon></button>`;
         newRow.appendChild(titleCell);
@@ -34,31 +33,22 @@ ipcRenderer.on('passwords-data', (event, passwordData) => {
         newRow.addEventListener('click', openItemInfo);
 
         const favoriteBtn = actionCell.children[0];
-    favoriteBtn.addEventListener('click', function(event) {
-        event.stopPropagation(); 
-        const itemTitle = password.dataValues.title; 
-        ipcRenderer.send('set-folder-to-favorites', { itemTitle });
-        showPopup('moveMessage');
-        setTimeout(function() {
-        hidePopup('moveMessage');
-        window.location.reload();
-
-         }, 1000);
-    });
-    const deleteBtn = actionCell.children[2];
-    deleteBtn.addEventListener('click', function (event) {
-        event.stopPropagation();
-        const itemTitle = password.dataValues.title; 
-        ipcRenderer.send('move-item-to-trash', { itemTitle });
-        window.location.reload();
-    }) 
-    });
-
+        favoriteBtn.addEventListener('click', function(event) {
+            event.stopPropagation(); 
+            const itemTitle = password.dataValues.title; 
+            ipcRenderer.send('remove-favorites-from-folders', { itemTitle });
+            showPopup('moveMessage');
+            setTimeout(function() {
+            hidePopup('moveMessage');
+            window.location.reload();
     
+             }, 1000);
+        });
+    });
 });
 
 document.addEventListener('DOMContentLoaded', () => {
-    ipcRenderer.send('request-passwords-data');
+    ipcRenderer.send('request-favorites-data');
 
     const addButton = document.querySelector('#addFolderBtn');
     addButton.addEventListener('click', () => {

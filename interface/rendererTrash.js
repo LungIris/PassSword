@@ -19,7 +19,6 @@ function addFolder(e) {
 folderForm.addEventListener('submit', addFolder);
 
 ipcRenderer.on('folders-data', (event, foldersTable) => {
-    console.log("entered folder data");
     foldersTable.forEach(folder => {
         const folderLink = document.createElement('a');
         folderLink.href = `folders.html?title=${encodeURIComponent(folder.folder_name)}`;
@@ -32,15 +31,13 @@ ipcRenderer.on('folders-data', (event, foldersTable) => {
             window.location.href = `folders.html?title=${encodeURIComponent(title)}`;
         });
         submenu.appendChild(folderLink);
-        
-        
     });
    
 });
 
 // Request folders data when DOM content is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    ipcRenderer.send('request-folders-data');
+    ipcRenderer.send('request-trash-data');
     const addButton = document.querySelector('#addFolderBtn');
     addButton.addEventListener('click', () => {
         window.location.reload();

@@ -60,15 +60,3 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 });
-
-
-
-
-
-ipcRenderer.on('item-moved-to-folder', (event, { success, error }) => {
-    if (success) {
-        console.log("Item successfully moved to the new folder.");
-    } else {
-        console.error("Failed to move item to folder:", error);
-    }
-});

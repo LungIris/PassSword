@@ -116,23 +116,8 @@
                         <th>Action</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                            <div class="content">
-                                <div class="tableImage"><img src="images/biometric.png" /></div>
-                                <div class="tableTitle">Facebook</div>
-                                                   
-                             </div>
-                        </td>
-                        <td>lungiris</td>
-                        <td>13 days ago</td>
-                        <td>
-                            <button class="tooltip" data-tooltip="Remove from folder"><ion-icon name="remove-circle-outline"></ion-icon></button>
-                            <button class="tooltip" data-tooltip="Launch Website"><ion-icon name="rocket-outline"></ion-icon></button>
-                            <button><ion-icon name="trash-outline"></ion-icon></ion-icon></button>
-                        </td>
-                    </tr>
+                <tbody id="passwordTbl">
+                    
                 </tbody>
             </table>
         </div>
@@ -206,7 +191,7 @@
         <h3> Enter new folder name:</h3>
         <form id="fldrForm">
         <input  type="text" name="newFldrName">
-            <button type="submit">Create and Move</button>
+            <button type="submit" id="createMove">Create and Move</button>
         </form>
         </div>
         
@@ -231,7 +216,7 @@
     <div class="createMessage" id="createMessage">
         <p id="create-message"></p>
     </div>
-    <script type="module" src="rendererFolder.js"></script>
+    <script type="module" src="rendererFavorites.js"></script>
     <script type="module" src="rendererMove.js"></script>
 
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
@@ -384,11 +369,13 @@
         } else {
            event.preventDefault();
            document.getElementById('move-message').innerText="Item moved to folder";
+           blur.classList.toggle('active');
             hidePopup('move-popup');
-            blur.classList.toggle('active');
             showPopup('moveMessage');
             setTimeout(function() {
-            hidePopup('moveMessage');
+                hidePopup('moveMessage');
+                window.location.reload();
+
         }, 1000);
 
         }
