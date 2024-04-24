@@ -31,13 +31,62 @@ ipcRenderer.on('folders-data', (event, foldersTable) => {
             window.location.href = `folders.html?title=${encodeURIComponent(title)}`;
         });
         submenu.appendChild(folderLink);
-    });
-   
-});
 
-// Request folders data when DOM content is loaded
+    })
+})
+ipcRenderer.on('trash-data', (event, trashData) => {
+    const passwordTable = document.querySelector('#passwordTbl');
+    trashData.forEach(password => {
+        const newRow = document.createElement('tr');
+        const titleCell = document.createElement('td');
+        titleCell.innerHTML = `<div class="content">
+        <div class="tableImage"><img src="images/biometric.png" /></div>
+        <div class="tableTitle">${password.dataValues.title}</div>
+        </div>`
+        const addressCell = document.createElement('td');
+        addressCell.textContent = password.dataValues.address;
+
+        const userCell = document.createElement('td');
+        userCell.textContent = password.dataValues.user;
+        const actionCell = document.createElement('td');
+        actionCell.innerHTML = `<button class"tooltip" data-tooltip="Recover item"><ion-icon name="arrow-undo-outline"></ion-icon></button>
+        <button class="tooltip" data-tooltip="Permanently delete"><ion-icon name="trash-outline"></ion-icon></button>`;
+        newRow.appendChild(titleCell);
+        newRow.appendChild(addressCell);
+        newRow.appendChild(userCell);
+        newRow.appendChild(actionCell);
+        passwordTable.appendChild(newRow);
+
+        const recoverBtn = actionCell.children[0];
+        recoverBtn.addEventListener('click', function (event) {
+            event.stopPropagation();
+            const itemTitle = password.dataValues.title;
+            ipcRenderer.send('recover-item', { itemTitle });
+            showPopup('moveMessage');
+            setTimeout(function() {
+                hidePopup('moveMessage');
+                window.location.reload();
+        
+                 }, 1000);
+        })
+
+        const deleteButton = actionCell.children[1];
+        deleteButton.addEventListener('click', function (event) {
+            event.stopPropagation();
+            const itemTitle = password.dataValues.title;
+            ipcRenderer.send('permanently-delete', { itemTitle });
+            setTimeout(function() {
+                window.location.reload();
+        
+            }, 1000);
+        })
+    })
+})
+
 document.addEventListener('DOMContentLoaded', () => {
     ipcRenderer.send('request-trash-data');
+    ipcRenderer.send('request-folders-data');
+
     const addButton = document.querySelector('#addFolderBtn');
     addButton.addEventListener('click', () => {
         window.location.reload();

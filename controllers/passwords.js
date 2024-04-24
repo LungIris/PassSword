@@ -28,9 +28,10 @@ const populateTable = () => {
         try {
             const passwordData = await passwords.findAll({
                 where: {
-                    folder: {
-                        [Op.ne]: 'trash'
-                    }
+                    [Op.or]: [
+                        { folder: { [Op.ne]: 'trash' } },
+                        { folder: { [Op.is]: null } } 
+                    ]
                 }
             });
             event.sender.send('passwords-data', passwordData);
@@ -81,6 +82,15 @@ ipcMain.on('set-folder-to-favorites', async (event, { itemTitle }) => {
             console.error('Error moving item to favorites:', error);
         });
 });
+    ipcMain.on('recover-item', async (event, { itemTitle }) => {
+        passwords.update({ folder: null }, { where: { title: itemTitle } })
+            .then(() => {
+                console.log('Item recovered');
+            })
+            .catch(error => {
+                console.error('Error recovering item:', error);
+            });
+    });
 ipcMain.on('remove-favorites-from-folders', async (event, { itemTitle }) => {
     passwords.update({ folder: null }, { where: { title: itemTitle } })
             .then(() => {
@@ -110,5 +120,32 @@ ipcMain.on('request-trash-data', async (event) => {
         event.sender.send('trash-data', { error: err.message });
     }
 })
+    ipcMain.on('permanently-delete', async (event, { itemTitle }) => {
+        try {
+            const result = await passwords.destroy({
+                where: { title: itemTitle }
+            });
+            if (result > 0) { // Check if any rows were deleted
+                console.log('Item permanently deleted:', itemTitle);
+                event.sender.send('item-deleted', { success: true, title: itemTitle });
+            } else {
+                throw new Error('No item found with specified title.');
+            }
+        }catch (error) {
+            console.error('Error deleting item:', error);
+            event.sender.send('item-deleted', { success: false, error: error.message });
+        }
+    })
+    ipcMain.on('request-folder-items', async (event, { currentFolder }) => {
+        try {
+            const folderData = await passwords.findAll({
+                where: {folder: currentFolder}
+            })
+            event.sender.send('folder-items-data',folderData)
+        }catch (err) {
+            console.error(err);
+            event.sender.send('folder-items-data', { error: err.message });
+        }
+    })
 }
 module.exports={newPassword,populateTable}

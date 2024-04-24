@@ -266,10 +266,9 @@
     .removePassword{
         display:flex;
         justify-content: center;
-        align-items:center;
-        min-height: 100vh;
         background: #413a3a;
-        margin-left:20%;
+        margin-left:250px;
+        height:700px;
     }
     
     .removePassword a, .EmptyTrash{
@@ -283,8 +282,9 @@
         transition: 0.5s;
         color: #fff;
         overflow:hidden;
-        margin-top:-30%;
+        margin-top:125px;
         margin-left:30px;
+        margin-bottom:450px;
         box-shadow: 0 7px 25px #282828;
     
     }
@@ -330,10 +330,11 @@
     }
     
     .removePassword table{
+        position:relative;
+        margin-top:200px;
+        margin-left:30px;
         background: #282828;
         transition: 0.5s;
-        margin-top:-13%;
-        margin-left: 30px;
         width:900px;
         border-collapse:collapse;
         color: #fff;
@@ -341,7 +342,8 @@
         box-shadow: 0 0 5px #ff3131;
         border-bottom: none;
         overflow-x: auto;
-        
+        max-height:500px;
+        overflow-y:auto;
 
     }
     
@@ -374,7 +376,7 @@
     }
     td{
         padding:10px;
-        border-bottom: none;
+        border-bottom: 1px solid #999;
     }
     .content {
         display: flex; 
