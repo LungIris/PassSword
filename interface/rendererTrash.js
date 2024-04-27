@@ -61,9 +61,7 @@ ipcRenderer.on('trash-data', (event, trashData) => {
             event.stopPropagation();
             const itemTitle = password.dataValues.title;
             ipcRenderer.send('recover-item', { itemTitle });
-            showPopup('moveMessage');
             setTimeout(function() {
-                hidePopup('moveMessage');
                 window.location.reload();
         
                  }, 1000);
