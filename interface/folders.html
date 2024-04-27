@@ -219,7 +219,6 @@
     </div>
     
     <script type="module" src="rendererFolders.js"></script>
-
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 <script>
@@ -324,8 +323,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     const urlParams = new URLSearchParams(window.location.search);
     const title = urlParams.get('title');
-    document.getElementById('pageTitle').textContent = title; // Populate the page title
-    // You can use the title to fetch data and populate the table accordingly
+    document.getElementById('pageTitle').textContent = title; 
 });
 
 

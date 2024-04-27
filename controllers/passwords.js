@@ -147,5 +147,21 @@ ipcMain.on('request-trash-data', async (event) => {
             event.sender.send('folder-items-data', { error: err.message });
         }
     })
-}
+
+    ipcMain.on('update-password', async (event, {title,address, user, password }) => {
+        try {
+            const result = await passwords.update(
+                { address:address, user:user, password:password },
+                { where: {title } }
+            );
+            if (result[0] > 0) {
+                event.reply('update-password-response', { success: true, message: 'Password updated successfully.' });
+            } else {
+                throw new Error('No record found to update.');
+            }
+        } catch (error) {
+            console.error('Error updating password:', error);
+            event.reply('update-password-response', { success: false, message: error.message });
+        }
+    });}
 module.exports={newPassword,populateTable}

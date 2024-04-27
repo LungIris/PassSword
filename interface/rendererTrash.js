@@ -4,7 +4,6 @@ const folderForm = document.querySelector('#addFolderForm')
 const popup = document.querySelector('#popup');
 const blur = document.querySelector('#blur');
 const submenu = document.querySelector('#submenu');
-const folderList = document.querySelector('#folder-list');
 
 function addFolder(e) {
     e.preventDefault()

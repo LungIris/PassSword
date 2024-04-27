@@ -103,8 +103,15 @@ function openItemInfo() {
     const website = this.querySelector('td:nth-child(2)').textContent;
     const imageSrc = this.querySelector('.tableImage img').src;
     const folder = this.getAttribute('data-folder');
+    const password = this.getAttribute('data-password');
     movePopupTitle.textContent = title;
+    const editButton = itemInfo.querySelector('.editButton button');
     updateItemInfo(title, user, website, folder, imageSrc);
+    editButton.onclick = () => openEditPage(title, website, user, password);
+}
+function openEditPage(title, website, user, password) {
+    const url = `editPassword.html?title=${encodeURIComponent(title)}&website=${encodeURIComponent(website)}&user=${encodeURIComponent(user)}&password=${encodeURIComponent(password)}`;
+    window.location.href = url;
 }
 // Function to close item info
 function closeItemInfo() {

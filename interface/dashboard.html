@@ -225,7 +225,11 @@
     let navbar=document.querySelector(".navbar");
     let addPassword=document.querySelector(".addPassword");
     let submenu=document.querySelector(".submenu");
-   
+    document.addEventListener('DOMContentLoaded', function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const title = urlParams.get('title');
+    document.getElementById('pageTitle').textContent = title; 
+    });
 
    
     let MenuList= document.querySelectorAll('.MenuList li');

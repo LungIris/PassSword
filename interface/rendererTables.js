@@ -88,8 +88,16 @@ function openItemInfo() {
     const website = this.querySelector('td:nth-child(2)').textContent;
     const imageSrc = this.querySelector('.tableImage img').src;
     const folder = this.getAttribute('data-folder');
+    const password = this.getAttribute('data-password');
+    const editButton = itemInfo.querySelector('.editButton button');
+
     movePopupTitle.textContent = title;
     updateItemInfo(title, user, website, folder, imageSrc);
+    editButton.onclick = () => openEditPage(title, website, user, password);
+}
+function openEditPage(title, website, user, password) {
+    const url = `editPassword.html?title=${encodeURIComponent(title)}&website=${encodeURIComponent(website)}&user=${encodeURIComponent(user)}&password=${encodeURIComponent(password)}`;
+    window.location.href = url;
 }
 // Function to close item info
 function closeItemInfo() {
@@ -142,5 +150,23 @@ ipcRenderer.on('folder-removed', (event, response) => {
         
     } else {
         console.error('Failed to remove folder:', response.error);
+    }
+});
+document.addEventListener('DOMContentLoaded', () => {
+    editForm.addEventListener('submit', function(event) {
+        event.preventDefault(); 
+        const address = document.getElementById('websiteField').value; // Change to .value
+        const user = document.getElementById('userField').value; // Change to .value
+        const password = document.getElementById('myPassword').value;const title = new URLSearchParams(window.location.search).get('title');
+
+        ipcRenderer.send('update-password', { title,address, user, password });
+    });
+});
+ipcRenderer.on('update-password-response', (event, response) => {
+    if (response.success) {
+        alert('Update successful!');
+        window.location.href = 'dashboard.html'; // Redirect back to dashboard or other appropriate page
+    } else {
+        alert(`Failed to update: ${response.message}`);
     }
 });
