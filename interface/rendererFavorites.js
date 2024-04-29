@@ -5,10 +5,19 @@ ipcRenderer.on('favorites-data', (event, favoritesData) => {
     favoritesData.forEach(password => {
         const newRow = document.createElement('tr');
         const titleCell = document.createElement('td');
-        titleCell.innerHTML = `<div class="content">
-        <div class="tableImage"><img src="images/biometric.png" /></div>
+        const logo = `./logos/${password.dataValues.title}`;
+        if (logo) {
+            titleCell.innerHTML = `<div class="content">
+        <div class="tableImage"><img src="${logo}" /></div>
         <div class="tableTitle">${password.dataValues.title}</div>
         </div>`
+        }
+        else {
+            titleCell.innerHTML = `<div class="content">
+        <div class="tableImage"><img src="images/biometric.png" /></div>
+        <div class="tableTitle">${password.dataValues.title}</div>
+        </div>` 
+        }
         const addressCell = document.createElement('td');
         addressCell.textContent = password.dataValues.address;
 

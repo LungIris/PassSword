@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "electron": "^27.0.4",
+    "node-fetch": "^3.3.2",
     "sequelize": "^6.37.2",
     "sqlite3": "^5.1.7"
   }
