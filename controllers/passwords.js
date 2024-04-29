@@ -163,5 +163,61 @@ ipcMain.on('request-trash-data', async (event) => {
             console.error('Error updating password:', error);
             event.reply('update-password-response', { success: false, message: error.message });
         }
-    });}
+    });
+    ipcMain.on('request-analytics-data', async (event) => {
+        const data = {
+            totalItems: await getTotalItems(),
+            uniqueAccounts: await getUniqueAccounts(),
+            reusedPasswords: await getReusedPasswords(),
+            deletedItems: await getDeletedItems(),
+        };
+        event.reply('analytics-data-response', data);
+    });
+
+    async function getTotalItems() {
+        return passwords.count();
+    }
+    
+    async function getUniqueAccounts() {
+        return passwords.count({
+            distinct: true,
+            col: 'user'
+        });
+     }
+    
+    async function getReusedPasswords() {
+        return passwords.count({
+            where: {
+                password: {
+                    [Op.in]: sequelize.literal('(SELECT password FROM passwords GROUP BY password HAVING COUNT(password) > 1)')
+                }
+            }
+        });
+          }
+    
+    async function getDeletedItems() {
+        return passwords.count({
+            where: {
+                folder: 'trash'
+            }
+        });
+         }
+    
+    ipcMain.on('request-strength-data', async (event) => {
+        try {
+            const results = await passwords.findAll({
+                attributes: ['password']
+            });
+            const passwordsArray = results.map(result => result.password);  
+            event.sender.send('strength-data', passwordsArray);  
+    
+
+        } catch (error) {
+            console.error('Failed to fetch passwords:', error);
+            throw error;
+        }
+});
+        
+    
+}
 module.exports={newPassword,populateTable}

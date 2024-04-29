@@ -7,9 +7,10 @@ ipcRenderer.on('passwords-data', (event, passwordData) => {
         const newRow = document.createElement('tr');
         const titleCell = document.createElement('td');
         const logo = `./logos/${password.dataValues.title}`;
-        if (logo) {
+        if (logo!=null) {
             titleCell.innerHTML = `<div class="content">
-        <div class="tableImage"><img src="${logo}" /></div>
+        <div class="tableImage"><img src="${logo}" onerror="this.onerror=null; this.src='images/biometric.png';" />
+        </div>
         <div class="tableTitle">${password.dataValues.title}</div>
         </div>`
         }
