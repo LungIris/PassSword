@@ -2,9 +2,7 @@ const { ipcRenderer } = require("electron");
 
 const folderForm = document.querySelector('#addFolderForm')
 const popup = document.querySelector('#createAndMove');
-const popup2 = document.querySelector('#move-popup');
 const fldrForm = document.querySelector('#fldrForm');
-const movePopupTitle = document.querySelector('#move-popup h2');
 
 function addFolder(e) {
     e.preventDefault()
@@ -22,13 +20,25 @@ function addFolder(e) {
         setTimeout(function() {
             hidePopup('moveMessage');
             }, 1000);
-
-
 }
 fldrForm.addEventListener('submit', addFolder);
 fldrForm.addEventListener('submit', () => {
     window.location.reload();
 })
+function addFolder2(e) {
+    e.preventDefault()
+    const formData = new FormData(folderForm)
+    const folder_name = formData.get('newFolderName')
+    
+    ipcRenderer.send('new-folder', { folder_name })
+    popup.classList.remove('active');
+    blur.classList.remove('active');
+    folderForm.reset();
+}
+
+folderForm.addEventListener('submit', addFolder2);
+
+const submenu = document.querySelector('#submenu');
 
 const folderList = document.querySelector('#folder-list');
 ipcRenderer.on('folders-data', (event, foldersTable) => {
