@@ -31,7 +31,6 @@ ipcRenderer.on('passwords-data', (event, passwordData) => {
         else {
             newRow.setAttribute('data-password', 'None');
         }
-
         const actionCell = document.createElement('td');
         actionCell.innerHTML = `<button class"tooltip" data-tooltip="Add to favorites"><ion-icon name="star-outline"></ion-icon></button>
         <button class="tooltip" data-tooltip="Launch Website"><ion-icon name="rocket-outline"></ion-icon></button>
@@ -107,7 +106,7 @@ function openItemInfo() {
     editButton.onclick = () => openEditPage(title, website, user, password,imageSrc);
 }
 function openEditPage(title, website, user, password,imageSrc) {
-    const url = `editPassword.html?title=${encodeURIComponent(title)}&website=${encodeURIComponent(website)}&user=${encodeURIComponent(user)}&password=${encodeURIComponent(password)}&image=${encodeURIComponent(imageSrc)}}`;
+    const url = `editPassword.html?title=${encodeURIComponent(title)}&website=${encodeURIComponent(website)}&user=${encodeURIComponent(user)}&password=${encodeURIComponent(password)}&image=${imageSrc}`;
     window.location.href = url;
 }
 function closeItemInfo() {
@@ -164,8 +163,8 @@ ipcRenderer.on('folder-removed', (event, response) => {
 document.addEventListener('DOMContentLoaded', () => {
     editForm.addEventListener('submit', function(event) {
         event.preventDefault(); 
-        const address = document.getElementById('websiteField').value; // Change to .value
-        const user = document.getElementById('userField').value; // Change to .value
+        const address = document.getElementById('websiteField').value; 
+        const user = document.getElementById('userField').value; 
         const password = document.getElementById('myPassword').value;const title = new URLSearchParams(window.location.search).get('title');
 
         ipcRenderer.send('update-password', { title,address, user, password });
@@ -174,7 +173,7 @@ document.addEventListener('DOMContentLoaded', () => {
 ipcRenderer.on('update-password-response', (event, response) => {
     if (response.success) {
         alert('Update successful!');
-        window.location.href = 'dashboard.html'; // Redirect back to dashboard or other appropriate page
+        window.location.href = 'dashboard.html'; 
     } else {
         alert(`Failed to update: ${response.message}`);
     }

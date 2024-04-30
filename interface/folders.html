@@ -126,55 +126,55 @@
         
 
          <!-- Add this div for item information -->
-    <div class="itemInfo inactive">
-        <div class="itemContent">
-            <div class="closeBtn"><ion-icon name="close-circle-outline"></ion-icon></div>
-            <div class="itemDetails">
-                <div class="itemImage">
-                            <div class="icon">
-                                <img src="" alt="" width="50" height="50", align-items="center">
+         <div class="itemInfo inactive">
+            <div class="itemContent">
+                <div class="closeBtn"><ion-icon name="close-circle-outline"></ion-icon></div>
+                <div class="itemDetails">
+                    <div class="itemImage">
+                                <div class="icon">
+                                    <img src="" alt="" width="50" height="50", align-items="center">
+                                </div>
+                    </div>
+                    <div class="itemTitle"></div>
+                    <div class="cards">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="card-name">Delete</div>
                             </div>
+                            <div class="icon-box">
+                                <ion-icon name="trash-outline"></ion-icon>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="card-name">Share</div>
+                            </div>
+                            <div class="icon-box">
+                                <ion-icon name="share-outline"></ion-icon>
+                            </div>
+                        </div>
+                        <div class="card" id="dropdown-card">
+                            <div class="card-content">
+                                <div class="card-name">More</div>
+                                
+                            </div>
+                            <div class="icon-box">
+                                <ion-icon name="menu-outline"></ion-icon>
+                            </div>
+                            <div class="dropdown-menu" id="dropdown-menu">
+                                <a href="#" id="move-option"onclick="moveToFolder()">Move to folder</a>
+                                <a href="#" id="remove-option" onclick="removeFromFolder()">Remove from folder</a>
+                            </div>
+                        </div>
+                       
+                    </div>
+                    <div class="itemWebsite"></div>
+                    <div class="itemFolder"></div>
+                    <div class="editButton"><button type="submit" onclick="window.location.href='editPassword.html'">Edit</button></div>
                 </div>
-                <div class="itemTitle"></div>
-                <div class="cards">
-                    <div class="card">
-                        <div class="card-content">
-                            <div class="card-name">Delete</div>
-                        </div>
-                        <div class="icon-box">
-                            <ion-icon name="trash-outline"></ion-icon>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-content">
-                            <div class="card-name">Share</div>
-                        </div>
-                        <div class="icon-box">
-                            <ion-icon name="share-outline"></ion-icon>
-                        </div>
-                    </div>
-                    <div class="card" id="dropdown-card">
-                        <div class="card-content">
-                            <div class="card-name">More</div>
-                            
-                        </div>
-                        <div class="icon-box">
-                            <ion-icon name="menu-outline"></ion-icon>
-                        </div>
-                        <div class="dropdown-menu" id="dropdown-menu">
-                            <a href="#" id="move-option">Move to folder</a>
-                            <a href="#" id="remove-option">Remove from folder</a>
-                        </div>
-                    </div>
-                   
-                </div>
-                <div class="itemWebsite"></div>
-                <div class="itemFolder"></div>
-                <div class="editButton"><button type="submit">Edit</button></div>
             </div>
+            
         </div>
-        
-    </div>
     </div>       
     <div class="popup" id="popup">
         <h2> Add new folder </h2>
@@ -219,6 +219,7 @@
     </div>
     
     <script type="module" src="rendererFolders.js"></script>
+    <script type="module" src="rendererMove.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 <script>
@@ -264,25 +265,7 @@
     const closeBtn = document.querySelector('.itemInfo .closeBtn');
     const tableRows = document.querySelectorAll('.passwordTable tbody tr');
 
-    // Function to open item info
-    function openItemInfo() {
-        // Show item info
-        itemInfo.classList.remove('inactive');
-        itemInfo.classList.add('active');
-        // Get data from the clicked table row
-        const title = this.querySelector('.tableTitle').textContent;
-        const website = ''; // You should add logic to fetch website address
-        const folder = ''; // You should add logic to fetch folder
-        const imageSrc = ''; // You should add logic to fetch image source
-
-        // Populate item info
-        itemInfo.querySelector('.itemTitle').textContent = title;
-        itemInfo.querySelector('.itemWebsite').textContent = `Website: ${website}`;
-        itemInfo.querySelector('.itemFolder').textContent = `Folder: ${folder}`;
-        itemInfo.querySelector('.itemImage img').src = imageSrc;
-
-        
-    }
+   
 
     // Function to close item info
     function closeItemInfo() {
@@ -290,10 +273,6 @@
         itemInfo.classList.add('inactive');    
     }
 
-    // Add click event listeners to table rows
-    tableRows.forEach(row => {
-        row.addEventListener('click', openItemInfo);
-    });
 
     // Add click event listener to close button
     closeBtn.addEventListener('click', closeItemInfo);
@@ -388,11 +367,13 @@ const actionButtons = document.querySelectorAll('.passwordTable tbody tr td:last
         } else {
            event.preventDefault();
            document.getElementById('move-message').innerText="Item moved to folder";
+           blur.classList.toggle('active');
             hidePopup('move-popup');
-            blur.classList.toggle('active');
             showPopup('moveMessage');
             setTimeout(function() {
-            hidePopup('moveMessage');
+                hidePopup('moveMessage');
+                window.location.reload();
+
         }, 1000);
 
         }
@@ -410,10 +391,9 @@ const actionButtons = document.querySelectorAll('.passwordTable tbody tr td:last
     })
 
     const closeAddFolder=document.querySelector('.popup .closeBtn');
-    const blur=document.getElementById('blur');
     closeAddFolder.addEventListener('click',function(){
-        blur.classList.toggle('active');
         popup.classList.toggle('active');
+        blur.classList.toggle('active');
         
     })
 </script>

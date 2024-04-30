@@ -23,6 +23,12 @@ ipcRenderer.on('favorites-data', (event, favoritesData) => {
         else {
             newRow.setAttribute('data-folder', 'None');
         }
+        if (password.dataValues.password) {
+            newRow.setAttribute('data-password', password.dataValues.password);
+        }
+        else {
+            newRow.setAttribute('data-password', 'None');
+        }
 
         const actionCell = document.createElement('td');
         actionCell.innerHTML = `<button class"tooltip" data-tooltip="Remove from favorites"><ion-icon name="remove-circle-outline"></ion-icon></button>
@@ -47,8 +53,16 @@ ipcRenderer.on('favorites-data', (event, favoritesData) => {
     
              }, 1000);
         });
+        const deleteBtn = actionCell.children[2];
+    deleteBtn.addEventListener('click', function (event) {
+        event.stopPropagation();
+        const itemTitle = password.dataValues.title; 
+        ipcRenderer.send('move-item-to-trash', { itemTitle });
+        window.location.reload();
+    }) 
     });
-});
+    });
+
 
 document.addEventListener('DOMContentLoaded', () => {
     ipcRenderer.send('request-favorites-data');
@@ -76,6 +90,7 @@ function updateItemInfo(title, user, website, folder, imageSrc) {
     itemInfo.classList.add('active');
 }
 function openItemInfo() {
+
     const title = this.querySelector('.tableTitle').textContent;
     const user = this.querySelector('td:nth-child(3)').textContent;
     const website = this.querySelector('td:nth-child(2)').textContent;
@@ -86,18 +101,16 @@ function openItemInfo() {
 
     movePopupTitle.textContent = title;
     updateItemInfo(title, user, website, folder, imageSrc);
-    editButton.onclick = () => openEditPage(title, website, user, password);
+    editButton.onclick = () => openEditPage(title, website, user, password,imageSrc);
 }
-function openEditPage(title, website, user, password) {
-    const url = `editPassword.html?title=${encodeURIComponent(title)}&website=${encodeURIComponent(website)}&user=${encodeURIComponent(user)}&password=${encodeURIComponent(password)}`;
+function openEditPage(title, website, user, password,imageSrc) {
+    const url = `editPassword.html?title=${encodeURIComponent(title)}&website=${encodeURIComponent(website)}&user=${encodeURIComponent(user)}&password=${encodeURIComponent(password)}&image=${imageSrc}`;
     window.location.href = url;
 }
-// Function to close item info
 function closeItemInfo() {
     itemInfo.classList.remove('active');
     itemInfo.classList.add('inactive');    
 }
-    // Add click event listener to close button
     closeBtn.addEventListener('click', closeItemInfo);
 
  document.getElementById('move-btn').addEventListener('click', function(event) {
@@ -150,8 +163,8 @@ const editForm = document.querySelector('#editPasswordForm');
 document.addEventListener('DOMContentLoaded', () => {
     editForm.addEventListener('submit', function(event) {
         event.preventDefault(); 
-        const address = document.getElementById('websiteField').value; // Change to .value
-        const user = document.getElementById('userField').value; // Change to .value
+        const address = document.getElementById('websiteField').value; 
+        const user = document.getElementById('userField').value; 
         const password = document.getElementById('myPassword').value;const title = new URLSearchParams(window.location.search).get('title');
 
         ipcRenderer.send('update-password', { title,address, user, password });
@@ -160,7 +173,7 @@ document.addEventListener('DOMContentLoaded', () => {
 ipcRenderer.on('update-password-response', (event, response) => {
     if (response.success) {
         alert('Update successful!');
-        window.location.href = 'dashboard.html'; // Redirect back to dashboard or other appropriate page
+        window.location.href = 'dashboard.html'; 
     } else {
         alert(`Failed to update: ${response.message}`);
     }

@@ -61,3 +61,6 @@ ipcRenderer.on('update-password-response', (event, response) => {
         alert(`Failed to update: ${response.message}`);
     }
 });
+
+
+

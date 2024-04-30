@@ -24,6 +24,12 @@ ipcRenderer.on('folder-items-data', (event, passwordData) => {
         else {
             newRow.setAttribute('data-folder', 'None');
         }
+        if (password.dataValues.password) {
+            newRow.setAttribute('data-password', password.dataValues.password);
+        }
+        else {
+            newRow.setAttribute('data-password', 'None');
+        }
         newRow.setAttribute('data-user', password.dataValues.user);
         newRow.setAttribute('data-password', password.dataValues.password);
         const actionCell = document.createElement('td');
@@ -42,11 +48,11 @@ ipcRenderer.on('folder-items-data', (event, passwordData) => {
             event.stopPropagation();
             const itemTitle = password.dataValues.title;
             ipcRenderer.send('remove-item-from-folder', { itemTitle });
-            setTimeout(function() {
+            setTimeout(function () {
                 window.location.reload();
         
             }, 1000);
-        })
+        });
 
     const deleteBtn = actionCell.children[2];
     deleteBtn.addEventListener('click', function (event) {
@@ -60,7 +66,6 @@ ipcRenderer.on('folder-items-data', (event, passwordData) => {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
-    ipcRenderer.send('request-folders-data');
     const currentFolder = document.getElementById('pageTitle').textContent;
     ipcRenderer.send('request-folder-items',{currentFolder});
     const addButton = document.querySelector('#addFolderBtn');
@@ -68,22 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
         window.location.reload();
     });
 });
-ipcRenderer.on('folders-data', (event, foldersTable) => {
-    foldersTable.forEach(folder => {
-        const folderLink = document.createElement('a');
-        folderLink.href = `folders.html?title=${encodeURIComponent(folder.folder_name)}`;
-        folderLink.textContent = folder.dataValues.folder_name;
-        folderLink.classList.add('link');
 
-        folderLink.addEventListener('click', function(event) {
-            event.preventDefault(); 
-            const title = this.textContent; 
-            window.location.href = `folders.html?title=${encodeURIComponent(title)}`;
-        });
-        submenu.appendChild(folderLink);
-
-    })
-})
 
 const itemInfo = document.querySelector('.itemInfo');
 const closeBtn = document.querySelector('.itemInfo .closeBtn');
@@ -101,19 +91,21 @@ function updateItemInfo(title, user, website, folder, imageSrc) {
     itemInfo.classList.add('active');
 }
 function openItemInfo() {
+
     const title = this.querySelector('.tableTitle').textContent;
     const user = this.querySelector('td:nth-child(3)').textContent;
     const website = this.querySelector('td:nth-child(2)').textContent;
     const imageSrc = this.querySelector('.tableImage img').src;
     const folder = this.getAttribute('data-folder');
     const password = this.getAttribute('data-password');
-    movePopupTitle.textContent = title;
     const editButton = itemInfo.querySelector('.editButton button');
+
+    movePopupTitle.textContent = title;
     updateItemInfo(title, user, website, folder, imageSrc);
-    editButton.onclick = () => openEditPage(title, website, user, password);
+    editButton.onclick = () => openEditPage(title, website, user, password,imageSrc);
 }
-function openEditPage(title, website, user, password) {
-    const url = `editPassword.html?title=${encodeURIComponent(title)}&website=${encodeURIComponent(website)}&user=${encodeURIComponent(user)}&password=${encodeURIComponent(password)}`;
+function openEditPage(title, website, user, password,imageSrc) {
+    const url = `editPassword.html?title=${encodeURIComponent(title)}&website=${encodeURIComponent(website)}&user=${encodeURIComponent(user)}&password=${encodeURIComponent(password)}&image=${imageSrc}`;
     window.location.href = url;
 }
 // Function to close item info
@@ -167,5 +159,23 @@ ipcRenderer.on('folder-removed', (event, response) => {
         
     } else {
         console.error('Failed to remove folder:', response.error);
+    }
+});
+document.addEventListener('DOMContentLoaded', () => {
+    editForm.addEventListener('submit', function(event) {
+        event.preventDefault(); 
+        const address = document.getElementById('websiteField').value; 
+        const user = document.getElementById('userField').value; 
+        const password = document.getElementById('myPassword').value;const title = new URLSearchParams(window.location.search).get('title');
+
+        ipcRenderer.send('update-password', { title,address, user, password });
+    });
+});
+ipcRenderer.on('update-password-response', (event, response) => {
+    if (response.success) {
+        alert('Update successful!');
+        window.location.href = 'dashboard.html'; 
+    } else {
+        alert(`Failed to update: ${response.message}`);
     }
 });
