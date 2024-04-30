@@ -2,6 +2,7 @@ const {DataTypes,Op}= require('sequelize')
 const { sequelize } = require('../models');
 const { ipcMain } = require('electron')
 const passwords = require('../models/passwords')(sequelize, DataTypes);
+const folders = require('../models/folders')(sequelize, DataTypes);
 
 const newPassword = () => {
     console.log("this is new password");
@@ -167,7 +168,7 @@ ipcMain.on('request-trash-data', async (event) => {
     ipcMain.on('request-analytics-data', async (event) => {
         const data = {
             totalItems: await getTotalItems(),
-            uniqueAccounts: await getUniqueAccounts(),
+            foldersNumber: await getFoldersNumber(),
             reusedPasswords: await getReusedPasswords(),
             deletedItems: await getDeletedItems(),
         };
@@ -178,11 +179,8 @@ ipcMain.on('request-trash-data', async (event) => {
         return passwords.count();
     }
     
-    async function getUniqueAccounts() {
-        return passwords.count({
-            distinct: true,
-            col: 'user'
-        });
+    async function getFoldersNumber() {
+        return folders.count();
      }
     
     async function getReusedPasswords() {
