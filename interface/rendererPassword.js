@@ -108,4 +108,3 @@ function addPassword(e) {
 }
 addPasswordForm.addEventListener('submit', addPassword);
 
-

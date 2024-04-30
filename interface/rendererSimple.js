@@ -34,7 +34,6 @@ ipcRenderer.on('folders-data', (event, foldersTable) => {
     })
 })
 
-// Request folders data when DOM content is loaded
 document.addEventListener('DOMContentLoaded', () => {
     ipcRenderer.send('request-folders-data');
     const addButton = document.querySelector('#addFolderBtn');
@@ -45,9 +44,11 @@ document.addEventListener('DOMContentLoaded', () => {
 document.addEventListener('DOMContentLoaded', () => {
     editForm.addEventListener('submit', function(event) {
         event.preventDefault(); 
-        const address = document.getElementById('websiteField').value; // Change to .value
-        const user = document.getElementById('userField').value; // Change to .value
-        const password = document.getElementById('myPassword').value;const title = new URLSearchParams(window.location.search).get('title');
+        const address = document.getElementById('websiteField').value;
+        const user = document.getElementById('userField').value; 
+        const password = document.getElementById('myPassword').value;
+        const title = new URLSearchParams(window.location.search).get('title');
+    
 
         ipcRenderer.send('update-password', { title,address, user, password });
     });
@@ -55,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
 ipcRenderer.on('update-password-response', (event, response) => {
     if (response.success) {
         alert('Update successful!');
-        window.location.href = 'dashboard.html'; // Redirect back to dashboard or other appropriate page
+        window.location.href = 'dashboard.html'; 
     } else {
         alert(`Failed to update: ${response.message}`);
     }

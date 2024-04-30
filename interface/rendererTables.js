@@ -8,7 +8,7 @@ ipcRenderer.on('passwords-data', (event, passwordData) => {
         const titleCell = document.createElement('td');
         const logo = `./logos/${password.dataValues.title}`;
        
-            titleCell.innerHTML = `<div class="content">
+        titleCell.innerHTML = `<div class="content">
         <div class="tableImage"><img src="${logo}" onerror="this.onerror=null; this.src='images/biometric.png';" />
         </div>
         <div class="tableTitle">${password.dataValues.title}</div>
@@ -24,6 +24,12 @@ ipcRenderer.on('passwords-data', (event, passwordData) => {
         }
         else {
             newRow.setAttribute('data-folder', 'None');
+        }
+        if (password.dataValues.password) {
+            newRow.setAttribute('data-password', password.dataValues.password);
+        }
+        else {
+            newRow.setAttribute('data-password', 'None');
         }
 
         const actionCell = document.createElement('td');
@@ -87,6 +93,7 @@ function updateItemInfo(title, user, website, folder, imageSrc) {
     itemInfo.classList.add('active');
 }
 function openItemInfo() {
+
     const title = this.querySelector('.tableTitle').textContent;
     const user = this.querySelector('td:nth-child(3)').textContent;
     const website = this.querySelector('td:nth-child(2)').textContent;
@@ -97,18 +104,16 @@ function openItemInfo() {
 
     movePopupTitle.textContent = title;
     updateItemInfo(title, user, website, folder, imageSrc);
-    editButton.onclick = () => openEditPage(title, website, user, password);
+    editButton.onclick = () => openEditPage(title, website, user, password,imageSrc);
 }
-function openEditPage(title, website, user, password) {
-    const url = `editPassword.html?title=${encodeURIComponent(title)}&website=${encodeURIComponent(website)}&user=${encodeURIComponent(user)}&password=${encodeURIComponent(password)}`;
+function openEditPage(title, website, user, password,imageSrc) {
+    const url = `editPassword.html?title=${encodeURIComponent(title)}&website=${encodeURIComponent(website)}&user=${encodeURIComponent(user)}&password=${encodeURIComponent(password)}&image=${encodeURIComponent(imageSrc)}}`;
     window.location.href = url;
 }
-// Function to close item info
 function closeItemInfo() {
     itemInfo.classList.remove('active');
     itemInfo.classList.add('inactive');    
 }
-    // Add click event listener to close button
     closeBtn.addEventListener('click', closeItemInfo);
 
  document.getElementById('move-btn').addEventListener('click', function(event) {
