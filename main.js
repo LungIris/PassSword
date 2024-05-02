@@ -3,6 +3,8 @@ const {sequelize} = require('./models');
 const path = require("path");
 const folders = require("./controllers/folders");
 const passwords = require("./controllers/passwords");
+const users = require("./controllers/users");
+
 const createWindow = () => {
     const mainWindow = new BrowserWindow({
       width: 900,
@@ -23,6 +25,7 @@ const createWindow = () => {
         folders.populateSubmenu()
         passwords.newPassword()
         passwords.populateTable()
+        users.handleUsers()
     })
     
     

@@ -1,6 +1,7 @@
 const signInBtnLink = document.querySelector('.signInBtn-link');
 const signUpBtnLink = document.querySelector('.signUpBtn-link');
 const wrapper = document.querySelector('.wrapper');
+const { ipcRenderer } = require('electron');
 
 signUpBtnLink.addEventListener('click', () => {
     wrapper.classList.toggle('active');
@@ -13,23 +14,53 @@ document.addEventListener('DOMContentLoaded', function() {
     const loginForm = document.querySelector('.sign-in form');
     const signUpForm = document.querySelector('.sign-up form');
 
-    loginForm.addEventListener('submit', function(event) {
-        const email = document.querySelector('.sign-in [type="email"]').value;
+    loginForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const username = document.getElementById('usernameLogin').value;
         const password = document.querySelector('.sign-in [type="password"]').value;
-        if (!validateEmail(email) || !validatePassword(password)) {
-            event.preventDefault(); // Stop form submission
-            alert("Invalid email or password.");
-        }
+            ipcRenderer.send('login-request', { username, password });
+        
     });
 
-    signUpForm.addEventListener('submit', function(event) {
+    signUpForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+        const username = document.getElementById('username').value;
         const email = document.querySelector('.sign-up [type="email"]').value;
         const password = document.querySelector('.sign-up [type="password"]').value;
         if (!validateEmail(email) || !validatePassword(password)) {
-            event.preventDefault(); // Stop form submission
+            event.preventDefault(); 
             alert("Invalid email or password.");
         }
+        ipcRenderer.send('check-username-email', { username, email });
+ipcRenderer.send('check-username-email', { username, email });
+    
+ipcRenderer.once('check-username-email-response', (event, exists) => {
+    if (exists) {
+        alert("Username or Email already exists.");
+    } else {
+        ipcRenderer.send('signup-request', { username, email, password });
+        ipcRenderer.once('signup-response', (event, response) => {
+            
+                location.reload();
+            
+        });
+    }
+});
     });
+ipcRenderer.on('login-response', (event, response) => {
+    if (response.success) {
+        console.log(response.message); 
+        window.location.href = 'dashboard.html';
+    } else {
+        console.log(response.message); 
+        alert("Login failed: " + response.message);
+        location.reload();
+
+    }
+});
+
+    
 });
 function validateEmail(email) {
     const re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
