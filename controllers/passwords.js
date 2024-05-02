@@ -214,7 +214,16 @@ ipcMain.on('request-trash-data', async (event) => {
             console.error('Failed to fetch passwords:', error);
             throw error;
         }
-});
+    });
+    ipcMain.on('empty-trash', async (event) => {
+        try {
+            const result = await passwords.destroy({
+                where: { folder: 'trash' }
+            });
+        }catch (error) {
+            console.error('Error deleting items:', error);
+        }
+    })
         
     
 }

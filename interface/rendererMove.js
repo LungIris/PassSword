@@ -43,24 +43,41 @@ const submenu = document.querySelector('#submenu');
 const folderList = document.querySelector('#folder-list');
 ipcRenderer.on('folders-data', (event, foldersTable) => {
     foldersTable.forEach(folder => {
+        const folderDiv = document.createElement('div');
+        folderDiv.classList.add('folder-item');
+
         const folderLink = document.createElement('a');
         folderLink.href = `folders.html?title=${encodeURIComponent(folder.folder_name)}`;
         folderLink.textContent = folder.dataValues.folder_name;
         folderLink.classList.add('link');
+
+        const deleteButton = document.createElement('button');
+        deleteButton.classList.add('delete-button');
+         const icon = document.createElement('ion-icon');
+         icon.setAttribute('name', 'trash-outline');
+ 
+         deleteButton.appendChild(icon); 
+ 
+        deleteButton.addEventListener('click', (event) => {
+            event.stopPropagation(); 
+            event.preventDefault();
+            deleteFolder(folder.dataValues.folder_name); 
+        });
 
         folderLink.addEventListener('click', function(event) {
             event.preventDefault(); 
             const title = this.textContent; 
             window.location.href = `folders.html?title=${encodeURIComponent(title)}`;
         });
-        submenu.appendChild(folderLink);
-
-        const option = document.createElement('option');
-        option.value = folder.dataValues.folder_name;
-        option.textContent = folder.dataValues.folder_name;
-        folderList.appendChild(option);
+        folderDiv.appendChild(folderLink);
+        folderDiv.appendChild(deleteButton);
+        submenu.appendChild(folderDiv);
     })
 })
+function deleteFolder(folder_name) {
+    ipcRenderer.send('delete-folder', { folder_name });
+    window.location.reload();
+}
 
 document.addEventListener('DOMContentLoaded', () => {
     ipcRenderer.send('request-folders-data');

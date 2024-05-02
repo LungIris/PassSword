@@ -135,7 +135,7 @@
         <button type="submit" onclick="window.location.href='trash.html'" >Cancel</button>
         </div>
         <div class="buttonC">
-        <button type="submit" onclick="window.location.href='trash.html'" >Empty</button>
+        <button type="submit" id='deteletTrash' onclick="deleteItems()" >Empty</button>
         </div>
     </div>
     <div class="popup" id="popup">
@@ -213,7 +213,7 @@
      const itemInfo = document.querySelector('.itemInfo');
     const closeBtn = document.querySelector('.itemInfo .closeBtn');
     const tableRows = document.querySelectorAll('.passwordTable tbody tr');
-
+    
     
     
 
@@ -240,8 +240,20 @@
         blur.classList.toggle('active');
     })
 
-})
+    
 
+})
+    
+function deleteItems(){
+    const { ipcRenderer } = require('electron');
+    ipcRenderer.send('empty-trash');
+    window.location.reload();
+
+}
+const deleteTrash = document.querySelector('#deleteTrash');
+    deleteTrash.addEventListener('click', () => {
+        window.location.reload();
+    });
 </script>
 
 </body>

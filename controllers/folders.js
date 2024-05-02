@@ -40,5 +40,15 @@ ipcMain.on('move-to-folder', async (event, { selectedItem, selectedFolder }) => 
         });
 });
 
+ipcMain.on('delete-folder', async (event, { folder_name }) => {
+    try {
+        const result = await folders.destroy({
+            where: { folder_name: folder_name }
+        });
+    } catch (error) {
+        console.error('Error deleting folder:', error);
+    }
+});
+
 
 module.exports={newFolder,populateSubmenu}

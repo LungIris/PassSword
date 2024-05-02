@@ -970,4 +970,33 @@
     width:30px;
     height:30px;
 }
+.folder-item{
+    background:#282828;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%; 
+    justify-content: flex-end; 
+
+}
+
+.folder-item button{
+    padding-left:50px;
+    padding-right:10px;
+}
+.delete-button {
+    background: none;
+    border: none;
+    color: red;
+    cursor: pointer;
+}
+
+.delete-button:hover {
+    color: darkred;
+}
+
+.delete-button ion-icon {
+    font-size: 20px;  /* Adjust size as needed */
+}
+
 }
