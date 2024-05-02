@@ -125,7 +125,7 @@ h3 {
 
 .input-group {
     position: relative;
-    margin: 25px 0;
+    margin: 15px 0;
     border-bottom: 2px solid #fff;
 }
 
@@ -278,4 +278,20 @@ fingerprint .fingerprintBox img {
     50%{
         opacity: 0.5;
     }
+}
+
+.emailText, .passText, .confirmPassText{
+    
+    color:#0ea015;
+}
+ 
+label.valid::before,
+label.invalid::before{
+    content:"";
+    position:absolute;
+    width:24px;
+    height:24px;
+    top:18px;
+    right:5px;
+    z-index:100;
 }

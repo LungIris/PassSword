@@ -62,19 +62,25 @@
                 <input type="text " required>
                 <label for=" ">Username</label>
               </div>
-              <div class="input-group ">
-                <input type="email" required>
+              <div class="input-group emailBox ">
+                <input type="email" id="email" required>
                 <label for="">Email</label>
               </div>
-              <div class="input-group ">
+              <span class="emailText"></span>
+
+              <div class="input-group passBox">
                 <div class="icon"><ion-icon name="eye-outline"></ion-icon></div>
-                <input type="password" required>
+                <input type="password" id="password" required>
                 <label for=" ">Password</label>
               </div>
-              <div class="input-group ">
-                <input type="password" required>
+              <span class="passText"></span>
+
+              <div class="input-group confirmPassBox">
+                <input type="password" id="confirmPass" required>
                 <label for=" ">Confirm Password</label>
               </div>
+              <span class="confirmPassText"></span>
+
               <div class="remember ">
                 <label><input type="checkbox"> I agree to the terms and conditions
                 </label>
@@ -88,8 +94,58 @@
             </form>
           </div> 
     </div>
-    <script type="text/javascript" src="rendererMainPage.js" >
-      
-  </script>
+    <script type="text/javascript" src="rendererMainPage.js" ></script>
+    <script>
+      const email=document.getElementById("email");
+      const password=document.getElementById("password");
+      const confirmPass=document.getElementById("confirmPass");
+      email.addEventListener('input',()=>{
+        const emailBox=document.querySelector('.emailBox');
+        const emailText=document.querySelector('.emailText');
+        const emailPattern= /[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+        if(email.value.match(emailPattern)){
+          emailBox.classList.add('valid');
+          emailBox.classList.remove('invalid');
+          emailText.innerHTML="Your email address is valid"
+        }else{
+          emailBox.classList.add('invalid');
+          emailBox.classList.remove('valid');
+          emailText.innerHTML="Must be a valid email address"
+        }
+      })
+
+      password.addEventListener('input',()=>{
+        const passBox=document.querySelector('.passBox');
+        const passText=document.querySelector('.passText');
+        const passPattern = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*><?:;"'{}+=_-]).{15,}/;
+        if(password.value.match(passPattern)){
+          passBox.classList.add('valid');
+          passBox.classList.remove('invalid');
+          passText.innerHTML="Your password is valid"
+        }else{
+          passBox.classList.add('invalid');
+          passBox.classList.remove('valid');
+          passText.innerHTML="Your password must have at least 15 characters, contain at least one uppercase, one lowercase, one symbol, and one number. "
+        }
+      })
+      confirmPass.addEventListener('input',()=>{
+        const passBox=document.querySelector('.passBox');
+        const passText=document.querySelector('.passText');
+        const confirmPassBox=document.querySelector('.confirmPassBox');
+        const confirmPassText=document.querySelector('.confirmPassText');
+        if(confirmPass.value===password.value){
+          confirmPassBox.classList.add('valid');
+          confirmPassBox.classList.remove('invalid');
+          confirmPassText.innerHTML="Your passwords match"
+
+        }else{
+          confirmPassBox.classList.add('invalid');
+          confirmPassBox.classList.remove('valid');
+          confirmPassText.innerHTML="Your passwords do not match"
+        }
+      })
+
+
+    </script>
 </body>
 </html>
