@@ -1,4 +1,5 @@
 const { ipcRenderer } = require("electron");
+const crypto = require('crypto');
 
 ipcRenderer.on('passwords-data', (event, passwordData) => {
     const passwordTable = document.querySelector('#passwordTbl');
@@ -30,6 +31,12 @@ ipcRenderer.on('passwords-data', (event, passwordData) => {
         }
         else {
             newRow.setAttribute('data-password', 'None');
+        }
+        if (password.dataValues.iv) {
+            newRow.setAttribute('data-iv', password.dataValues.iv);
+        }
+        else {
+            newRow.setAttribute('data-iv', 'None');
         }
         const actionCell = document.createElement('td');
         actionCell.innerHTML = `<button class"tooltip" data-tooltip="Add to favorites"><ion-icon name="star-outline"></ion-icon></button>
@@ -100,11 +107,36 @@ function openItemInfo() {
     const folder = this.getAttribute('data-folder');
     const password = this.getAttribute('data-password');
     const editButton = itemInfo.querySelector('.editButton button');
+    const iv = this.getAttribute('data-iv');
+    const sessionKey = sessionStorage.getItem('sessionKey'); 
+    console.log('session key:' + sessionKey);
+    console.log('password:' + password);
 
-    movePopupTitle.textContent = title;
-    updateItemInfo(title, user, website, folder, imageSrc);
-    editButton.onclick = () => openEditPage(title, website, user, password,imageSrc);
+    const decryptedPassword = decryptPassword(password, iv, sessionKey);
+
+    if (decryptedPassword) {
+        const editButton = itemInfo.querySelector('.editButton button');
+        movePopupTitle.textContent = title;
+        updateItemInfo(title, user, website, folder, imageSrc);
+        editButton.onclick = () => openEditPage(title, website, user, decryptedPassword, imageSrc);
+    } else {
+        console.error('Failed to decrypt password');
+    }
 }
+function decryptPassword(encryptedPassword, ivHex, sessionKey) {
+    try {
+        const key = Buffer.from(sessionKey, 'hex');
+        const iv = Buffer.from(ivHex, 'hex');
+        const decipher = crypto.createDecipheriv('aes-256-cbc', key, iv);
+        let decrypted = decipher.update(encryptedPassword, 'hex', 'utf8');
+        decrypted += decipher.final('utf8');
+        return decrypted;
+    } catch (error) {
+        console.error('Decryption failed:', error);
+        return null;
+    }
+}
+
 function openEditPage(title, website, user, password,imageSrc) {
     const url = `editPassword.html?title=${encodeURIComponent(title)}&website=${encodeURIComponent(website)}&user=${encodeURIComponent(user)}&password=${encodeURIComponent(password)}&image=${imageSrc}`;
     window.location.href = url;
@@ -113,7 +145,7 @@ function closeItemInfo() {
     itemInfo.classList.remove('active');
     itemInfo.classList.add('inactive');    
 }
-    closeBtn.addEventListener('click', closeItemInfo);
+closeBtn.addEventListener('click', closeItemInfo);
 
  document.getElementById('move-btn').addEventListener('click', function(event) {
         var folderSelect = document.getElementById('folder-list');

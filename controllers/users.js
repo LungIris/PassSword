@@ -11,8 +11,7 @@ const handleUsers = () => {
         console.log('user logged in');
         const user = await users.findOne({ where: { username } });
         if (user && await bcrypt.compare(password, user.hash)) {
-            const salt = crypto.randomBytes(16).toString('hex');
-            crypto.pbkdf2(user.hash, salt, 100000, 32, 'sha512', (err, key) => {
+            crypto.pbkdf2(user.hash, user.salt, 100000, 32, 'sha512', (err, key) => {
                 if (err) {
                     console.error('Error generating key', err);
                     event.reply('login-response', { success: false, message: 'Error in key generation' });

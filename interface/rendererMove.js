@@ -39,7 +39,6 @@ function addFolder2(e) {
 folderForm.addEventListener('submit', addFolder2);
 
 const submenu = document.querySelector('#submenu');
-
 const folderList = document.querySelector('#folder-list');
 ipcRenderer.on('folders-data', (event, foldersTable) => {
     foldersTable.forEach(folder => {
@@ -72,6 +71,11 @@ ipcRenderer.on('folders-data', (event, foldersTable) => {
         folderDiv.appendChild(folderLink);
         folderDiv.appendChild(deleteButton);
         submenu.appendChild(folderDiv);
+
+        const option = document.createElement('option');
+        option.value = folder.dataValues.folder_name;
+        option.textContent = folder.dataValues.folder_name;
+        folderList.appendChild(option);
     })
 })
 function deleteFolder(folder_name) {

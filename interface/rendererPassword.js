@@ -2,7 +2,7 @@ const { ipcRenderer } = require("electron");
 
 const addPasswordForm = document.getElementById('addPasswordForm');
 let inputAddress = document.getElementById("address");
-let websiteLogo = document.getElementById("logo"); // Assuming this is the ID for your image element
+let websiteLogo = document.getElementById("logo"); 
 const crypto = require('crypto');
 
 const websites = [
@@ -107,6 +107,8 @@ function addPassword(e) {
     ipcRenderer.send('new-password', { title, address, user, plainPassword , folder,sessionKey});
     addPasswordForm.reset();
     window.location.href = 'dashboard.html';
+    localStorage.removeItem('formData');
+
 }
 addPasswordForm.addEventListener('submit', addPassword);
 
