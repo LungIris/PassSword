@@ -3,7 +3,7 @@ const { ipcRenderer } = require("electron");
 const addPasswordForm = document.getElementById('addPasswordForm');
 let inputAddress = document.getElementById("address");
 let websiteLogo = document.getElementById("logo"); // Assuming this is the ID for your image element
-
+const crypto = require('crypto');
 
 const websites = [
     {"name": "Facebook", "url": "https://www.facebook.com"},
@@ -94,15 +94,17 @@ function removeElements() {
     });
 }
 function addPassword(e) {
-    console.log('this is add password');
+    console.log('entered addPassword');
     e.preventDefault();
     const formData = new FormData(addPasswordForm);
     const title = formData.get('title');
     const address = formData.get('address');
     const user = formData.get('user');
-    const password = formData.get('password');
+    const plainPassword = formData.get('password');
     const folder = '';
-    ipcRenderer.send('new-password', { title, address, user, password , folder});
+
+    const sessionKey = sessionStorage.getItem('sessionKey');
+    ipcRenderer.send('new-password', { title, address, user, plainPassword , folder,sessionKey});
     addPasswordForm.reset();
     window.location.href = 'dashboard.html';
 }

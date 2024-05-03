@@ -228,7 +228,6 @@
     document.addEventListener('DOMContentLoaded', function() {
     const urlParams = new URLSearchParams(window.location.search);
     const title = urlParams.get('title');
-    document.getElementById('pageTitle').textContent = title; 
     });
 
    
@@ -375,17 +374,7 @@
         popup.classList.toggle('active');
         blur.classList.toggle('active');
     })
-    const favoriteBtn = actionCell.children[0];
-
-    favoriteBtn.addEventListener('click', function(event) {
-
-        document.getElementById('move-message').innerText = "Item moved to favorites";
-        showPopup('moveMessage');
-        setTimeout(function() {
-            hidePopup('moveMessage');
-            }, 1000);
-
-    });
+    
 })
 
 

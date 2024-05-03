@@ -3,23 +3,30 @@ const { sequelize } = require('../models');
 const { ipcMain } = require('electron')
 const passwords = require('../models/passwords')(sequelize, DataTypes);
 const folders = require('../models/folders')(sequelize, DataTypes);
+const crypto = require('crypto');
+
 
 const newPassword = () => {
-    console.log("this is new password");
     ipcMain.on('new-password', async (event, data) => {
-        console.log("this is IPC new password");
-        const title = data.title;
-        const address = data.address;
-        const user = data.user;
-        const password = data.password;
-        const folder = data.folder;
+        console.log('entered new password');
         try {
-            await passwords.create({ title, address, user, password,folder });
-            event.sender.send('password-created', { success: true });
+            const { title, address, user, plainPassword, folder, sessionKey } = data;
+            const key = Buffer.from(sessionKey, 'hex');
+            console.log('this is session key: ' + sessionKey);
+            const iv = crypto.randomBytes(16);
+            console.log('iv:' + iv.toString('hex'));
+            const cipher = crypto.createCipheriv('aes-256-cbc', key, iv);
+            let encryptedPassword = cipher.update(plainPassword, 'utf8', 'hex');
 
+            encryptedPassword += cipher.final('hex');
+
+            console.log('this is encrypted password: ' + encryptedPassword);
+
+            await passwords.create({ title, address, user, password: encryptedPassword,iv: iv.toString('hex') , folder });
+            event.sender.send('password-created', { success: true });
         } catch (err) {
-            console.error(err);
-            event.sender.send('password-created', { succes: false, error: err.message });
+            console.error('Error in new-password handler:', err);
+            event.sender.send('password-created', { success: false, error: err.message });
         }
     })
 }

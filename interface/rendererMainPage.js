@@ -51,7 +51,10 @@ ipcRenderer.once('check-username-email-response', (event, exists) => {
 ipcRenderer.on('login-response', (event, response) => {
     if (response.success) {
         console.log(response.message); 
+        console.log('session key received: ' + response.sessionKey);
+        sessionStorage.setItem('sessionKey', response.sessionKey);  
         window.location.href = 'dashboard.html';
+
     } else {
         console.log(response.message); 
         alert("Login failed: " + response.message);
