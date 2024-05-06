@@ -102,9 +102,10 @@ function addPassword(e) {
     const user = formData.get('user');
     const plainPassword = formData.get('password');
     const folder = '';
+    const username = sessionStorage.getItem('username');
 
     const sessionKey = sessionStorage.getItem('sessionKey');
-    ipcRenderer.send('new-password', { title, address, user, plainPassword , folder,sessionKey});
+    ipcRenderer.send('new-password', { title, address, user, plainPassword , folder,sessionKey,username});
     addPasswordForm.reset();
     window.location.href = 'dashboard.html';
     localStorage.removeItem('formData');

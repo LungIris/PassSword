@@ -6,19 +6,16 @@ const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 
 const handleUsers = () => {
-    console.log('this is handle users ');
     ipcMain.on('login-request', async (event, { username, password }) => {
-        console.log('user logged in');
         const user = await users.findOne({ where: { username } });
         if (user && await bcrypt.compare(password, user.hash)) {
             crypto.pbkdf2(user.hash, user.salt, 100000, 32, 'sha512', (err, key) => {
                 if (err) {
                     console.error('Error generating key', err);
-                    event.reply('login-response', { success: false, message: 'Error in key generation' });
+                    event.reply('login-response', { success: false, message: 'Error in key generation'});
                 } else {
-                    console.log('this is the generated key: ' + key.toString('hex'));
                     event.reply('login-response', {
-                        success: true, message: 'Login successful', sessionKey: key.toString('hex')
+                        success: true, message: 'Login successful', sessionKey: key.toString('hex'),username:username
                     });
                 }
             });
@@ -41,11 +38,10 @@ const handleUsers = () => {
             event.reply('check-username-email-response', userExists ? true : false);
         } catch (error) {
             console.error('Error checking username/email:', error);
-            event.reply('check-username-email-response', false); // Assume false on error
+            event.reply('check-username-email-response', false);
         }
     });
     ipcMain.on('signup-request', async (event, { username, email, password }) => {
-        console.log('signup request made ');
         try {
             const salt = await bcrypt.genSalt(10);
             const hash = await bcrypt.hash(password, salt);

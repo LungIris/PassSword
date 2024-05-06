@@ -45,7 +45,9 @@ ipcRenderer.on('favorites-data', (event, favoritesData) => {
         favoriteBtn.addEventListener('click', function(event) {
             event.stopPropagation(); 
             const itemTitle = password.dataValues.title; 
-            ipcRenderer.send('remove-favorites-from-folders', { itemTitle });
+            const username=sessionStorage.getItem('username')
+
+            ipcRenderer.send('remove-favorites-from-folders', { itemTitle,username });
             showPopup('moveMessage');
             setTimeout(function() {
             hidePopup('moveMessage');
@@ -56,8 +58,10 @@ ipcRenderer.on('favorites-data', (event, favoritesData) => {
         const deleteBtn = actionCell.children[2];
     deleteBtn.addEventListener('click', function (event) {
         event.stopPropagation();
-        const itemTitle = password.dataValues.title; 
-        ipcRenderer.send('move-item-to-trash', { itemTitle });
+        const itemTitle = password.dataValues.title;
+        const username=sessionStorage.getItem('username')
+
+        ipcRenderer.send('move-item-to-trash', { itemTitle ,username});
         window.location.reload();
     }) 
     });
@@ -65,8 +69,8 @@ ipcRenderer.on('favorites-data', (event, favoritesData) => {
 
 
 document.addEventListener('DOMContentLoaded', () => {
-    ipcRenderer.send('request-favorites-data');
-
+    const username=sessionStorage.getItem('username')
+    ipcRenderer.send('request-favorites-data',{username});
     const addButton = document.querySelector('#addFolderBtn');
     addButton.addEventListener('click', () => {
         window.location.reload();
@@ -127,8 +131,9 @@ function closeItemInfo() {
          event.preventDefault();
          const movePopupTitle = document.querySelector('#move-popup h2').textContent;
          const selectedItem = movePopupTitle;     
+         const username=sessionStorage.getItem('username')
 
-        ipcRenderer.send('move-to-folder',{selectedItem,selectedFolder})
+        ipcRenderer.send('move-to-folder',{selectedItem,selectedFolder,username})
           
         document.getElementById('move-message').innerText = "Item moved to folder "+selectedFolder;
         hidePopup('move-popup');
@@ -144,8 +149,9 @@ function closeItemInfo() {
 document.getElementById('remove-option').addEventListener('click', function (event) {
     event.preventDefault();
     const itemTitle = document.querySelector('.itemInfo .itemTitle').textContent;
+    const username=sessionStorage.getItem('username')
 
-    ipcRenderer.send('remove-item-from-folder', { itemTitle });     
+    ipcRenderer.send('remove-item-from-folder', { itemTitle,username });     
     
 
 });

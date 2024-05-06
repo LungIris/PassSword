@@ -53,7 +53,9 @@ ipcRenderer.on('passwords-data', (event, passwordData) => {
     favoriteBtn.addEventListener('click', function(event) {
         event.stopPropagation(); 
         const itemTitle = password.dataValues.title; 
-        ipcRenderer.send('set-folder-to-favorites', { itemTitle });
+        const username=sessionStorage.getItem('username')
+
+        ipcRenderer.send('set-folder-to-favorites', { itemTitle,username });
         showPopup('moveMessage');
         setTimeout(function() {
         hidePopup('moveMessage');
@@ -74,7 +76,8 @@ ipcRenderer.on('passwords-data', (event, passwordData) => {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
-    ipcRenderer.send('request-passwords-data');
+    const username=sessionStorage.getItem('username')
+    ipcRenderer.send('request-passwords-data',{username});
 
     const addButton = document.querySelector('#addFolderBtn');
     addButton.addEventListener('click', () => {
@@ -161,8 +164,9 @@ closeBtn.addEventListener('click', closeItemInfo);
          event.preventDefault();
          const movePopupTitle = document.querySelector('#move-popup h2').textContent;
          const selectedItem = movePopupTitle;     
+         const username=sessionStorage.getItem('username')
 
-        ipcRenderer.send('move-to-folder',{selectedItem,selectedFolder})
+        ipcRenderer.send('move-to-folder',{selectedItem,selectedFolder,username})
           
         document.getElementById('move-message').innerText = "Item moved to folder "+selectedFolder;
         hidePopup('move-popup');

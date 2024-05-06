@@ -9,15 +9,18 @@ function addFolder(e) {
     e.preventDefault()
     const formData = new FormData(folderForm)
     const folder_name = formData.get('newFolderName')
-    
-    ipcRenderer.send('new-folder', { folder_name })
+    const username=sessionStorage.getItem('username')
+
+    ipcRenderer.send('new-folder', {
+        folder_name, username
+     })
     popup.classList.remove('active');
     blur.classList.remove('active');
     folderForm.reset();
 }
 folderForm.addEventListener('submit', addFolder);
 
-ipcRenderer.on('folders-data', (event, foldersTable) => {
+ipcRenderer.on('folders-data', (event, foldersTable,username) => {
     foldersTable.forEach(folder => {
         const folderDiv = document.createElement('div');
         folderDiv.classList.add('folder-item');
@@ -51,12 +54,16 @@ ipcRenderer.on('folders-data', (event, foldersTable) => {
     })
 })
 function deleteFolder(folder_name) {
-    ipcRenderer.send('delete-folder', { folder_name });
+    const username=sessionStorage.getItem('username')
+
+    ipcRenderer.send('delete-folder', { folder_name,username });
     window.location.reload();
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    ipcRenderer.send('request-folders-data');
+    const username=sessionStorage.getItem('username')
+
+    ipcRenderer.send('request-folders-data', { username });
     const addButton = document.querySelector('#addFolderBtn');
     addButton.addEventListener('click', () => {
         window.location.reload();
@@ -70,8 +77,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const password = document.getElementById('myPassword').value;
         const title = new URLSearchParams(window.location.search).get('title');
     
+        const username=sessionStorage.getItem('username')
 
-        ipcRenderer.send('update-password', { title,address, user, password });
+        ipcRenderer.send('update-password', { title,address, user, password ,username});
     });
 });
 ipcRenderer.on('update-password-response', (event, response) => {

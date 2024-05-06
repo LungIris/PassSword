@@ -14,7 +14,8 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   folders.init({
-    folder_name: DataTypes.STRING
+    folder_name: DataTypes.STRING,
+    username: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'folders',

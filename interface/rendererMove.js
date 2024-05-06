@@ -10,8 +10,10 @@ function addFolder(e) {
     const folder_name = formData.get('newFldrName')
     const selectedItem = document.querySelector('.itemInfo .itemTitle').textContent;
     const selectedFolder = folder_name;
-    ipcRenderer.send('new-folder', { folder_name })
-    ipcRenderer.send('move-to-folder',{selectedItem,selectedFolder})
+    const username=sessionStorage.getItem('username')
+
+    ipcRenderer.send('new-folder', { folder_name,username })
+    ipcRenderer.send('move-to-folder',{selectedItem,selectedFolder,username})
     fldrForm.reset();
     document.getElementById('move-message').innerText = "Item moved to folder "+selectedFolder;
         hidePopup('move-popup');
@@ -29,8 +31,9 @@ function addFolder2(e) {
     e.preventDefault()
     const formData = new FormData(folderForm)
     const folder_name = formData.get('newFolderName')
-    
-    ipcRenderer.send('new-folder', { folder_name })
+    const username=sessionStorage.getItem('username')
+
+    ipcRenderer.send('new-folder', { folder_name,username })
     popup.classList.remove('active');
     blur.classList.remove('active');
     folderForm.reset();
@@ -40,7 +43,7 @@ folderForm.addEventListener('submit', addFolder2);
 
 const submenu = document.querySelector('#submenu');
 const folderList = document.querySelector('#folder-list');
-ipcRenderer.on('folders-data', (event, foldersTable) => {
+ipcRenderer.on('folders-data', (event, foldersTable,username) => {
     foldersTable.forEach(folder => {
         const folderDiv = document.createElement('div');
         folderDiv.classList.add('folder-item');
@@ -79,12 +82,16 @@ ipcRenderer.on('folders-data', (event, foldersTable) => {
     })
 })
 function deleteFolder(folder_name) {
-    ipcRenderer.send('delete-folder', { folder_name });
+    const username=sessionStorage.getItem('username')
+
+    ipcRenderer.send('delete-folder', { folder_name ,username});
     window.location.reload();
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    ipcRenderer.send('request-folders-data');
+    const username=sessionStorage.getItem('username')
+
+    ipcRenderer.send('request-folders-data',{username});
     const addButton = document.querySelector('#addFolderBtn');
     addButton.addEventListener('click', () => {
         window.location.reload();

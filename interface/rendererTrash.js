@@ -9,15 +9,16 @@ function addFolder(e) {
     e.preventDefault()
     const formData = new FormData(folderForm)
     const folder_name = formData.get('newFolderName')
-    
-    ipcRenderer.send('new-folder', { folder_name })
+    const username=sessionStorage.getItem('username')
+
+    ipcRenderer.send('new-folder', { folder_name,username })
     popup.classList.remove('active');
     blur.classList.remove('active');
     folderForm.reset();
 }
 folderForm.addEventListener('submit', addFolder);
 
-ipcRenderer.on('folders-data', (event, foldersTable) => {
+ipcRenderer.on('folders-data', (event, foldersTable,username) => {
     foldersTable.forEach(folder => {
         const folderDiv = document.createElement('div');
         folderDiv.classList.add('folder-item');
@@ -51,10 +52,12 @@ ipcRenderer.on('folders-data', (event, foldersTable) => {
     })
 })
 function deleteFolder(folder_name) {
-    ipcRenderer.send('delete-folder', { folder_name });
+    const username=sessionStorage.getItem('username')
+
+    ipcRenderer.send('delete-folder', { folder_name,username });
     window.location.reload();
 }
-ipcRenderer.on('trash-data', (event, trashData) => {
+ipcRenderer.on('trash-data', (event, trashData,username) => {
     const passwordTable = document.querySelector('#passwordTbl');
     trashData.forEach(password => {
         const newRow = document.createElement('tr');
@@ -84,7 +87,9 @@ ipcRenderer.on('trash-data', (event, trashData) => {
         recoverBtn.addEventListener('click', function (event) {
             event.stopPropagation();
             const itemTitle = password.dataValues.title;
-            ipcRenderer.send('recover-item', { itemTitle });
+            const username=sessionStorage.getItem('username')
+
+            ipcRenderer.send('recover-item', { itemTitle,username });
             setTimeout(function() {
                 window.location.reload();
         
@@ -95,7 +100,9 @@ ipcRenderer.on('trash-data', (event, trashData) => {
         deleteButton.addEventListener('click', function (event) {
             event.stopPropagation();
             const itemTitle = password.dataValues.title;
-            ipcRenderer.send('permanently-delete', { itemTitle });
+            const username=sessionStorage.getItem('username')
+
+            ipcRenderer.send('permanently-delete', { itemTitle,username });
             setTimeout(function() {
                 window.location.reload();
         
@@ -104,8 +111,10 @@ ipcRenderer.on('trash-data', (event, trashData) => {
     })
 })
 document.addEventListener('DOMContentLoaded', () => {
-    ipcRenderer.send('request-trash-data');
-    ipcRenderer.send('request-folders-data');
+    const username=sessionStorage.getItem('username')
+
+    ipcRenderer.send('request-trash-data', { username });
+    ipcRenderer.send('request-folders-data',{username});
 
     const addButton = document.querySelector('#addFolderBtn');
     addButton.addEventListener('click', () => {

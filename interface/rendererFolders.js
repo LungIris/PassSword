@@ -47,7 +47,8 @@ ipcRenderer.on('folder-items-data', (event, passwordData) => {
         removeButton.addEventListener('click', function (event) {
             event.stopPropagation();
             const itemTitle = password.dataValues.title;
-            ipcRenderer.send('remove-item-from-folder', { itemTitle });
+            const username=sessionStorage.getItem('username')
+            ipcRenderer.send('remove-item-from-folder', { itemTitle,username });
             setTimeout(function () {
                 window.location.reload();
         
@@ -58,7 +59,8 @@ ipcRenderer.on('folder-items-data', (event, passwordData) => {
     deleteBtn.addEventListener('click', function (event) {
         event.stopPropagation();
         const itemTitle = password.dataValues.title; 
-        ipcRenderer.send('move-item-to-trash', { itemTitle });
+        const username=sessionStorage.getItem('username')
+        ipcRenderer.send('move-item-to-trash', { itemTitle,username });
         window.location.reload();
     }) 
     });
@@ -67,7 +69,9 @@ ipcRenderer.on('folder-items-data', (event, passwordData) => {
 
 document.addEventListener('DOMContentLoaded', () => {
     const currentFolder = document.getElementById('pageTitle').textContent;
-    ipcRenderer.send('request-folder-items',{currentFolder});
+    const username=sessionStorage.getItem('username')
+    ipcRenderer.send('request-passwords-data',{username});
+    ipcRenderer.send('request-folder-items',{currentFolder,username});
     const addButton = document.querySelector('#addFolderBtn');
     addButton.addEventListener('click', () => {
         window.location.reload();
@@ -130,8 +134,9 @@ function closeItemInfo() {
          event.preventDefault();
          const movePopupTitle = document.querySelector('#move-popup h2').textContent;
          const selectedItem = movePopupTitle;     
+         const username=sessionStorage.getItem('username')
 
-        ipcRenderer.send('move-to-folder',{selectedItem,selectedFolder})
+        ipcRenderer.send('move-to-folder',{selectedItem,selectedFolder,username})
           
         document.getElementById('move-message').innerText = "Item moved to folder "+selectedFolder;
         hidePopup('move-popup');
@@ -147,8 +152,9 @@ function closeItemInfo() {
 document.getElementById('remove-option').addEventListener('click', function (event) {
     event.preventDefault();
     const itemTitle = document.querySelector('.itemInfo .itemTitle').textContent;
+    const username=sessionStorage.getItem('username')
 
-    ipcRenderer.send('remove-item-from-folder', { itemTitle });     
+    ipcRenderer.send('remove-item-from-folder', { itemTitle,username });     
     
 
 });
@@ -167,8 +173,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const address = document.getElementById('websiteField').value; 
         const user = document.getElementById('userField').value; 
         const password = document.getElementById('myPassword').value;const title = new URLSearchParams(window.location.search).get('title');
+        const username=sessionStorage.getItem('username')
 
-        ipcRenderer.send('update-password', { title,address, user, password });
+        ipcRenderer.send('update-password', { title,address, user, password ,username});
     });
 });
 ipcRenderer.on('update-password-response', (event, response) => {
