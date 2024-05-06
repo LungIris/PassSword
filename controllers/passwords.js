@@ -3,7 +3,10 @@ const { sequelize } = require('../models');
 const { ipcMain } = require('electron')
 const passwords = require('../models/passwords')(sequelize, DataTypes);
 const folders = require('../models/folders')(sequelize, DataTypes);
+const users = require('../models/users')(sequelize, DataTypes);
+
 const crypto = require('crypto');
+const bcrypt = require('bcrypt');
 
 const newPassword = () => {
     ipcMain.on('new-password', async (event, data) => {
@@ -211,16 +214,76 @@ ipcMain.on('request-trash-data', async (event,{username}) => {
             throw error;
         }
     });
-    ipcMain.on('empty-trash', async (event,username) => {
+    ipcMain.on('empty-trash', async (event, username) => {
         try {
             const result = await passwords.destroy({
-                where: { folder: 'trash',username:username }
+                where: { folder: 'trash', username: username }
             });
-        }catch (error) {
+        } catch (error) {
             console.error('Error deleting items:', error);
         }
+    });
+    ipcMain.on('change-password-request', async (event, { oldPassword, newPass, username }) => {
+        console.log('entered change password');
+        const user = await users.findOne({ where: { username } });
+        if (!user || !await bcrypt.compare(oldPassword, user.hash)) {
+            event.reply('change-password-response', { success: false, message: 'Invalid old password.' });
+            return;
+        }
+        if (!validatePassword(newPass)) {
+            event.reply('change-password-response', { success: false, message: 'Password does not meet security criteria.' });
+            return;
+        }
+        const salt = await bcrypt.genSalt(10);
+        const hash = await bcrypt.hash(newPass, salt);
+        await users.update({ hash, salt }, { where: { username } });
+        event.reply('change-password-response', { success: true });
     })
-        
+    ipcMain.on('get-user-email', async (event, { username }) => {
+        try {
+            const user = await users.findOne({
+                where: { username }
+            });
+            if (user) {
+                event.reply('send-user-email', { email: user.email });
+            } else {
+                event.reply('send-user-email', { email: null });
+            }
+        } catch (error) {
+            console.error('Error fetching user email:', error);
+            event.reply('send-user-email', { email: null });
+        }
+    });
+    function validatePassword(password) {
+        const minLength = 15;
+        const hasNumbers = /\d/;
+        const hasUpper = /[A-Z]/;
+        const hasLower = /[a-z]/;
+        const hasSpecial = /[!@#\$%\^\&*\)\(+=._-]/;
+    
+        if (password.length < minLength) {
+            alert("Password must be at least 15 characters long.");
+            return false;
+        }
+        if (!hasNumbers.test(password)) {
+            alert("Password must include at least one number.");
+            return false;
+        }
+        if (!hasUpper.test(password)) {
+            alert("Password must include at least one uppercase letter.");
+            return false;
+        }
+        if (!hasLower.test(password)) {
+            alert("Password must include at least one lowercase letter.");
+            return false;
+        }
+        if (!hasSpecial.test(password)) {
+            alert("Password must include at least one special character.");
+            return false;
+        }
+        return true;
+    }
+    
     
 }
 module.exports={newPassword,populateTable}

@@ -567,6 +567,7 @@
         visibility:visible;
         opacity:1;
         transition:1.5s;
+        overflow:scroll;
 }
 
 .popupChangePassword h2{
@@ -613,8 +614,15 @@
     letter-spacing:0.05em;
     transition: 0.5s;
 }
-.popupChangePassword .inputBox label{
+
+.popupChangePassword .inputBox label.valid::before,
+.popupChangePassword .inputBox label.invalid::before{
     position:absolute;
+    width:24px;
+    height:24px;
+    top:18px;
+    right:5px;
+    z-index:100;
     left:0;
     padding:20px 10px 10px;
     pointer-events: none;
@@ -622,7 +630,6 @@
     font-size: 1em;
     letter-spacing:0.05em;
     transition: 0.5s;
-
 }
 
 .popupChangePassword  .inputBox input:valid ~label,
@@ -764,9 +771,28 @@
     justify-content: center;
     align-items: center;
     margin-left:170px;
-
 }
 .popupChangePassword button[type="submit"]{
+
+    width: 200px;
+    height: 40px;
+    background: #57e5ff;
+    box-shadow: 0 0 10px #57e5ff;
+    font-size:16px;
+    color: #000;
+    font-weight:500;
+    cursor:pointer;
+    border-radius:30px;
+    margin-top:20px;
+    margin-right:50px;
+    border:none;
+    outline:none;
+}
+.popupChangePassword button[type="submit"]:hover{
+    background: #2a8b9c;
+    box-shadow: 0 0 10px #2a8b9c; 
+}
+.popupChangePassword button[type="button"]{
 
     width: 200px;
     height: 40px;
@@ -782,7 +808,7 @@
     border:none;
     outline:none;
 }
-.popupChangePassword button[type="submit"]:hover{
+.popupChangePassword button[type="button"]:hover{
     background: #2a8b9c;
     box-shadow: 0 0 10px #2a8b9c; 
 }
@@ -996,7 +1022,12 @@
 }
 
 .delete-button ion-icon {
-    font-size: 20px;  /* Adjust size as needed */
+    font-size: 20px;  
 }
+.passText, .confirmPassText{
+    
+    color:#0ea015;
+}
+ 
 
 }

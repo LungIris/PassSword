@@ -109,18 +109,18 @@
             <h2>Account</h2>
             <div class="section">
                 <div class="label">
-                    <label>Email</label>
+                    <label >Change email</label>
                 </div>
                 <div class="input">
-                    <h3>lung_iris@yahoo.com</h3>
+                    <button type="submit" onclick="showChangeEmail()" id="buttonChangeEmail"><ion-icon name="chevron-forward-outline"></ion-icon></button>
                 </div>
             </div>
             <div class="section">
                 <div class="label">
-                    <label >Change Profile Picture</label>
+                    <label >Change username</label>
                 </div>
                 <div class="input">
-                    <button type="file" ><ion-icon name="chevron-forward-outline"></ion-icon></button>
+                    <button type="submit" onclick="showChangeUsername()" id="buttonChangeUsername"><ion-icon name="chevron-forward-outline"></ion-icon></button>
                 </div>
             </div>
         </section>
@@ -197,6 +197,31 @@
         </div>
     </form>
 </div>
+<div class="popupChangeEmail" id="popupChangeEmail">
+    <h2>Change email:</h2>
+    <div>
+        <label>Current Email:</label>
+        <span id="currentEmail">user@example.com</span>
+    </div>
+    <div>
+        <input type="email" id="newEmail" placeholder="Enter new email">
+    </div>
+    <button onclick="updateEmail()">Change</button>
+    <button onclick="hidePopup('popupChangeEmail')">Cancel</button>
+
+</div>
+<div class="popupChangeUsername" id="popupChangeUsername" style="display:none;">
+    <h2>Change Username:</h2>
+    <div>
+        <label>Current Username:</label>
+        <span id="currentUsername">username</span>
+    </div>
+    <div>
+        <input type="text" id="newUsername" placeholder="Enter new username">
+    </div>
+    <button onclick="updateUsername()">Change</button>
+    <button onclick="hidePopup('popupChangeUsername')">Cancel</button>
+</div>
     <div class="popupChangePassword" id="popupChangePassword">
         <h2> Change master password: </h2>
         <div class="inputBox">
@@ -205,29 +230,30 @@
             <div class="show1"></div>
             <i></i>
         </div>
-        <div class="inputBox">
+        <div class="inputBox passBox">
             <input type="password"  required="required" id="myPassword2">
             <label >Enter new PassSword</label>
             <div class="show2"></div>
             <i></i>
+
         </div>
-        <div class="inputBox">
+        <span class="passText"></span>
+
+        <div class="inputBox confirmPassBox">
             <div class="passwordInput">
                 <input type="password" required="required" id="myPassword3">
                 <label >
                     Confirm new PassSword</label>
                 <div class="show3"></div>
                 </div>
-            <i></i>
-            <div class="strengthMeter"></div>
-            <i></i>
+                <i></i>
+
         </div>
-        <div class="generate">
-            <a href="generatePassword.html"> Generate Password</a>
-        </div>
+        <span class="confirmPassText"></span>
+
         <div class="buttonC">
-            <button type="submit" onclick="window.location.href='settings.html'" >Confirm</button>
-            </div>
+            <button type="button" id="confirmChangePassword">Confirm</button>
+        </div>
         <div class="buttonC">
         <button type="submit" onclick="window.location.href='settings.html'" >Cancel</button>
         </div>
@@ -413,6 +439,42 @@
         blur.classList.toggle('active');
     })
 
+    
+
+    const password = document.getElementById('myPassword2');
+
+    password.addEventListener('input',()=>{
+        const passBox=document.querySelector('.passBox');
+        const passText=document.querySelector('.passText');
+        const passPattern = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*><?:;"'{}+=_-]).{15,}/;
+        if(password.value.match(passPattern)){
+          passBox.classList.add('valid');
+          passBox.classList.remove('invalid');
+          passText.innerHTML="Your password is valid"
+        }else{
+          passBox.classList.add('invalid');
+          passBox.classList.remove('valid');
+          passText.innerHTML="Your password must have at least 15 characters, contain at least one uppercase, one lowercase, one symbol, and one number. "
+        }
+      })
+      const confirmPass = document.getElementById('myPassword3');
+
+      confirmPass.addEventListener('input',()=>{
+        const passBox=document.querySelector('.passBox');
+        const passText=document.querySelector('.passText');
+        const confirmPassBox=document.querySelector('.confirmPassBox');
+        const confirmPassText=document.querySelector('.confirmPassText');
+        if(confirmPass.value===password.value){
+          confirmPassBox.classList.add('valid');
+          confirmPassBox.classList.remove('invalid');
+          confirmPassText.innerHTML="Your passwords match"
+
+        }else{
+          confirmPassBox.classList.add('invalid');
+          confirmPassBox.classList.remove('valid');
+          confirmPassText.innerHTML="Your passwords do not match"
+        }
+      })
 </script>
 <script src="setBiometric.js"></script>  
 </body>
