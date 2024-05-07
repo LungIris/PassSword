@@ -110,11 +110,9 @@ function openItemInfo() {
     const imageSrc = this.querySelector('.tableImage img').src;
     const folder = this.getAttribute('data-folder');
     const password = this.getAttribute('data-password');
-    const editButton = itemInfo.querySelector('.editButton button');
     const iv = this.getAttribute('data-iv');
     const sessionKey = sessionStorage.getItem('sessionKey'); 
-    console.log('session key:' + sessionKey);
-    console.log('password:' + password);
+    
 
     const decryptedPassword = decryptPassword(password, iv, sessionKey);
 
