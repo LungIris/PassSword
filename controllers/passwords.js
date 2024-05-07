@@ -214,13 +214,21 @@ ipcMain.on('request-trash-data', async (event,{username}) => {
             throw error;
         }
     });
-    ipcMain.on('empty-trash', async (event, username) => {
+    ipcMain.on('empty-trash', async (event, { username }) => {
         try {
             const result = await passwords.destroy({
                 where: { folder: 'trash', username: username }
             });
+            if (result > 0) {
+                console.log('Items deleted:', result);
+                event.reply('empty-trash-response', { success: true, message: 'Trash emptied successfully' });
+            } else {
+                console.log('No items to delete');
+                event.reply('empty-trash-response', { success: false, message: 'No items found in trash' });
+            }
         } catch (error) {
             console.error('Error deleting items:', error);
+            event.reply('empty-trash-response', { success: false, message: error.message });
         }
     });
     ipcMain.on('change-password-request', async (event, { oldPassword, newPass, username }) => {
@@ -237,7 +245,7 @@ ipcMain.on('request-trash-data', async (event,{username}) => {
         const salt = await bcrypt.genSalt(10);
         const hash = await bcrypt.hash(newPass, salt);
         await users.update({ hash, salt }, { where: { username } });
-        event.reply('change-password-response', { success: true });
+        event.reply('change-password-response', { success: true ,hash,salt});
     })
     ipcMain.on('get-user-email', async (event, { username }) => {
         try {

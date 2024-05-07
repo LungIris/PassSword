@@ -67,7 +67,8 @@ ipcRenderer.on('passwords-data', (event, passwordData) => {
     deleteBtn.addEventListener('click', function (event) {
         event.stopPropagation();
         const itemTitle = password.dataValues.title; 
-        ipcRenderer.send('move-item-to-trash', { itemTitle });
+        const username = sessionStorage.getItem('username');
+        ipcRenderer.send('move-item-to-trash', { itemTitle,username });
         window.location.reload();
     }) 
     });

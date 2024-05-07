@@ -135,7 +135,7 @@
         <button type="submit" onclick="window.location.href='trash.html'" >Cancel</button>
         </div>
         <div class="buttonC">
-        <button type="submit" id='deteletTrash' onclick="deleteItems()" >Empty</button>
+        <button type="submit" id='deleteTrash' onclick="deleteItems()" >Empty</button>
         </div>
     </div>
     <div class="popup" id="popup">
@@ -243,17 +243,19 @@
     
 
 })
-    
+const { ipcRenderer } = require('electron');
 function deleteItems(){
-    const { ipcRenderer } = require('electron');
-    ipcRenderer.send('empty-trash');
-    window.location.reload();
-
+    const username= sessionStorage.getItem('username');
+    ipcRenderer.send('empty-trash',{username});
 }
-const deleteTrash = document.querySelector('#deleteTrash');
-    deleteTrash.addEventListener('click', () => {
-        window.location.reload();
-    });
+ipcRenderer.on('empty-trash-response', (event, { success, message }) => {
+    if (success) {
+        console.log('Trash emptied successfully');
+    } else {
+        console.error('Failed to empty trash:', message);
+    }
+    window.location.reload(); 
+});
 </script>
 
 </body>
