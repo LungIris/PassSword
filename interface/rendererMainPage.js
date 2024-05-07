@@ -29,12 +29,11 @@ document.addEventListener('DOMContentLoaded', function() {
         const email = document.querySelector('.sign-up [type="email"]').value;
         const password = document.querySelector('.sign-up [type="password"]').value;
         if (!validateEmail(email) || !validatePassword(password)) {
-            event.preventDefault(); 
+            event.preventDefault();
             alert("Invalid email or password.");
         }
         ipcRenderer.send('check-username-email', { username, email });
-ipcRenderer.send('check-username-email', { username, email });
-    
+    });    
 ipcRenderer.once('check-username-email-response', (event, exists) => {
     if (exists) {
         alert("Username or Email already exists.");
@@ -63,7 +62,7 @@ ipcRenderer.on('login-response', (event, response) => {
 });
 
     
-});
+
 function validateEmail(email) {
     const re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
     return re.test(String(email).toLowerCase());

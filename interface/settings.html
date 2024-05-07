@@ -112,7 +112,7 @@
                     <label >Change email</label>
                 </div>
                 <div class="input">
-                    <button type="submit" onclick="showChangeEmail()" id="buttonChangeEmail"><ion-icon name="chevron-forward-outline"></ion-icon></button>
+                    <button type="submit" onclick="changeEmail()" id="buttonChangeEmail"><ion-icon name="chevron-forward-outline"></ion-icon></button>
                 </div>
             </div>
             <div class="section">
@@ -120,7 +120,7 @@
                     <label >Change username</label>
                 </div>
                 <div class="input">
-                    <button type="submit" onclick="showChangeUsername()" id="buttonChangeUsername"><ion-icon name="chevron-forward-outline"></ion-icon></button>
+                    <button type="submit" onclick="changeUsername()" id="buttonChangeUsername"><ion-icon name="chevron-forward-outline"></ion-icon></button>
                 </div>
             </div>
         </section>
@@ -198,29 +198,43 @@
     </form>
 </div>
 <div class="popupChangeEmail" id="popupChangeEmail">
-    <h2>Change email:</h2>
-    <div>
+    <h2>Change email</h2>
+    <div class="inputBox">
         <label>Current Email:</label>
-        <span id="currentEmail">user@example.com</span>
+        <span id="currentEmail"></span>
     </div>
-    <div>
-        <input type="email" id="newEmail" placeholder="Enter new email">
+    <div class="inputBox emailBox">
+        <input type="email" id="newEmail" required>
+        <label>Enter New Email:</label>
     </div>
-    <button onclick="updateEmail()">Change</button>
-    <button onclick="hidePopup('popupChangeEmail')">Cancel</button>
+    <span class="passEmail"></span>
+
+    <div class="buttonC">
+        <button type="button" id="confirmChangeEmail">Confirm</button>
+    </div>
+    <div class="buttonC">
+    <button type="submit" onclick="window.location.href='settings.html'" >Cancel</button>
+    </div>
 
 </div>
-<div class="popupChangeUsername" id="popupChangeUsername" style="display:none;">
-    <h2>Change Username:</h2>
-    <div>
+<div class="popupChangeUsername" id="popupChangeUsername">
+    <h2>Change Username</h2>
+    <div class="inputBox">
         <label>Current Username:</label>
-        <span id="currentUsername">username</span>
+        <span id="currentUsername"></span>
     </div>
-    <div>
-        <input type="text" id="newUsername" placeholder="Enter new username">
+    <div class="inputBox usernameBox">
+        <input type="text" id="newUsername"  required>
+        <label>Enter New Username</label>
     </div>
-    <button onclick="updateUsername()">Change</button>
-    <button onclick="hidePopup('popupChangeUsername')">Cancel</button>
+    <span class="passUsername"></span>
+
+    <div class="buttonC">
+        <button type="button" id="confirmChangeUsername">Confirm</button>
+    </div>
+    <div class="buttonC">
+    <button type="submit" onclick="window.location.href='settings.html'" >Cancel</button>
+    </div>
 </div>
     <div class="popupChangePassword" id="popupChangePassword">
         <h2> Change master password: </h2>
@@ -332,7 +346,33 @@
     });
    
     let passwordForm=document.querySelector(".popupChangePassword");
+    const { ipcRenderer } = require('electron');
 
+    function changeEmail(){
+        var blur =document.getElementById('blur');
+        blur.classList.toggle('active');
+        var popupChangeEmail = document.getElementById('popupChangeEmail');
+        popupChangeEmail.classList.toggle('active');
+        let username= sessionStorage.getItem('username');
+        ipcRenderer.send('change-email',{username});
+    }
+    ipcRenderer.on('email-response', (event, response) => {
+    if (response.success) {
+        const currentEmailSpan = document.getElementById('currentEmail');
+        currentEmailSpan.textContent = response.email;
+    } else {
+        console.log(response.message); 
+    }
+    });
+    function changeUsername(){
+        var blur =document.getElementById('blur');
+        blur.classList.toggle('active');
+        var popupChangeUsername = document.getElementById('popupChangeUsername');
+        popupChangeUsername.classList.toggle('active');
+        let username= sessionStorage.getItem('username');
+        document.getElementById('currentUsername').textContent = username; 
+
+    }
     function changePassword() {
             var blur = document.getElementById('blur');
             blur.classList.toggle('active');
@@ -364,30 +404,7 @@
             return i;
         }
         let container= document.querySelector('.popupChangePassword');
-        let meter=document.querySelector('.passwordInput');
-        meter.addEventListener("keyup",function(e){
-            let password=document.querySelector('#myPassword2').value;
-            let strength=Strength(password);
-            if(strength ==0){
-                container.classList.remove('weak');
-                container.classList.remove('medium');
-                container.classList.remove('strong');
-            }
-            if(strength <=2){
-                container.classList.add('weak');
-                container.classList.remove('medium');
-                container.classList.remove('strong');
-            }
-            else if(strength >=2 && strength <=4){
-                container.classList.remove('weak');
-                container.classList.add('medium');
-                container.classList.remove('strong');
-            }else{
-                container.classList.remove('weak');
-                container.classList.remove('medium');
-                container.classList.add('strong');
-            }
-        })
+       
         let pass1=document.querySelector('#myPassword1');
         let show1= document.querySelector('.show1');
         show1.onclick= function(){
@@ -439,7 +456,28 @@
         blur.classList.toggle('active');
     })
 
-    
+    const email=document.getElementById('newEmail');
+    email.addEventListener('input',()=>{
+        const emailBox=document.querySelector('.emailBox');
+        const passEmail=document.querySelector('.passEmail');
+        if(validateEmail(email.value)){
+            emailBox.classList.add('valid');
+            emailBox.classList.remove('invalid');
+            passEmail.innerHTML="Email is valid";
+            passEmail.style.color = "green";
+
+        }else{
+            emailBox.classList.add('invalid');
+            emailBox.classList.remove('valid');
+            passEmail.innerHTML="Invalid email format";
+            passEmail.style.color = "red";
+
+        }
+    })
+    function validateEmail(email) {
+    const re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    return re.test(String(email).toLowerCase());
+}
 
     const password = document.getElementById('myPassword2');
 
@@ -475,6 +513,48 @@
           confirmPassText.innerHTML="Your passwords do not match"
         }
       })
+    
+    document.getElementById('confirmChangeUsername').addEventListener('click',()=>{
+        event.preventDefault();
+        const username=document.getElementById('newUsername').value;
+        ipcRenderer.send('check-change-username',{username});
+      });
+
+    ipcRenderer.once('check-change-username-response',(event, exists)=>{
+        if(exists){
+            alert("Username already exists.");
+        }
+        else{
+            const oldUsername=sessionStorage.getItem('username');
+            const username=document.getElementById('newUsername').value;
+
+            ipcRenderer.send('update-username',{oldUsername,username});
+            ipcRenderer.on('update-username-response',(event,{username})=>{
+                sessionStorage.setItem('username',username);
+                location.reload();
+            })
+        }
+    })
+
+    document.getElementById('confirmChangeEmail').addEventListener('click',()=>{
+        event.preventDefault();
+        const email=document.getElementById('newEmail').value;
+        ipcRenderer.send('check-change-email',{email});
+    });
+    ipcRenderer.once('check-change-email-response',(event,exists)=>{
+        if(exists){
+            alert("Email already exists.");
+        }
+        else{
+            const username=sessionStorage.getItem('username');
+            const email=document.getElementById('newEmail').value;
+
+            ipcRenderer.send('update-email',{email,username});
+            ipcRenderer.on('update-email-response',(event,{email})=>{
+                location.reload();
+            })
+        }
+    })
 </script>
 <script src="setBiometric.js"></script>  
 </body>

@@ -34,14 +34,5 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-ipcRenderer.on('send-user-email', (event, { email }) => {
-    if (email) {
-        console.log(email);
-        document.getElementById('emailInput').textContent = email;
-    } else {
-        console.log('No email found for the user.');
-    }
-});
-
 
 
