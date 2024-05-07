@@ -14,6 +14,8 @@
     "electron": "^27.0.4",
     "electron-store": "^9.0.0",
     "node-fetch": "^3.3.2",
+    "open": "^10.1.0",
+    "puppeteer": "^22.8.0",
     "sequelize": "^6.37.2",
     "sqlite3": "^5.1.7"
   }

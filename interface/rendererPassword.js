@@ -54,7 +54,6 @@ const websites = [
 ];
 
 const websiteNames = websites.map(website => website.name);
-console.log(websiteNames);
 const sortedWebsites = websiteNames.sort();
 let input = document.getElementById("title");
 function displayWebsites(value) {

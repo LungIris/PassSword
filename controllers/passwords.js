@@ -148,10 +148,16 @@ ipcMain.on('request-trash-data', async (event,{username}) => {
         }
     })
 
-    ipcMain.on('update-password', async (event, {title,address, user, password ,username}) => {
+    ipcMain.on('update-password', async (event, {title,address, user, password ,username,sessionKey}) => {
         try {
+            const key = Buffer.from(sessionKey, 'hex');
+            const iv = crypto.randomBytes(16);
+            const cipher = crypto.createCipheriv('aes-256-cbc', key, iv);
+            let encryptedPassword = cipher.update(password, 'utf8', 'hex');
+            encryptedPassword += cipher.final('hex');
+
             const result = await passwords.update(
-                { address:address, user:user, password:password },
+                { address:address, user:user, password:encryptedPassword,iv: iv.toString('hex') , username: username },
                 { where: {title,username } }
             );
             if (result[0] > 0) {

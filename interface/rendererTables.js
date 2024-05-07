@@ -1,6 +1,11 @@
 const { ipcRenderer } = require("electron");
 const crypto = require('crypto');
 
+const puppeteer = require('puppeteer');
+async function openURL(url) {
+    const open = await import('open');
+    open.default(url);
+}
 ipcRenderer.on('passwords-data', (event, passwordData) => {
     const passwordTable = document.querySelector('#passwordTbl');
 
@@ -71,6 +76,49 @@ ipcRenderer.on('passwords-data', (event, passwordData) => {
         ipcRenderer.send('move-item-to-trash', { itemTitle,username });
         window.location.reload();
     }) 
+        
+        const launchWebsiteBtn = actionCell.children[1];
+        launchWebsiteBtn.addEventListener('click', async function (event) {
+            event.stopPropagation();
+            const itemTitle = password.dataValues.title;
+            const username = password.dataValues.user;
+            const encryptedPassword = password.dataValues.password;
+            const iv = password.dataValues.iv;
+            const sessionKey = sessionStorage.getItem('sessionKey');
+            const decryptedPassword = decryptPassword(encryptedPassword, iv, sessionKey);
+
+            openURL(password.dataValues.address);
+           
+            const browser = await puppeteer.launch({ headless: false });
+            const page = await browser.newPage();
+            await page.goto(password.dataValues.address);
+            
+            await page.waitForSelector('input[name=id]');
+            const usernameSelectors = ['input[name="username"]', 'input[name="user"]', 'input[name="email"]','input[name="id"]'];
+
+            
+            const usernameField = await findWorkingSelector(page, usernameSelectors);
+            if (usernameField) {
+                await page.type(usernameField, username);
+            }else {
+                console.error("No valid username field found.");
+                return;
+            }
+        
+            await page.type('input[type="password"]', decryptedPassword);
+            
+        })
+        async function findWorkingSelector(page, selectors) {
+            for (let selector of selectors) {
+                try {
+                    await page.waitForSelector(selector, { timeout: 500 });
+                    return selector;
+                } catch (error) {
+                    console.log(`Selector not found: ${selector}`);
+                }
+            }
+            return null;
+        }
     });
 
     
