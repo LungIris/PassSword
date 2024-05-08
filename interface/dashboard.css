@@ -557,7 +557,7 @@ outline:none;
     grid-template-columns: repeat(5, 1fr);
     grid-gap: 90px;
     align-items:center;
-    padding-left:100px;
+    padding-left:200px;
     justify-content: space-between;
     padding-bottom:20px;
     

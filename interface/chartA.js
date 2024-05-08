@@ -1,22 +1,42 @@
-const ctx = document.getElementById('lineChart');
+function getLoginDataForChart() {
+  const username = sessionStorage.getItem('username');
+  const logins = JSON.parse(localStorage.getItem('monthlyLogins')) || {};
+  const userLogins = logins[username] || {};
+  const data = [];
+  const labels = [];
 
-  new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: ['January','February','March','April','May','June','July','August','September','October','December'],
-      datasets: [{
-        label: 'Logins',
-          data: [12, 19, 3, 5, 2, 3, 5, 2, 7, 16, 20, 8, 4, 1, 9, 17],
-          backgroundColor: [
+  const currentYear = new Date().getFullYear();
+   for (let month = 0; month < 12; month++) { 
+       const key = `${currentYear}-${month}`;
+       labels.push(new Date(currentYear, month).toLocaleString('default', { month: 'long' })); // Get month name
+       data.push(userLogins[key] || 0); // Push the number of logins for this month or 0 if none
+      }
+  return { labels, data };
+
+}
+
+function updateChart() {
+  const { labels, data } = getLoginDataForChart();
+  const ctx = document.getElementById('lineChart');
+
+new Chart(ctx, {
+  type: 'line',
+  data: {
+    labels: labels,
+    datasets: [{
+      label: 'Logins',
+        data: data,
+        backgroundColor: [
+          '#2ed344'
+        ],
+        borderColor: [
             '#2ed344'
-          ],
-          borderColor: [
-              '#2ed344'
-          ],
-        borderWidth: 1
-      }]
-    },
-    options: {
-        responsive: true
-    }
-  });
+        ],
+      borderWidth: 1
+    }]
+  },
+  options: {
+      responsive: true
+  }
+});
+}

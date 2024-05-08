@@ -70,24 +70,6 @@ document.addEventListener('DOMContentLoaded', () => {
     })
 });
 
-document.addEventListener('DOMContentLoaded', () => {
-    editForm.addEventListener('submit', function(event) {
-        event.preventDefault(); 
-        const address = document.getElementById('websiteField').value;
-        const user = document.getElementById('userField').value; 
-        const password = document.getElementById('myPassword').value;
-        const title = new URLSearchParams(window.location.search).get('title');
-        const username = sessionStorage.getItem('username');
-        const sessionKey=sessionStorage.getItem('sessionKey')
-        ipcRenderer.send('update-password', { title,address, user, password,username,sessionKey });
-    });
-});
-ipcRenderer.on('update-password-response', (event, response) => {
-    if (response.success) {
-        window.location.href = 'dashboard.html'; 
-    } else {
-        alert(`Failed to update: ${response.message}`);
-    }
-});
+
 
 

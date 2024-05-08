@@ -170,22 +170,21 @@ ipcMain.on('request-trash-data', async (event,{username}) => {
             event.reply('update-password-response', { success: false, message: error.message });
         }
     });
-    ipcMain.on('request-analytics-data', async (event) => {
+    ipcMain.on('request-analytics-data', async (event,{username}) => {
         const data = {
-            totalItems: await getTotalItems(),
-            foldersNumber: await getFoldersNumber(),
-            reusedPasswords: await getReusedPasswords(),
-            deletedItems: await getDeletedItems(),
+            totalItems: await getTotalItems(username),
+            foldersNumber: await getFoldersNumber(username),
+            deletedItems: await getDeletedItems(username),
         };
         event.reply('analytics-data-response', data);
     });
 
-    async function getTotalItems() {
-        return passwords.count();
+    async function getTotalItems(username) {
+        return passwords.count({ where: { username } });
     }
     
-    async function getFoldersNumber() {
-        return folders.count();
+    async function getFoldersNumber(username) {
+        return folders.count({ where: { username } });
      }
     
     async function getReusedPasswords() {
@@ -198,10 +197,11 @@ ipcMain.on('request-trash-data', async (event,{username}) => {
         });
           }
     
-    async function getDeletedItems() {
+    async function getDeletedItems(username) {
         return passwords.count({
             where: {
-                folder: 'trash'
+                folder: 'trash',
+                username:username
             }
         });
          }
@@ -298,6 +298,19 @@ ipcMain.on('request-trash-data', async (event,{username}) => {
         return true;
     }
     
-    
+    ipcMain.on('get-password-data', async (event,{username}) => {
+        const passwordData = await passwords.findAll({
+            where: {
+                username: username,
+                folder: { [Op.ne]: 'trash' }
+            },
+            attributes: ['password', 'iv']
+        });
+        if (passwordData) {
+            event.reply('password-data-response', { success: true, data: passwordData });
+        } else {
+            event.reply('password-data-response', { success: false, message: 'No password data found' });
+        }
+    })
 }
 module.exports={newPassword,populateTable}

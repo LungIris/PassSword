@@ -112,7 +112,15 @@ function openItemInfo() {
     const iv = this.getAttribute('data-iv');
     const sessionKey = sessionStorage.getItem('sessionKey'); 
     const decryptedPassword = decryptPassword(password, iv, sessionKey);
+    const deleteCard = document.getElementById('delete-card');
+    deleteCard.addEventListener("click", function (event) {
+        event.stopPropagation();
+        const itemTitle = title; 
+        const username = sessionStorage.getItem('username');
+        ipcRenderer.send('move-item-to-trash', { itemTitle,username });
+        window.location.reload();
 
+    });
     if (decryptedPassword) {
         const editButton = itemInfo.querySelector('.editButton button');
         movePopupTitle.textContent = title;

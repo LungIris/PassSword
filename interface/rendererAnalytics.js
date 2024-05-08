@@ -1,58 +1,104 @@
 const { ipcRenderer } = require('electron');
+const crypto = require('crypto');
 
 document.addEventListener('DOMContentLoaded', function() {
     fetchDataAndUpdateUI();
-    updatePasswordStrengthChart();
+    updateChart();
 });
 
 function fetchDataAndUpdateUI() {
-    ipcRenderer.send('request-analytics-data');
-    ipcRenderer.send('request-strength-data');
+    const username = sessionStorage.getItem('username');
+    ipcRenderer.send('request-analytics-data',{username});
     ipcRenderer.on('analytics-data-response', (event, data) => {
         updateCards(data);
     });
+    ipcRenderer.send('get-password-data',{username});
+    ipcRenderer.on('password-data-response', (event, response) => {
+        if (response.success && response.data) {
+            const sessionKey = sessionStorage.getItem('sessionKey'); 
+            const decryptedPasswords = response.data.map(item => {
+                return {
+                    ...item,
+                    decryptedPassword: decryptPassword(item.dataValues.password, item.dataValues.iv, sessionKey)
+                };
+            });
+            getStrengthResult(decryptedPasswords);
+            updateReusedItems(decryptedPasswords);
+    
+        } else {
+            console.log('No data received or decryption failed:', response.message);
+        }
+    });
+}
+
+function decryptPassword(encryptedPassword, ivHex, sessionKey) {
+    try {
+        const key = Buffer.from(sessionKey, 'hex');
+        const iv = Buffer.from(ivHex, 'hex');
+        const decipher = crypto.createDecipheriv('aes-256-cbc', key, iv);
+        let decrypted = decipher.update(encryptedPassword, 'hex', 'utf8');
+        decrypted += decipher.final('utf8');
+        return decrypted;
+    } catch (error) {
+        console.error('Decryption failed:', error);
+        return null;
+    }
 }
 
 function updateCards(data) {
     document.getElementById('items').textContent = data.totalItems;
     document.getElementById('folders').textContent = data.foldersNumber;
-    document.getElementById('reused').textContent = data.reusedPasswords;
     document.getElementById('deleted').textContent = data.deletedItems;
 }
-ipcRenderer.on('strength-data', (event, passwordsArray) => {
-    const strengthResults = passwordsArray.map(getPasswordStrength);
-    updatePasswordStrengthChart(strengthResults);
-});
-function getPasswordStrength(password) {
-    let i= 0;
-    if(password.length> 6){
-        i++;
+function updateReusedItems(decryptedPasswords) {
+    const passwordCount = {};
+    decryptedPasswords.forEach(password => {
+        console.log(password.decryptedPassword);
+        if (passwordCount[password.decryptedPassword]) {
+            passwordCount[password.decryptedPassword]++;
+        } else {
+            passwordCount[password.decryptedPassword] = 1;
+           }
+           
+       });
+       let duplicateCount = 0;
+    for (let password in passwordCount) {
+           if (passwordCount[password] > 1) {
+               duplicateCount += passwordCount[password] - 1; 
+           }
     }
-    if(password.length>= 10){
-        i++;
-    }
-    if(/[A-Z]/.test(password)){
-        i++;
-    }
-    
-    if(/[a-z]/.test(password)){
-        i++;
-    }
-    if(/[0-9]/.test(password)){
-        i++;
-    }
-    if(/[A-Za-z0-9]/.test(password)){
-        i++;
-    }
+    document.getElementById('reused').textContent = duplicateCount;
 
-    if (i > 4) {
-        return 'strong';
-    }
-    else if (i >= 2 && i <= 4) {
-        return 'medium';
-    }
-    else return weak;
 }
+
+function getStrengthResult(decryptedPasswords) {
+    const strengthResult = decryptedPasswords.map(getPasswordStrength);
+    updatePasswordStrengthChart(strengthResult);
+
+}
+
+function getPasswordStrength(password) {
+    let score = 0;
+
+    if (password.decryptedPassword.length > 6) score++;
+    if (password.decryptedPassword.length >= 15) score++;
+
+    if (/[A-Z]/.test(password.decryptedPassword)) score++;
+    if (/[a-z]/.test(password.decryptedPassword)) score++;
+    if (/[0-9]/.test(password.decryptedPassword)) score++;
+
+    if (/\W|_/g.test(password.decryptedPassword)) score++;
+
+
+    if (score > 4) {
+        return 'strong';
+    } else if (score >= 2 && score <= 4) {
+        return 'medium';
+    } else {
+        return 'weak';
+    }
+}
+
 function updatePasswordStrengthChart(passwordStrength) {
     const strengthCounts = {
         strong: 0,
@@ -91,3 +137,4 @@ function updatePasswordStrengthChart(passwordStrength) {
         }
     });
 }
+
