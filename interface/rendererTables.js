@@ -86,9 +86,9 @@ ipcRenderer.on('passwords-data', (event, passwordData) => {
             const iv = password.dataValues.iv;
             const sessionKey = sessionStorage.getItem('sessionKey');
             const decryptedPassword = decryptPassword(encryptedPassword, iv, sessionKey);
-
+            let url = password.dataValues.address;
             openURL(password.dataValues.address);
-           
+            
             const browser = await puppeteer.launch({ headless: false });
             const page = await browser.newPage();
             await page.goto(password.dataValues.address);
