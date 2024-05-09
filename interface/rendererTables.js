@@ -261,3 +261,162 @@ ipcRenderer.on('folder-removed', (event, response) => {
     }
 });
 
+    let sidebar= document.querySelector('.sidebar');
+    let navbar=document.querySelector(".navbar");
+    let addPassword=document.querySelector(".addPassword");
+    let submenu=document.querySelector(".submenu");
+    document.addEventListener('DOMContentLoaded', function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const title = urlParams.get('title');
+    });
+
+   
+    let MenuList= document.querySelectorAll('.MenuList li');
+    function activeLink(){
+        MenuList.forEach((item)=> 
+            item.classList.remove('active'));  
+        setTimeout(() => {
+        if (!this.classList.contains('dropdown')) {
+        this.classList.add('active');
+    }
+        }, 100);
+    }
+    MenuList.forEach((item)=> 
+    item.addEventListener('click',activeLink));
+
+    let button= document.querySelectorAll('.addPassword a');
+    button.forEach(btn =>{
+        btn.onmousemove= function(e){
+            let x= e.pageX - btn.offsetLeft;
+            let y= e.pageY - btn.offsetTop;
+
+            btn.style.setProperty('--x', x + 'px');
+            btn.style.setProperty('--y', y + 'px');
+
+        }
+    })
+    document.addEventListener('DOMContentLoaded', function() {
+
+     // Add click event listeners to buttons in the action column
+     const actionButtons = document.querySelectorAll('.passwordTable tbody tr td:last-child button');
+    actionButtons.forEach(button => {
+        button.addEventListener('click', function(event) {
+            // Stop event propagation to prevent opening item info
+            event.stopPropagation();
+            // Handle button click here
+            // You can add different functions for different buttons
+            if (button.contains('star')) {
+                // Handle folder button click
+            } else if (button.contains('rocket')) {
+                // Handle rocket button click
+            } else if (button.contains('trash')) {
+                // Handle trash button click
+            }
+        });
+    });
+
+
+
+    const arrowIcon = document.querySelector('.title .arrow');
+    const submenu = document.querySelector('.dropdown .submenu');
+    let dropdown=document.querySelector('.dropdown');
+    arrowIcon.addEventListener('click', function() {
+        submenu.classList.toggle('active');
+        dropdown.classList.toggle('active');
+        arrowIcon.classList.toggle('flip');
+    });
+
+    const foldersIcon=document.querySelector('.dropdown .title .icon');
+    const openPopup=document.querySelector('.openPopup');
+    const blur = document.getElementById('blur');
+    const popup = document.getElementById('popup');
+
+    openPopup.addEventListener("click",function(){
+            blur.classList.toggle('active'),
+            popup.classList.toggle('active')
+    });
+    
+    const card=document.getElementById('dropdown-card');
+    card.addEventListener("click",function(){
+        var dropdownMenu = document.getElementById('dropdown-menu');
+        dropdownMenu.classList.toggle('active');
+    });
+
+    
+    // Function to show popup
+    function showPopup(popupId) {
+        document.getElementById(popupId).style.display = "block";
+    }
+    document.getElementById('remove-option').addEventListener('click',function(event){
+        event.preventDefault();
+        showPopup('remove-popup');
+        document.getElementById('remove-message').innerText = "Item removed";
+        setTimeout(function() {
+            hidePopup('remove-popup');
+            window.location.reload();
+
+        }, 1000);
+
+    })
+
+    // Move to folder option
+    document.getElementById('move-option').addEventListener('click', function(event) {
+        event.preventDefault();
+        showPopup('move-popup');
+        blur.classList.toggle('active');
+
+    });
+    // Function to hide popup
+    function hidePopup(popupId) {
+        document.getElementById(popupId).style.display = "none";
+
+    }
+
+   
+    const itemInfo = document.querySelector('.itemInfo');
+
+    document.getElementById('move-btn').addEventListener('click', function(event) {
+        var folderSelect = document.getElementById('folder-list');
+        var selectedFolder = folderSelect.options[folderSelect.selectedIndex].value;
+        if (selectedFolder === 'New Folder') {
+            event.preventDefault();
+            let create=document.getElementById('createAndMove');
+            create.classList.add('active');
+            showPopup('createAndMove');
+
+        } else {
+           event.preventDefault();
+            hidePopup('move-popup');
+            blur.classList.toggle('active');
+            showPopup('moveMessage');
+            setTimeout(function() {
+            hidePopup('moveMessage');
+            window.location.reload();
+
+        }, 1000);
+        
+
+
+        }
+    });
+    const closeBtnMoveToFolder = document.querySelector('.popupMoveToFolder .closeBtn');
+    closeBtnMoveToFolder.addEventListener('click', function () {
+            hidePopup('move-popup');
+            blur.classList.toggle('active');
+
+        });
+
+    const closeCreateAndMove=document.querySelector('.createAndMove .closeBtn');
+    closeCreateAndMove.addEventListener('click',function(){
+        hidePopup('createAndMove');
+    })
+
+    const closeAddFolder=document.querySelector('.popup .closeBtn');
+    closeAddFolder.addEventListener('click',function(){
+        popup.classList.toggle('active');
+        blur.classList.toggle('active');
+    })
+    
+})
+
+
