@@ -88,7 +88,7 @@
     .sidebar{
         position: absolute;
         width:220px;
-        height:100vh;
+        height:104vh;
         background: #282828;
         transition: 0.5s;
         padding-left: 10px;
@@ -1062,7 +1062,35 @@
     border-color:#0f0;
     box-shadow: 0 1px 10px #0f0;
 }
-
+.toggle2{
+    height:12px;
+    cursor:pointer;
+    width:55px;
+    border-radius:25px;
+    background-color:#282828;
+    box-shadow: 0 1px 10px #000;
+    position:relative;
+}
+.toggle2::before{
+    content:"";
+    position:absolute;
+    height:20px;
+    width:20px;
+    background-color:#282828;
+    border:5px solid #f00;
+    box-shadow: 0 1px 10px #f00;
+    border-radius:50%;
+    top:50%;
+    transform: translateY(-50%);
+    left:0;
+    transition:all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    
+}
+.toggle2.active::before{
+    left:25px;
+    border-color:#0f0;
+    box-shadow: 0 1px 10px #0f0;
+}
     .inspiration {
     position: fixed;
     bottom: 0;

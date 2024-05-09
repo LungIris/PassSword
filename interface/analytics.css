@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
 
 @media (max-width: 1500px) {
     
@@ -7,7 +7,8 @@
         padding: 0;
         box-sizing: border-box;
         font-family: 'Poppins', sans-serif;
-    
+        max-width:calc(100%);
+
     }
     :root{
         --clr: #413a3a;
@@ -16,6 +17,8 @@
     {
         min-height:100vh;
         background: var(--clr);
+        overflow:hidden;
+
     }
     .navbar{
         
@@ -24,7 +27,6 @@
         text-align:center;
         position:absolute;
         width: calc(100%);
-        margin-left: 200px;
     }
     .navbar a {
         color: #fff;
@@ -42,16 +44,15 @@
     }
  
     .search-bar{
-        width: 30%;
+        width: calc(30%);
         max-width: 360px;
-        width: 400px;
         background:#282828;
         display: flex;
         align-items: center;
         justify-content: center;
         border-radius:60px;
         padding: 5px;
-        margin-left: 370px;
+        margin-left: 45%;;
         position:relative;
         height: 30px;
         backdrop-filter: blur(4px) saturate(100%);
@@ -66,6 +67,8 @@
         padding: 24px 20px;
         font-size: 15px;
         color:#57e5ff;
+        width: calc(100%);
+
     }
     ::placeholder{
         color: #999;
@@ -86,7 +89,7 @@
     .sidebar{
         position: absolute;
         width:220px;
-        height:100vh;
+        height:104vh;
         background: #282828;
         transition: 0.5s;
         padding-left: 10px;
@@ -266,21 +269,24 @@
     .analytics{
         position: absolute;
         top:66px;
-        width: 83%;
-        max-width:85%;
-        left:211px;
+        width: calc(80%);
+        max-width:calc(85%);
+        left:calc(20%);
         min-height: calc(100vh- 60px);
         background: #413a3a;
         transition: 0.5s;
+        overflow:hidden;
 
     }
 
     .cards{
-        width:calc(100%);
         padding:35px 20px;
         display:grid;
         grid-template-columns: repeat(4, 1fr);
-        grid-gap: 20px;
+        grid-gap: 10px;
+        width:calc(100%);
+
+
     }
     .cards .card{
         padding:20px;
@@ -319,7 +325,7 @@
         padding:10px;
         border-radius:10px;
         box-shadow: 0 7px 15px 0 #2ed344;
-        width:90%;
+        width:calc(90%);
         height:100%;
       
     }

@@ -6,7 +6,7 @@
         padding: 0;
         box-sizing: border-box;
         font-family: 'Poppins', sans-serif;
-    
+        max-width:calc(100%);
     }
     :root{
         --clr: #413a3a;
@@ -41,9 +41,8 @@
     }
     
     .search-bar{
-        width: 30%;
+        width: calc(30%);
         max-width: 360px;
-        width: 400px;
         background:#282828;
         display: flex;
         align-items: center;
@@ -65,6 +64,8 @@
         padding: 24px 20px;
         font-size: 15px;
         color:#57e5ff;
+        width: calc(100%);
+
     }
     ::placeholder{
         color: #999;
@@ -85,7 +86,7 @@
     .sidebar{
         position: absolute;
         width:220px;
-        height:100vh;
+        height:104vh;
         background: #282828;
         transition: 0.5s;
         padding-left: 10px;
@@ -245,7 +246,7 @@
         bottom: 0;
         width:100%;
         padding-bottom:20px;
-    }
+  }
     .imgBx{
         position:relative;
         width: 40px;
@@ -269,6 +270,7 @@
         background: #413a3a;
         margin-left:250px;
         height:700px;
+        
     }
     
     .removePassword a, .EmptyTrash{
@@ -332,11 +334,10 @@
     .removePassword table{
         position:relative;
         margin-top:200px;
-        margin-left:30px;
         background: #282828;
         transition: 0.5s;
-        width:900px;
         border-collapse:collapse;
+        width:950px;
         color: #fff;
         border-color: #282828;
         box-shadow: 0 0 5px #ff3131;

@@ -6,6 +6,7 @@
     padding: 0;
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
+    max-width:calc(100%);
 
 }
 :root{
@@ -15,6 +16,8 @@ body
 {
     min-height:100vh;
     background: var(--clr);
+    overflow:hidden;
+
 }
 .navbar{
     
@@ -42,9 +45,8 @@ body
 
 
 .search-bar{
-    width: 30%;
+    width: calc(30%);
     max-width: 360px;
-    width: 400px;
     background:#282828;
     display: flex;
     align-items: center;
@@ -66,6 +68,8 @@ body
     padding: 24px 20px;
     font-size: 15px;
     color:#57e5ff;
+    width: calc(100%);
+
 }
 ::placeholder{
     color: #999;
@@ -90,7 +94,7 @@ body
     background: #282828;
     transition: 0.5s;
     padding-left: 10px;
-    overflow: hidden;
+    overflow-y: auto;        
     z-index:1;
 }
 
@@ -275,7 +279,6 @@ body
 .addPassword a{
     
     position: absolute;
-    margin-top:125px;
     padding: 10px 40px;
     background:#282828;
     border-radius: 50px;
@@ -284,6 +287,7 @@ body
     transition: 0.5s;
     color: #fff;
     overflow:hidden;
+    margin-top:125px;
     margin-left:30px;
     margin-bottom:450px;
     box-shadow: 0 7px 25px #282828;
@@ -332,10 +336,9 @@ body
 .addPassword table{
     position:relative;
     margin-top:200px;
-    margin-left:30px;
     background: #282828;
     transition: 0.5s;
-    width:900px;
+    width:950px;
     border-collapse:collapse;
     color: #fff;
     border-color: #282828;
@@ -529,12 +532,10 @@ outline:none;
     padding-top:10px;
     cursor:pointer;
     border-radius:10px;
-    margin-right:50px;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    margin-left:50px;
     font-size: 26px;
     color: #999;
     padding-bottom:30px;
@@ -557,7 +558,7 @@ outline:none;
     grid-template-columns: repeat(5, 1fr);
     grid-gap: 90px;
     align-items:center;
-    padding-left:200px;
+    padding-left:calc(25%);
     justify-content: space-between;
     padding-bottom:20px;
     
