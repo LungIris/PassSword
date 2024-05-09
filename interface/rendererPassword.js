@@ -13,7 +13,7 @@ const websites = [
     {"name": "Google", "url": "https://www.google.com"},
     {"name": "Yahoo", "url": "https://www.yahoo.com"},
     {"name": "Reddit", "url": "https://www.reddit.com"},
-    {"name": "Pinterest", "url": "https://www.pinterest.com"},
+    {"name": "Pinterest", "url": "https://www.pinterest.com/#bottom"},
     {"name": "LinkedIn", "url": "https://www.linkedin.com"},
     {"name": "Amazon", "url": "https://www.amazon.com"},
     {"name": "eBay", "url": "https://www.ebay.com"},
@@ -39,7 +39,7 @@ const websites = [
     {"name": "Apple", "url": "https://www.apple.com"},
     {"name": "Microsoft", "url": "https://www.microsoft.com"},
     { "name": "Spotify", "url": "https://www.spotify.com" },
-    {"name": "Netflix","url":"https://www.netflix.com" },
+    {"name": "Netflix","url":"https://www.netflix.com/login" },
     {"name": "Tiktok","url":"https://www.tiktok.com" },
     { "name": "Snapchat", "url": "https://www.snapchat.com" },
     { "name": "Booking", "url": "https://www.booking.com" },
@@ -103,11 +103,14 @@ function addPassword(e) {
     const folder = '';
     const username = sessionStorage.getItem('username');
 
-    const sessionKey = sessionStorage.getItem('sessionKey');
-    ipcRenderer.send('new-password', { title, address, user, plainPassword , folder,sessionKey,username});
+    ipcRenderer.send('get-key', { username });
+    ipcRenderer.once('get-key-response', (event, keyResponse) => {
+        const sessionKey = keyResponse.sessionKey;
+        ipcRenderer.send('new-password', { title, address, user, plainPassword , folder,sessionKey,username});
     addPasswordForm.reset();
     window.location.href = 'dashboard.html';
     localStorage.removeItem('formData');
+    });    
 
 }
 addPasswordForm.addEventListener('submit', addPassword);

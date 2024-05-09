@@ -12,20 +12,34 @@ const handleUsers = () => {
     ipcMain.on('login-request', async (event, { username, password }) => {
         const user = await users.findOne({ where: { username } });
         if (user && await bcrypt.compare(password, user.hash)) {
-            crypto.pbkdf2(user.hash, user.salt, 100000, 32, 'sha512', (err, key) => {
-                if (err) {
-                    console.error('Error generating key', err);
-                    event.reply('login-response', { success: false, message: 'Error in key generation' });
-                } else {
-                    event.reply('login-response', {
-                        success: true, message: 'Login successful', sessionKey: key.toString('hex'), username: username
-                    });
-                }
+                 event.reply('login-response', {
+                    success: true, message: 'Login successful', username: username
             });
         } else {
-            event.reply('login-response', { success: false, message: 'Invalid credentials' });
+            event.reply('login-response', { success: false, message: 'Error in key generation' });
 
         }
+        
+    });
+    ipcMain.on('get-key', async (event, { username }) => {
+            const user = await users.findOne({ where: { username } });
+            if (user) {
+                crypto.pbkdf2(user.hash, user.salt, 100000, 32, 'sha512', (err, key) => {
+                    if (err) {
+                        console.error('Error generating key:', err);
+                        event.reply('get-key-response', { success: false, message: 'Error in key generation' });
+                    } else {
+                        event.reply('get-key-response', {
+                            success: true,
+                            sessionKey: key.toString('hex'),
+                            message: 'Key generated successfully'
+                        });
+                    }
+                });
+            } else {
+                event.reply('get-key-response', { success: false, message: 'User not found' });
+            }
+    
     });
     ipcMain.on('check-username-email', async (event, { username, email }) => {
         try {

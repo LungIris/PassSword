@@ -15,15 +15,21 @@ function fetchDataAndUpdateUI() {
     ipcRenderer.send('get-password-data',{username});
     ipcRenderer.on('password-data-response', (event, response) => {
         if (response.success && response.data) {
-            const sessionKey = sessionStorage.getItem('sessionKey'); 
-            const decryptedPasswords = response.data.map(item => {
-                return {
-                    ...item,
-                    decryptedPassword: decryptPassword(item.dataValues.password, item.dataValues.iv, sessionKey)
-                };
+            const username = sessionStorage.getItem('username');
+
+            ipcRenderer.send('get-key', { username });
+            ipcRenderer.once('get-key-response', (event, keyResponse) => {
+                const sessionKey = keyResponse.sessionKey;
+                const decryptedPasswords = response.data.map(item => {
+                    return {
+                        ...item,
+                        decryptedPassword: decryptPassword(item.dataValues.password, item.dataValues.iv, sessionKey)
+                    };
+                });
+                getStrengthResult(decryptedPasswords);
+                updateReusedItems(decryptedPasswords);
             });
-            getStrengthResult(decryptedPasswords);
-            updateReusedItems(decryptedPasswords);
+            
     
         } else {
             console.log('No data received or decryption failed:', response.message);
@@ -53,7 +59,6 @@ function updateCards(data) {
 function updateReusedItems(decryptedPasswords) {
     const passwordCount = {};
     decryptedPasswords.forEach(password => {
-        console.log(password.decryptedPassword);
         if (passwordCount[password.decryptedPassword]) {
             passwordCount[password.decryptedPassword]++;
         } else {

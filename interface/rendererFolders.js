@@ -110,27 +110,29 @@ function openItemInfo() {
     const folder = this.getAttribute('data-folder');
     const password = this.getAttribute('data-password');
     const iv = this.getAttribute('data-iv');
-    const sessionKey = sessionStorage.getItem('sessionKey'); 
-   
-    const deleteCard = document.getElementById('delete-card');
-    deleteCard.addEventListener("click", function (event) {
-        event.stopPropagation();
-        const itemTitle = title; 
-        const username = sessionStorage.getItem('username');
-        ipcRenderer.send('move-item-to-trash', { itemTitle,username });
-        window.location.reload();
-
+    const username = sessionStorage.getItem('username');
+    ipcRenderer.send('get-key', { username });
+    ipcRenderer.once('get-key-response', (event, keyResponse) => {
+        const sessionKey = keyResponse.sessionKey;
+        const decryptedPassword = decryptPassword(password, iv, sessionKey);
+        const deleteCard = document.getElementById('delete-card');
+        deleteCard.addEventListener("click", function (event) {
+            event.stopPropagation();
+            const itemTitle = title; 
+            const username = sessionStorage.getItem('username');
+            ipcRenderer.send('move-item-to-trash', { itemTitle,username });
+            window.location.reload();
+    
+        });
+        if (decryptedPassword) {
+            const editButton = itemInfo.querySelector('.editButton button');
+            movePopupTitle.textContent = title;
+            updateItemInfo(title, user, website, folder, imageSrc);
+            editButton.onclick = () => openEditPage(title, website, user, decryptedPassword, imageSrc);
+        } else {
+            console.error('Failed to decrypt password');
+        }
     });
-    const decryptedPassword = decryptPassword(password, iv, sessionKey);
-
-    if (decryptedPassword) {
-        const editButton = itemInfo.querySelector('.editButton button');
-        movePopupTitle.textContent = title;
-        updateItemInfo(title, user, website, folder, imageSrc);
-        editButton.onclick = () => openEditPage(title, website, user, decryptedPassword, imageSrc);
-    } else {
-        console.error('Failed to decrypt password');
-    }
 }
 function decryptPassword(encryptedPassword, ivHex, sessionKey) {
     try {

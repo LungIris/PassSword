@@ -1,11 +1,9 @@
 const { ipcRenderer } = require("electron");
 const crypto = require('crypto');
+const { shell } = require('electron');
 
 const puppeteer = require('puppeteer');
-async function openURL(url) {
-    const open = await import('open');
-    open.default(url);
-}
+
 ipcRenderer.on('passwords-data', (event, passwordData) => {
     const passwordTable = document.querySelector('#passwordTbl');
 
@@ -78,23 +76,21 @@ ipcRenderer.on('passwords-data', (event, passwordData) => {
     }) 
         
         const launchWebsiteBtn = actionCell.children[1];
-        launchWebsiteBtn.addEventListener('click', async function (event) {
+    launchWebsiteBtn.addEventListener('click', async function (event) {
             event.stopPropagation();
             const itemTitle = password.dataValues.title;
             const username = password.dataValues.user;
             const encryptedPassword = password.dataValues.password;
             const iv = password.dataValues.iv;
-            const sessionKey = sessionStorage.getItem('sessionKey');
+            const sessionKey = await getSessionKey();
             const decryptedPassword = decryptPassword(encryptedPassword, iv, sessionKey);
-            let url = password.dataValues.address;
-            openURL(password.dataValues.address);
             
-            const browser = await puppeteer.launch({ headless: false });
+            const browser = await puppeteer.launch({headless: false});
             const page = await browser.newPage();
             await page.goto(password.dataValues.address);
             
-            await page.waitForSelector('input[name=id]');
-            const usernameSelectors = ['input[name="username"]', 'input[name="user"]', 'input[name="email"]','input[name="id"]'];
+            await page.waitForSelector('input[]');
+            const usernameSelectors = ['input[name="username"]', 'input[name="user"]', 'input[name="email"]','input[name="id"]','input[name="loginUserId"]'];
 
             
             const usernameField = await findWorkingSelector(page, usernameSelectors);
@@ -120,10 +116,20 @@ ipcRenderer.on('passwords-data', (event, passwordData) => {
             return null;
         }
     });
-
-    
 });
-
+function getSessionKey() {
+    return new Promise((resolve, reject) => {
+        const username = sessionStorage.getItem('username');
+        ipcRenderer.send('get-key', { username });
+        ipcRenderer.once('get-key-response', (event, keyResponse) => {
+            if (keyResponse.success) {
+                resolve(keyResponse.sessionKey); 
+            } else {
+                reject('Failed to retrieve session key: ' + keyResponse.message); 
+            }
+        });
+    });
+}
 document.addEventListener('DOMContentLoaded', () => {
     const username=sessionStorage.getItem('username')
     ipcRenderer.send('request-passwords-data',{username});
@@ -159,9 +165,11 @@ function openItemInfo() {
     const folder = this.getAttribute('data-folder');
     const password = this.getAttribute('data-password');
     const iv = this.getAttribute('data-iv');
-    const sessionKey = sessionStorage.getItem('sessionKey'); 
-    
-    const deleteCard = document.getElementById('delete-card');
+    const username = sessionStorage.getItem('username');
+    ipcRenderer.send('get-key', { username });
+    ipcRenderer.once('get-key-response', (event, keyResponse) => {
+        const sessionKey = keyResponse.sessionKey;
+        const deleteCard = document.getElementById('delete-card');
     deleteCard.addEventListener("click", function (event) {
         event.stopPropagation();
         const itemTitle = title; 
@@ -179,6 +187,8 @@ function openItemInfo() {
     } else {
         console.error('Failed to decrypt password');
     }
+    });
+    
 }
 function decryptPassword(encryptedPassword, ivHex, sessionKey) {
     try {

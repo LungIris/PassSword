@@ -49,24 +49,22 @@ ipcRenderer.once('check-username-email-response', (event, exists) => {
     });
 ipcRenderer.on('login-response', (event, response) => {
     if (response.success) {
-        sessionStorage.setItem('sessionKey', response.sessionKey);  
         sessionStorage.setItem('username', response.username)
         const today = new Date();
         const month = today.getMonth();
         const year = today.getFullYear();
         const key = `${year}-${month}`
         const username = response.username;
-        let logins = JSON.parse(localStorage.getItem('monthlyLogins')) || {}; // Retrieve the existing logins data or initialize it
-        // Initialize user object if not already present
+        let logins = JSON.parse(localStorage.getItem('monthlyLogins')) || {}; 
         if (!logins[username]) {
             logins[username] = {};
         }
         if (logins[username][key]) {
             logins[username][key]++;
         } else {
-            logins[username][key] = 1; // Start counting logins for this month
+            logins[username][key] = 1; 
         }
-        localStorage.setItem('monthlyLogins', JSON.stringify(logins)); // Store the updated data back to local storage
+        localStorage.setItem('monthlyLogins', JSON.stringify(logins));
         console.log(localStorage.getItem('monthlyLogins'));
         window.location.href = 'dashboard.html';
 
