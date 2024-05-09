@@ -1,5 +1,4 @@
 const { ipcRenderer } = require('electron');
-const crypto = require('crypto');
 
 const folderForm = document.querySelector('#addFolderForm')
 const popup = document.querySelector('#popup');

@@ -16,7 +16,7 @@ const handleUsers = () => {
                     success: true, message: 'Login successful', username: username
             });
         } else {
-            event.reply('login-response', { success: false, message: 'Error in key generation' });
+            event.reply('login-response', { success: false, message: 'Invalid username or password' });
 
         }
         

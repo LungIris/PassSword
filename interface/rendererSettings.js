@@ -1,5 +1,6 @@
 
 const { ipcRenderer } = require('electron');
+const crypto = require('crypto');
 
 const folderForm = document.querySelector('#addFolderForm')
 const popup = document.querySelector('#popup');
@@ -71,18 +72,69 @@ document.addEventListener('DOMContentLoaded', () => {
     })
 });
 document.getElementById('confirmChangePassword').addEventListener('click', () => {
-    const oldPassword = document.getElementById('myPassword1').value;
-    const newPass = document.getElementById('myPassword2').value;
-    const confirmPassword = document.getElementById('myPassword3').value;
+    const username = sessionStorage.getItem('username');
+    ipcRenderer.send('get-password-data',{username});
+    ipcRenderer.once('password-data-response', (event, response) => {
+        const username = sessionStorage.getItem('username');
+        ipcRenderer.send('get-key', { username });
+        ipcRenderer.once('get-key-response', (event, keyResponse) => {
+            const username = sessionStorage.getItem('username')
+            const sessionKey = keyResponse.sessionKey;
+            console.log('old session key:' + sessionKey);
+            const decryptedPasswords = response.data.map(item => {
+                console.log('password:' + item.dataValues.password);
+                console.log('iv:' + item.dataValues.iv);
+                console.log('title' + item.dataValues.title);
+                return {
+                    ...item,
+                    title: item.dataValues.title,
+                    user: item.dataValues.user,
+                    address: item.dataValues.address,
+                    decryptedPassword: decryptPassword(item.dataValues.password, item.dataValues.iv, sessionKey)
+                };
+            });
 
-    if (newPass !== confirmPassword) {
-        alert("New passwords do not match.");
-        return;
-    }
-    const username=sessionStorage.getItem('username')
-    ipcRenderer.send('change-password-request', { oldPassword, newPass ,username});
+            const oldPassword = document.getElementById('myPassword1').value;
+            const newPass = document.getElementById('myPassword2').value;
+            const confirmPassword = document.getElementById('myPassword3').value;
+
+            if (newPass !== confirmPassword) {
+                alert("New passwords do not match.");
+                return;
+            }
+           
+            ipcRenderer.send('change-password-request', { oldPassword, newPass, username, decryptedPasswords });
+            ipcRenderer.once('change-password-response', (event, changeResponse) => {
+                const username = sessionStorage.getItem('username')
+                const sessionKey = changeResponse.newKey;
+                const decryptedPasswords = changeResponse.decryptedPasswords;
+                decryptedPasswords.forEach(pass => {
+                    const title = pass.title;
+                    const address = pass.address;
+                    const user = pass.user;
+                    const password = pass.decryptedPassword;
+
+                    ipcRenderer.send('update-password', { title, address, user, password, username, sessionKey });
+
+                })
+            })
+
+        })
+    })
 });
-
+function decryptPassword(encryptedPassword, ivHex, sessionKey) {
+    try {
+        const key = Buffer.from(sessionKey, 'hex');
+        const iv = Buffer.from(ivHex, 'hex');
+        const decipher = crypto.createDecipheriv('aes-256-cbc', key, iv);
+        let decrypted = decipher.update(encryptedPassword, 'hex', 'utf8');
+        decrypted += decipher.final('utf8');
+        return decrypted;
+    } catch (error) {
+        console.error('Decryption failed:', error);
+        return null;
+    }
+}
 ipcRenderer.on('change-password-response', (event, response) => {
     if (response.success) {
         alert('Password changed successfully.');

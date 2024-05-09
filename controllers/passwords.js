@@ -150,6 +150,15 @@ ipcMain.on('request-trash-data', async (event,{username}) => {
 
     ipcMain.on('update-password', async (event, {title,address, user, password ,username,sessionKey}) => {
         try {
+            console.log('entered update-password');
+            console.log(title);
+            console.log(address);
+            console.log(user);
+            console.log(password);
+            console.log(username);
+            console.log(sessionKey);
+
+
             const key = Buffer.from(sessionKey, 'hex');
             const iv = crypto.randomBytes(16);
             const cipher = crypto.createCipheriv('aes-256-cbc', key, iv);
@@ -187,15 +196,7 @@ ipcMain.on('request-trash-data', async (event,{username}) => {
         return folders.count({ where: { username } });
      }
     
-    async function getReusedPasswords() {
-        return passwords.count({
-            where: {
-                password: {
-                    [Op.in]: sequelize.literal('(SELECT password FROM passwords GROUP BY password HAVING COUNT(password) > 1)')
-                }
-            }
-        });
-          }
+ 
     
     async function getDeletedItems(username) {
         return passwords.count({
@@ -237,7 +238,7 @@ ipcMain.on('request-trash-data', async (event,{username}) => {
             event.reply('empty-trash-response', { success: false, message: error.message });
         }
     });
-    ipcMain.on('change-password-request', async (event, { oldPassword, newPass, username }) => {
+    ipcMain.on('change-password-request', async (event, { oldPassword, newPass, username , decryptedPasswords}) => {
         console.log('entered change password');
         const user = await users.findOne({ where: { username } });
         if (!user || !await bcrypt.compare(oldPassword, user.hash)) {
@@ -248,11 +249,27 @@ ipcMain.on('request-trash-data', async (event,{username}) => {
             event.reply('change-password-response', { success: false, message: 'Password does not meet security criteria.' });
             return;
         }
+        const passwordData = await passwords.findAll({
+            where: {
+                username: username,
+                folder: { [Op.ne]: 'trash' }
+            },
+            attributes: [ 'title', 'address', 'user', 'password', 'iv', 'folder', 'username']
+        });
         const salt = await bcrypt.genSalt(10);
         const hash = await bcrypt.hash(newPass, salt);
         await users.update({ hash, salt }, { where: { username } });
-        event.reply('change-password-response', { success: true ,hash,salt});
+        const newKey =await generateKey(hash, salt);
+        event.reply('change-password-response', { success: true ,passwordData,newKey,decryptedPasswords});
     })
+    function generateKey(hash, salt) {
+        return new Promise((resolve, reject) => {
+            crypto.pbkdf2(hash, salt, 100000, 32, 'sha512', (err, key) => {
+                if (err) reject(err);
+                else resolve(key.toString('hex'));
+            });
+        });
+    }
     ipcMain.on('get-user-email', async (event, { username }) => {
         try {
             const user = await users.findOne({
@@ -304,7 +321,7 @@ ipcMain.on('request-trash-data', async (event,{username}) => {
                 username: username,
                 folder: { [Op.ne]: 'trash' }
             },
-            attributes: ['password', 'iv']
+            attributes: ['title', 'address', 'user', 'password', 'iv', 'folder', 'username']
         });
         if (passwordData) {
             event.reply('password-data-response', { success: true, data: passwordData });

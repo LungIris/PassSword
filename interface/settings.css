@@ -7,7 +7,8 @@
         padding: 0;
         box-sizing: border-box;
         font-family: 'Poppins', sans-serif;
-    
+        max-width:calc(100%);
+
     }
     :root{
         --clr: #413a3a;
@@ -16,6 +17,7 @@
     {
         max-height:100vh;
         background: var(--clr);
+        overflow:hidden;
     }
     .navbar{
     
@@ -44,9 +46,8 @@
     
     
     .search-bar{
-        width: 30%;
-        max-width: 360px;
-        width: 400px;
+        width: calc(30%);
+        max-width: 360px;  
         background:#282828;
         display: flex;
         align-items: center;
@@ -68,6 +69,8 @@
         padding: 24px 20px;
         font-size: 15px;
         color:#57e5ff;
+        width: calc(100%);
+
     }
     ::placeholder{
         color: #999;
@@ -276,8 +279,8 @@
         display:block;
         align-items: left;
         justify-content:left;
-        margin-left:350px;
-        width:1000px;
+        margin-left:calc(30%);
+        width:calc(90%);
         height:800px;
         padding-top:90px;
         transition: 0.5s;
@@ -305,7 +308,7 @@
         background: #282828;
         border-radius:20px;
         border: solid 1px #413a3a;
-        width:900px;
+        width:calc(70%);
     }
     .section label{
         pointer-events: none;
