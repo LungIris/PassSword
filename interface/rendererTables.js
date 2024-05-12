@@ -89,7 +89,7 @@ ipcRenderer.on('passwords-data', (event, passwordData) => {
             const page = await browser.newPage();
             await page.goto(password.dataValues.address);
             
-            await page.waitForSelector('input[]');
+            await page.waitForSelector('input[name="id"]');
             const usernameSelectors = ['input[name="username"]', 'input[name="user"]', 'input[name="email"]','input[name="id"]','input[name="loginUserId"]'];
 
             

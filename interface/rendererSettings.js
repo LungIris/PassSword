@@ -80,7 +80,6 @@ document.getElementById('confirmChangePassword').addEventListener('click', () =>
         ipcRenderer.once('get-key-response', (event, keyResponse) => {
             const username = sessionStorage.getItem('username')
             const sessionKey = keyResponse.sessionKey;
-            console.log('old session key:' + sessionKey);
             const decryptedPasswords = response.data.map(item => {
                 console.log('password:' + item.dataValues.password);
                 console.log('iv:' + item.dataValues.iv);

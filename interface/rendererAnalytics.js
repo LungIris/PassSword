@@ -1,4 +1,5 @@
 const { ipcRenderer } = require('electron');
+const crypto = require('crypto');
 
 const folderForm = document.querySelector('#addFolderForm')
 const popup = document.querySelector('#popup');
@@ -77,18 +78,23 @@ document.addEventListener('DOMContentLoaded', function() {
 function fetchDataAndUpdateUI() {
     const username = sessionStorage.getItem('username');
     ipcRenderer.send('request-analytics-data',{username});
-    ipcRenderer.on('analytics-data-response', (event, data) => {
+    ipcRenderer.once('analytics-data-response', (event, data) => {
         updateCards(data);
     });
-    ipcRenderer.send('get-password-data',{username});
-    ipcRenderer.on('password-data-response', (event, response) => {
-        if (response.success && response.data) {
+    ipcRenderer.send('get-password-data-new',{username});
+    ipcRenderer.once('password-data-response-new', (event, response) => {
             const username = sessionStorage.getItem('username');
 
             ipcRenderer.send('get-key', { username });
             ipcRenderer.once('get-key-response', (event, keyResponse) => {
+                const username = sessionStorage.getItem('username');
                 const sessionKey = keyResponse.sessionKey;
+
+
                 const decryptedPasswords = response.data.map(item => {
+                    
+                    const sessionKey = keyResponse.sessionKey;
+
                     return {
                         ...item,
                         decryptedPassword: decryptPassword(item.dataValues.password, item.dataValues.iv, sessionKey)
@@ -98,10 +104,6 @@ function fetchDataAndUpdateUI() {
                 updateReusedItems(decryptedPasswords);
             });
             
-    
-        } else {
-            console.log('No data received or decryption failed:', response.message);
-        }
     });
 }
 
@@ -178,7 +180,7 @@ function updatePasswordStrengthChart(passwordStrength) {
         medium: 0,
         weak: 0
     };
-
+    
     passwordStrength.forEach(strength => {
         if (strength === 'strong') {
             strengthCounts.strong++;
@@ -188,6 +190,10 @@ function updatePasswordStrengthChart(passwordStrength) {
             strengthCounts.weak++;
         }
     });
+    console.log('weak: ' + strengthCounts.weak);
+    console.log('medium: ' + strengthCounts.medium);
+    console.log('strong: ' + strengthCounts.strong);
+
     const ctx2 = document.getElementById('doughnut');
     new Chart(ctx2, {
         type: 'doughnut',

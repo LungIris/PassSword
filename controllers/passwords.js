@@ -189,7 +189,12 @@ ipcMain.on('request-trash-data', async (event,{username}) => {
     });
 
     async function getTotalItems(username) {
-        return passwords.count({ where: { username } });
+        return passwords.count({
+        where: {
+            username: username,
+            folder: { [Op.ne]: 'trash' }
+        }
+        });
     }
     
     async function getFoldersNumber(username) {
@@ -327,6 +332,20 @@ ipcMain.on('request-trash-data', async (event,{username}) => {
             event.reply('password-data-response', { success: true, data: passwordData });
         } else {
             event.reply('password-data-response', { success: false, message: 'No password data found' });
+        }
+    })
+    ipcMain.on('get-password-data-new', async (event,{username}) => {
+        const passwordData = await passwords.findAll({
+            where: {
+                username: username,
+                folder: { [Op.ne]: 'trash' }
+            },
+            attributes: [ 'password', 'iv']
+        });
+        if (passwordData) {
+            event.reply('password-data-response-new', { success: true, data: passwordData });
+        } else {
+            event.reply('password-data-response-new', { success: false, message: 'No password data found' });
         }
     })
 }
