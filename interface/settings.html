@@ -136,14 +136,7 @@
             </div>
           </div>
             
-        <div class="section">
-            <div class="label">
-                <label >Multi-Factor Authentication</label>
-            </div>
-            <div class="toggle2">
-                
-            </div>
-        </div>
+
 
         <div class="section">
             <div class="label">
@@ -158,17 +151,26 @@
          
         </section>
 
+        <section id="language">
+            <h2>Browser</h2>
+            <div class="section">
+                <div class="label">
+                    <label >Browser Preference</label>
+                </div>
+                <div class="input">
+                            <select name="app-browser" id="browserPreference">
+                                <option value="Google Chrome">Google Chrome</option>
+                                <option value="Microsoft Edge">Microsoft Edge</option>
+                            </select>    
+                </div>
+            </div>
+            
+            
+        </section>
     
         <section id="autofill-autosave">
             <h2>Autofill & Autosave</h2>
-            <div class="section">
-                <div class="label">
-                    <label >Add PassSword browser extension</label>
-                </div>
-                <div class="input">
-                    <button type="submit"><ion-icon name="chevron-forward-outline"></ion-icon></button>
-                </div>
-            </div>
+           
             <div class="section">
                 <div class="label">
                     <label >Instant launch</label>
@@ -439,17 +441,8 @@
         }
         const toggleBtn=document.querySelector(".toggle");
         toggleBtn.addEventListener("click",()=> toggleBtn.classList.toggle("active"));
-        const toggleBtn2=document.querySelector(".toggle2");
-        toggleBtn2.addEventListener("click",()=> toggleBtn2.classList.toggle("active"));
 
-        let popupBiometric=document.querySelector(".popupBiometric");
-
-        function setBiometric() {
-            var blur = document.getElementById('blur');
-            blur.classList.toggle('active');
-            var popupBiometric = document.getElementById('popupBiometric');
-            popupBiometric.classList.toggle('active');
-        }
+       
 
         const closeAddFolder=document.querySelector('.popup .closeBtn');
     closeAddFolder.addEventListener('click',function(){

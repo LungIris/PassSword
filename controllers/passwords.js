@@ -243,7 +243,7 @@ ipcMain.on('request-trash-data', async (event,{username}) => {
             event.reply('empty-trash-response', { success: false, message: error.message });
         }
     });
-    ipcMain.on('change-password-request', async (event, { oldPassword, newPass, username , decryptedPasswords}) => {
+    ipcMain.on('password-request', async (event, { oldPassword, newPass, username , decryptedPasswords}) => {
         console.log('entered change password');
         const user = await users.findOne({ where: { username } });
         if (!user || !await bcrypt.compare(oldPassword, user.hash)) {
@@ -275,21 +275,8 @@ ipcMain.on('request-trash-data', async (event,{username}) => {
             });
         });
     }
-    ipcMain.on('get-user-email', async (event, { username }) => {
-        try {
-            const user = await users.findOne({
-                where: { username }
-            });
-            if (user) {
-                event.reply('send-user-email', { email: user.email });
-            } else {
-                event.reply('send-user-email', { email: null });
-            }
-        } catch (error) {
-            console.error('Error fetching user email:', error);
-            event.reply('send-user-email', { email: null });
-        }
-    });
+
+
     function validatePassword(password) {
         const minLength = 15;
         const hasNumbers = /\d/;

@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 ipcRenderer.on('update-password-response', (event, response) => {
     if (response.success) {
-        window.location.href = 'dashboard.html'; 
+        window.history.back();
     } else {
         alert(`Failed to update: ${response.message}`);
     }

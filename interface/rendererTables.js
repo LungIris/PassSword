@@ -1,6 +1,5 @@
 const { ipcRenderer } = require("electron");
 const crypto = require('crypto');
-const { shell } = require('electron');
 
 const puppeteer = require('puppeteer');
 
@@ -79,18 +78,25 @@ ipcRenderer.on('passwords-data', (event, passwordData) => {
     launchWebsiteBtn.addEventListener('click', async function (event) {
             event.stopPropagation();
             const itemTitle = password.dataValues.title;
-            const username = password.dataValues.user;
+        const username = password.dataValues.user;
             const encryptedPassword = password.dataValues.password;
             const iv = password.dataValues.iv;
             const sessionKey = await getSessionKey();
-            const decryptedPassword = decryptPassword(encryptedPassword, iv, sessionKey);
-            
-            const browser = await puppeteer.launch({headless: false});
-            const page = await browser.newPage();
+        const decryptedPassword = decryptPassword(encryptedPassword, iv, sessionKey);
+        
+        const browserPreference = await getBrowser();
+            const browserPath = getBrowserPath(browserPreference);
+
+            const browser = await puppeteer.launch({
+                executablePath: browserPath,
+                headless: false
+            });
+            const page = await  browser.newPage();
             await page.goto(password.dataValues.address);
             
-            await page.waitForSelector('input[name="id"]');
-            const usernameSelectors = ['input[name="username"]', 'input[name="user"]', 'input[name="email"]','input[name="id"]','input[name="loginUserId"]'];
+            //await page.waitForSelector('input[type="password"]');
+            const usernameSelectors = ['input[name="username"]', 'input[name="user"]', 'input[name="email"]','input[name="id"]','input[name="userLoginId"]'];
+            const passwordSelectors = ['input[type="password"]'];
 
             
             const usernameField = await findWorkingSelector(page, usernameSelectors);
@@ -101,8 +107,13 @@ ipcRenderer.on('passwords-data', (event, passwordData) => {
                 return;
             }
         
-            await page.type('input[type="password"]', decryptedPassword);
-            
+            const passwordField = await findWorkingSelector(page, passwordSelectors);
+            if (passwordField) {
+                await page.type(passwordField, decryptedPassword);
+            } else {
+                console.error("No valid password field found. Proceeding without password entry.");
+                return; 
+            }            
         })
         async function findWorkingSelector(page, selectors) {
             for (let selector of selectors) {
@@ -129,6 +140,19 @@ function getSessionKey() {
             }
         });
     });
+}
+function getBrowser() {
+    return new Promise((resolve, reject) => {
+        const username = sessionStorage.getItem('username');
+        ipcRenderer.send('get-browser', { username });
+        ipcRenderer.once('send-browser', (event, { browser }) => {
+            if (browser) {
+                resolve(browser); 
+            } else {
+                reject('Failed to retrieve browser: ' + response.message); 
+            }
+        });
+    })
 }
 document.addEventListener('DOMContentLoaded', () => {
     const username=sessionStorage.getItem('username')
@@ -297,24 +321,7 @@ ipcRenderer.on('folder-removed', (event, response) => {
     })
     document.addEventListener('DOMContentLoaded', function() {
 
-     // Add click event listeners to buttons in the action column
-     const actionButtons = document.querySelectorAll('.passwordTable tbody tr td:last-child button');
-    actionButtons.forEach(button => {
-        button.addEventListener('click', function(event) {
-            // Stop event propagation to prevent opening item info
-            event.stopPropagation();
-            // Handle button click here
-            // You can add different functions for different buttons
-            if (button.contains('star')) {
-                // Handle folder button click
-            } else if (button.contains('rocket')) {
-                // Handle rocket button click
-            } else if (button.contains('trash')) {
-                // Handle trash button click
-            }
-        });
-    });
-
+     
 
 
     const arrowIcon = document.querySelector('.title .arrow');
@@ -343,7 +350,6 @@ ipcRenderer.on('folder-removed', (event, response) => {
     });
 
     
-    // Function to show popup
     function showPopup(popupId) {
         document.getElementById(popupId).style.display = "block";
     }
@@ -359,7 +365,6 @@ ipcRenderer.on('folder-removed', (event, response) => {
 
     })
 
-    // Move to folder option
     document.getElementById('move-option').addEventListener('click', function(event) {
         event.preventDefault();
         showPopup('move-popup');
@@ -420,3 +425,13 @@ ipcRenderer.on('folder-removed', (event, response) => {
 })
 
 
+function getBrowserPath(browserName) {
+    switch (browserName) {
+        case 'Google Chrome':
+            return 'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe'; 
+        case 'Microsoft Edge':
+            return 'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe'; 
+        default:
+            return puppeteer.executablePath(); 
+    }
+}

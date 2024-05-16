@@ -123,8 +123,35 @@ ipcMain.on('update-email', async (event, { email, username }) => {
          catch (error) {
         console.error('Failed to update email:', error);
         event.reply('update-email-response', { success: false, message: 'Failed to update email', error: error.message });
+    }   
+    
+});
+ipcMain.on('update-browser-preference', async (event, { username, browser }) => {
+    try {
+        const result = await users.update({ browser }, { where: { username } });
+        console.log('Database updated successfully:', result);
+    } catch (error) {
+        console.error('Failed to update database:', error);
     }
 });
+    
+    ipcMain.on('get-browser', async (event, { username }) => {
+        try {
+            const user = await users.findOne({
+                where: {
+                    username: username
+                },
+            });
+            if (user) {
+                event.reply('send-browser', { browser: user.browser });
+            } else {
+                event.reply('send-browser', { email: null });
+            }
+        } catch (error) {
+            console.error('Error fetching user browser:', error);
+            event.reply('send-browser', { email: null });
+        }
+    });
         ipcMain.on('signup-request', async (event, { username, email, password }) => {
             try {
                 const salt = await bcrypt.genSalt(10);
@@ -133,7 +160,8 @@ ipcMain.on('update-email', async (event, { email, username }) => {
                     username: username,
                     email: email,
                     hash: hash,
-                    salt: salt
+                    salt: salt,
+                    browser: 'Google Chrome'
                 });
                 event.reply('signup-response', { success: true, message: 'User registered successfully' });
 

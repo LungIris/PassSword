@@ -2,7 +2,14 @@ let body = document.querySelector('body');
 let fingerprint = document.querySelector('.fingerprint');
 let scan = document.querySelector('.scan');
 let timer, timerSuccesss;
+let popupBiometric=document.querySelector(".popupBiometric");
 
+function setBiometric() {
+    var blur = document.getElementById('blur');
+    blur.classList.toggle('active');
+    var popupBiometric = document.getElementById('popupBiometric');
+    popupBiometric.classList.toggle('active');
+}
 
 function onSuccess() {
     body.removeEventListener('mousedown', onTouchstart);

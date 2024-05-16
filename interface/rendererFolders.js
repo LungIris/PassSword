@@ -1,5 +1,6 @@
 const { ipcRenderer } = require("electron");
 const crypto = require('crypto');
+const puppeteer = require('puppeteer');
 
 ipcRenderer.on('folder-items-data', (event, passwordData) => {
     const passwordTable = document.querySelector('#passwordTbl');
@@ -70,10 +71,87 @@ ipcRenderer.on('folder-items-data', (event, passwordData) => {
         ipcRenderer.send('move-item-to-trash', { itemTitle,username });
         window.location.reload();
     }) 
+    const launchWebsiteBtn = actionCell.children[1];
+    launchWebsiteBtn.addEventListener('click', async function (event) {
+            event.stopPropagation();
+            const itemTitle = password.dataValues.title;
+        const username = password.dataValues.user;
+            const encryptedPassword = password.dataValues.password;
+            const iv = password.dataValues.iv;
+            const sessionKey = await getSessionKey();
+        const decryptedPassword = decryptPassword(encryptedPassword, iv, sessionKey);
+        
+        const browserPreference = await getBrowser();
+            const browserPath = getBrowserPath(browserPreference);
+
+            const browser = await puppeteer.launch({
+                executablePath: browserPath,
+                headless: false
+            });
+            const page = await  browser.newPage();
+            await page.goto(password.dataValues.address);
+            
+            //await page.waitForSelector('input[type="password"]');
+            const usernameSelectors = ['input[name="username"]', 'input[name="user"]', 'input[name="email"]','input[name="id"]','input[name="userLoginId"]'];
+            const passwordSelectors = ['input[type="password"]'];
+
+            
+            const usernameField = await findWorkingSelector(page, usernameSelectors);
+            if (usernameField) {
+                await page.type(usernameField, username);
+            }else {
+                console.error("No valid username field found.");
+                return;
+            }
+        
+            const passwordField = await findWorkingSelector(page, passwordSelectors);
+            if (passwordField) {
+                await page.type(passwordField, decryptedPassword);
+            } else {
+                console.error("No valid password field found. Proceeding without password entry.");
+                return; 
+            }            
+        })
+        async function findWorkingSelector(page, selectors) {
+            for (let selector of selectors) {
+                try {
+                    await page.waitForSelector(selector, { timeout: 500 });
+                    return selector;
+                } catch (error) {
+                    console.log(`Selector not found: ${selector}`);
+                }
+            }
+            return null;
+        }
     });
     
 });
-
+function getSessionKey() {
+    return new Promise((resolve, reject) => {
+        const username = sessionStorage.getItem('username');
+        ipcRenderer.send('get-key', { username });
+        ipcRenderer.once('get-key-response', (event, keyResponse) => {
+            if (keyResponse.success) {
+                resolve(keyResponse.sessionKey); 
+            } else {
+                reject('Failed to retrieve session key: ' + keyResponse.message); 
+            }
+        });
+    });
+}
+function getBrowser() {
+    return new Promise((resolve, reject) => {
+        const username = sessionStorage.getItem('username');
+        ipcRenderer.send('get-browser', { username });
+        ipcRenderer.once('send-browser', (event, { browser }) => {
+            if (browser) {
+                resolve(browser); 
+            } else {
+                reject('Failed to retrieve browser: ' + response.message); 
+            }
+        });
+    })
+}
 document.addEventListener('DOMContentLoaded', () => {
     const currentFolder = document.getElementById('pageTitle').textContent;
     const username=sessionStorage.getItem('username')
@@ -207,11 +285,13 @@ ipcRenderer.on('folder-removed', (event, response) => {
     }
 });
 
-ipcRenderer.on('update-password-response', (event, response) => {
-    if (response.success) {
-        alert('Update successful!');
-        window.location.href = 'dashboard.html'; 
-    } else {
-        alert(`Failed to update: ${response.message}`);
+function getBrowserPath(browserName) {
+    switch (browserName) {
+        case 'Google Chrome':
+            return 'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe'; 
+        case 'Microsoft Edge':
+            return 'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe'; 
+        default:
+            return puppeteer.executablePath(); 
     }
-});
+}

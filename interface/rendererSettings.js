@@ -64,12 +64,21 @@ function deleteFolder(folder_name) {
 
 document.addEventListener('DOMContentLoaded', () => {
     const username=sessionStorage.getItem('username')
-
+    ipcRenderer.send('get-browser', { username });
     ipcRenderer.send('request-folders-data', { username });
     const addButton = document.querySelector('#addFolderBtn');
     addButton.addEventListener('click', () => {
         window.location.reload();
     })
+});
+ipcRenderer.on('send-browser', (event, { browser }) => {
+    if (browser) {
+        const selectElement = document.getElementById('browserPreference');
+        selectElement.value = browser;
+    }
+    else {
+        reject('Failed to retrieve browser: ' + response.message); 
+    }
 });
 document.getElementById('confirmChangePassword').addEventListener('click', () => {
     const username = sessionStorage.getItem('username');
@@ -143,16 +152,14 @@ ipcRenderer.on('change-password-response', (event, response) => {
     }
 });
 
-document.addEventListener('DOMContentLoaded', function () {
+
+
+document.getElementById('browserPreference').addEventListener('change', async function() {
+    const selectedBrowser = this.value;
     const username = sessionStorage.getItem('username');
-    if (username) {
-        ipcRenderer.send('get-user-email', { username });
 
-    } else {
-        console.log('Username not found');
-    }
+    ipcRenderer.send('update-browser-preference', { username, browser: selectedBrowser });
 });
-
 
 
 
