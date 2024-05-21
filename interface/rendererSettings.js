@@ -101,7 +101,6 @@ document.getElementById('confirmChangePassword').addEventListener('click', () =>
                     decryptedPassword: decryptPassword(item.dataValues.password, item.dataValues.iv, sessionKey)
                 };
             });
-
             const oldPassword = document.getElementById('myPassword1').value;
             const newPass = document.getElementById('myPassword2').value;
             const confirmPassword = document.getElementById('myPassword3').value;
@@ -111,7 +110,7 @@ document.getElementById('confirmChangePassword').addEventListener('click', () =>
                 return;
             }
            
-            ipcRenderer.send('change-password-request', { oldPassword, newPass, username, decryptedPasswords });
+            ipcRenderer.send('password-request', { oldPassword, newPass, username, decryptedPasswords });
             ipcRenderer.once('change-password-response', (event, changeResponse) => {
                 const username = sessionStorage.getItem('username')
                 const sessionKey = changeResponse.newKey;
@@ -123,7 +122,7 @@ document.getElementById('confirmChangePassword').addEventListener('click', () =>
                     const password = pass.decryptedPassword;
 
                     ipcRenderer.send('update-password', { title, address, user, password, username, sessionKey });
-
+                    //window.location.href('dashboard.html');
                 })
             })
 

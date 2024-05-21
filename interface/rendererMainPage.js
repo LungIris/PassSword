@@ -34,7 +34,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         ipcRenderer.send('check-username-email', { username, email ,password});
     });  
-    //Inimadefer28042001@
 ipcRenderer.once('check-username-email-response', (event, exists,username,email,password) => {
     if (exists) {
         alert("Username or Email already exists.");

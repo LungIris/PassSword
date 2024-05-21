@@ -187,7 +187,7 @@ ipcMain.on('request-trash-data', async (event,{username}) => {
         };
         event.reply('analytics-data-response', data);
     });
-
+    
     async function getTotalItems(username) {
         return passwords.count({
         where: {

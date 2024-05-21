@@ -152,16 +152,19 @@ ipcMain.on('update-browser-preference', async (event, { username, browser }) => 
             event.reply('send-browser', { email: null });
         }
     });
+    //Inimadefer28042001@
         ipcMain.on('signup-request', async (event, { username, email, password }) => {
             try {
                 const salt = await bcrypt.genSalt(10);
                 const hash = await bcrypt.hash(password, salt);
+                let master =await checkMaster();
                 await users.create({
                     username: username,
                     email: email,
                     hash: hash,
                     salt: salt,
-                    browser:'Google Chrome'
+                    browser: 'Google Chrome',
+                    masterUser: '${master}'
                 });
                 event.reply('signup-response', { success: true, message: 'User registered successfully',username });
 
@@ -171,6 +174,16 @@ ipcMain.on('update-browser-preference', async (event, { username, browser }) => 
 
             }
         })
+        async function checkMaster() {
+            try {
+                let items = await  users.count();
+                return items === 0 ? 1 : 0;
+            } catch (error) {
+                console.error('Error checking user count:', error);
+                return 0; 
+            }
+        }
+        
         ipcMain.on('change-email', async (event, { username }) => {
             try {
                 const user = await users.findOne({ where: { username } });
@@ -184,6 +197,15 @@ ipcMain.on('update-browser-preference', async (event, { username, browser }) => 
                 event.reply('email-response', { success: false, message: error.message });
             }
         });
+        ipcMain.on('check-master-user', async (event, { username }) => {
+            const user = await users.findOne({ where: { username } });
+            if (user) {
+                event.reply('check-master-user-response', { isMasterUser: user.masterUser === '1' });
+            } else {
+                event.reply('check-master-user-response', { isMasterUser: false });
+            }
+        });
+        
     }
 
 module.exports = { handleUsers }
