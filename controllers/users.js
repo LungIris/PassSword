@@ -129,12 +129,17 @@ ipcMain.on('update-email', async (event, { email, username }) => {
 ipcMain.on('update-browser-preference', async (event, { username, browser }) => {
     try {
         const result = await users.update({ browser }, { where: { username } });
-        console.log('Database updated successfully:', result);
     } catch (error) {
         console.error('Failed to update database:', error);
     }
 });
-    
+    ipcMain.on('update-touchID', async (event, { username, touchID }) => {
+        try {
+            const result = await users.update({ touchID }, { where: { username } });
+        } catch (error) {
+            console.error('Failed to update database:', error);
+        }
+    });
     ipcMain.on('get-browser', async (event, { username }) => {
         try {
             const user = await users.findOne({
@@ -152,7 +157,20 @@ ipcMain.on('update-browser-preference', async (event, { username, browser }) => 
             event.reply('send-browser', { email: null });
         }
     });
-    //Inimadefer28042001@
+
+    ipcMain.on('get-touchID-status', async (event, { username }) => {
+        try {
+            const user = await users.findOne({ where: { username } });
+            if (user) {
+                event.reply('touchID-status-response', { touchID: user.touchID });
+            } else {
+                event.reply('touchID-status-response', { touchID: '0' });
+            }
+        }catch (error) {
+            console.error('Error fetching touchID status:', error);
+            event.reply('touchID-status-response', { touchID: '0' });
+        }
+    })
         ipcMain.on('signup-request', async (event, { username, email, password }) => {
             try {
                 const salt = await bcrypt.genSalt(10);
