@@ -32,17 +32,28 @@ document.addEventListener('DOMContentLoaded', function() {
             event.preventDefault();
             alert("Invalid email or password.");
         }
-        ipcRenderer.send('check-username-email', { username, email });
-    });    
-ipcRenderer.once('check-username-email-response', (event, exists) => {
+        ipcRenderer.send('check-username-email', { username, email ,password});
+    });  
+    //Inimadefer28042001@
+ipcRenderer.once('check-username-email-response', (event, exists,username,email,password) => {
     if (exists) {
         alert("Username or Email already exists.");
     } else {
+
         ipcRenderer.send('signup-request', { username, email, password });
         ipcRenderer.once('signup-response', (event, response) => {
             
                 location.reload();
-            
+                sessionStorage.setItem('username', response.username)
+                const today = new Date();
+                const month = today.getMonth();
+                const year = today.getFullYear();
+                const key = `${year}-${month}`
+                 const username = response.username;
+                let logins = JSON.parse(localStorage.getItem('monthlyLogins')) || {}; 
+                logins[username][key] = 0; 
+                localStorage.setItem('monthlyLogins', JSON.stringify(logins));
+
         });
     }
 });

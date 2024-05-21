@@ -41,7 +41,7 @@ const handleUsers = () => {
             }
     
     });
-    ipcMain.on('check-username-email', async (event, { username, email }) => {
+    ipcMain.on('check-username-email', async (event, { username, email,password }) => {
         try {
             const userExists = await users.findOne({
                 where: {
@@ -52,7 +52,7 @@ const handleUsers = () => {
                 }
             });
     
-            event.reply('check-username-email-response', userExists ? true : false);
+            event.reply('check-username-email-response', userExists ? true : false,username,email,password);
         } catch (error) {
             console.error('Error checking username/email:', error);
             event.reply('check-username-email-response', false);
@@ -161,9 +161,9 @@ ipcMain.on('update-browser-preference', async (event, { username, browser }) => 
                     email: email,
                     hash: hash,
                     salt: salt,
-                    browser: 'Google Chrome'
+                    browser:'Google Chrome'
                 });
-                event.reply('signup-response', { success: true, message: 'User registered successfully' });
+                event.reply('signup-response', { success: true, message: 'User registered successfully',username });
 
             } catch (error) {
                 console.error('Signup error: ', error);
