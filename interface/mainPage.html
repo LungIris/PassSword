@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="" X-UA-Compatible " content="IE-edge ">
+        <meta name="viewport " content="width=device.width, initial-scale=1.0 ">
+        <title>PassSword
+        </title>
+        <link rel="stylesheet " type="text/css " href="mainPage.css ">
+
+    </head>
+    
+    <body>
+      <div class="container" >
+      <div class="logo">
+        <img src="images/Logov2.png" width="100" height="100" margin-right="700">
+      </div>
+      <div class="title">
+          <h1><span>always</span> <span>en</span> <span>garde</span></h1>
+      </div>
+      </div>
+          
+        <div class="wrapper" >
+          
+          <div class="form-wrapper sign-in">
+            <form action=" ">
+              <h2>Login</h2>
+              <div class="input-group">
+                <input type="text" id="usernameLogin" required>
+                <label for=" ">Username</label>
+              </div>
+              <div class="input-group">
+                <input type="password" id="passwordLogin" required>
+                <label for="">Password</label>
+              </div>
+              <div class="remember">
+                <label><input type="checkbox"> Remember me
+                </label>
+                <a href="forgotPassword.html"  class="forgotPasswordBtn-link">Forgot Password?</a>
+
+              </div>
+              
+              <button type="submit">Login</button>
+              <h3>OR</h3>
+              <div class="fingerprint">
+                <div class="fingerprintBox">
+                  <img src="images/biometric.png" onclick="window.location.href='biometricScan.html'" width="100" height="90", align-items="center">
+                  </div>
+                <p>Login with fingerprint</p>
+                </div>
+
+                
+              <div class="signUp-link">
+                <p>Don't have an account? <a href="# " class="signUpBtn-link">Sign Up</a></p>
+              
+              </div>
+
+            </form>
+          </div> 
+          <div class="form-wrapper sign-up ">
+            <form action=" ">
+              <h2>Sign Up</h2>
+              <div class="input-group ">
+                <input type="text " id="username" required>
+                <label for=" ">Username</label>
+              </div>
+              <div class="input-group emailBox ">
+                <input type="email" id="email" required>
+                <label for="">Email</label>
+              </div>
+              <span class="emailText"></span>
+
+              <div class="input-group passBox">
+                <div class="icon"><ion-icon name="eye-outline"></ion-icon></div>
+                <input type="password" id="password" required>
+                <label for=" ">Password</label>
+              </div>
+              <span class="passText"></span>
+
+              <div class="input-group confirmPassBox">
+                <input type="password" id="confirmPass" required>
+                <label for=" ">Confirm Password</label>
+              </div>
+              <span class="confirmPassText"></span>
+
+              <div class="remember ">
+                <label><input type="checkbox"> I agree to the terms and conditions
+                </label>
+              </div>
+              <button type="submit " id="signUpButton">Sign Up</button>
+              
+              <div class="signUp-link ">
+                <p>Already have an account? <a href="# " class="signInBtn-link ">Login</a></p>
+              </div>
+              
+            </form>
+          </div> 
+    </div>
+    <script type="text/javascript" src="rendererMainPage.js" ></script>
+    <script>
+      const username=document.getElementById("username");
+      const email=document.getElementById("email");
+      const password=document.getElementById("password");
+      const confirmPass=document.getElementById("confirmPass");
+      email.addEventListener('input',()=>{
+        const emailBox=document.querySelector('.emailBox');
+        const emailText=document.querySelector('.emailText');
+        const emailPattern= /[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+        if(email.value.match(emailPattern)){
+          emailBox.classList.add('valid');
+          emailBox.classList.remove('invalid');
+          emailText.innerHTML="Your email address is valid"
+        }else{
+          emailBox.classList.add('invalid');
+          emailBox.classList.remove('valid');
+          emailText.innerHTML="Must be a valid email address"
+        }
+      })
+
+      password.addEventListener('input',()=>{
+        const passBox=document.querySelector('.passBox');
+        const passText=document.querySelector('.passText');
+        const passPattern = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*><?:;"'{}+=_-]).{15,}/;
+        if(password.value.match(passPattern)){
+          passBox.classList.add('valid');
+          passBox.classList.remove('invalid');
+          passText.innerHTML="Your password is valid"
+        }else{
+          passBox.classList.add('invalid');
+          passBox.classList.remove('valid');
+          passText.innerHTML="Your password must have at least 15 characters, contain at least one uppercase, one lowercase, one symbol, and one number. "
+        }
+      })
+      confirmPass.addEventListener('input',()=>{
+        const passBox=document.querySelector('.passBox');
+        const passText=document.querySelector('.passText');
+        const confirmPassBox=document.querySelector('.confirmPassBox');
+        const confirmPassText=document.querySelector('.confirmPassText');
+        if(confirmPass.value===password.value){
+          confirmPassBox.classList.add('valid');
+          confirmPassBox.classList.remove('invalid');
+          confirmPassText.innerHTML="Your passwords match"
+
+        }else{
+          confirmPassBox.classList.add('invalid');
+          confirmPassBox.classList.remove('valid');
+          confirmPassText.innerHTML="Your passwords do not match"
+        }
+      })
+
+
+    </script>
+   
+</body>
+</html>

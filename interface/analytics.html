@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="" X-UA-Compatible " content="IE-edge ">
+        <meta name="viewport " content="width=device.width, initial-scale=1.0 ">
+        <title>PassSword
+        </title>
+        <link rel="stylesheet " type="text/css " href="analytics.css">
+</head>
+<body>
+    <div class="wrapper" id="blur">
+        <div class="sidebar">
+            <ul>
+                <li class="logo"  style="--bg:#333;">
+                    <a href="#">
+                        <div class="icon">
+                            <img src="images/Logov2.png" width="50" height="50">
+                        </div>
+                       <div class="text">PassSword</div>
+                    </a>
+                </li>
+                <div class="MenuList">
+    
+                <li style="--bg:#57e5ff;">
+                    <a href="dashboard.html">
+                        <div class="icon"><ion-icon name="key"></ion-icon></div>
+                    <div class="text">PassSwords</div>
+                    </a>
+                </li>
+                <li style="--bg:#e4f03a;" >
+                    <a href="favorites.html">
+                        <div class="icon"><ion-icon name="star"></ion-icon></ion-icon></div>
+                    <div class="text">Favorites</div>
+                    </a>
+                </li>
+
+                <li style="--bg:#57e5ff;"class="dropdown">
+                <div class="title">
+                    <a href="#">
+                        <div class="icon"><ion-icon name="folder"></ion-icon></div>
+                        <div class="text">Folders</div>
+                        <div class="arrow"><ion-icon name="chevron-down-outline"></ion-icon></div>
+                        <button class="openPopup"><ion-icon name="add-circle-outline"></ion-icon></button>
+                    </a>
+                </div>
+                <div class="submenu" id="submenu">
+                    <a href="#" class="submenu-title">Folders</a>
+                </div>
+                </li>
+
+
+                <li style="--bg:#48e47c;"class="active">
+                    <a href="analytics.html">
+                        <div class="icon"><ion-icon name="analytics-outline"></ion-icon></div>
+                    <div class="text">Analytics</div>
+                    </a>
+                </li>
+                <li style="--bg:#cf2a1e;">
+                    <a href="trash.html">
+                        <div class="icon"><ion-icon name="trash"></ion-icon></div>
+                    <div class="text">Trash</div>
+                    </a>
+                </li>
+                <li style="--bg:#57e5ff;">
+                    <a href="settings.html">
+                        <div class="icon"><ion-icon name="settings-outline"></ion-icon></div>
+                    <div class="text">Settings</div>
+                    </a>
+                </li>
+                </div>
+                <div class="bottom">
+                    <li style="--bg:#333;">
+                        <a href="#">
+                            <div class="icon">
+                                <div class="imgBx">
+                                    <img src="images/check.png" width="100" heigt="100">
+                                </div>
+                            </div>
+                            <div class="text">Iris Lung</div>
+                        </a>
+                    </li>
+                    <li style="--bg:#333;">
+                        <a href="mainPage.html">
+                            <div class="icon"><ion-icon name="log-out-outline" ></ion-icon></div>
+                        <div class="text">Logout</div>
+                        </a>
+                    </li>
+                </div>
+            </ul>
+        </div>
+        
+        <!--top bar-->
+        <div class="navbar">
+            <div class="MenuOptions">
+            <form action="" method="get" class="search-bar">
+            <input  type="text" placeholder="Search" name="Search">
+            <button type="submit"><ion-icon name="search"></ion-icon></button>
+            </form>
+    
+            </div>
+        </div>
+        
+ 
+
+    <!-- analytics items-->
+    <div class="analytics">
+        <div class="cards">
+            <div class="card">
+                <div class="card-content">
+                    <div class="number" id="items"></div>
+                    <div class="card-name">Items</div>
+                </div>
+                <div class="icon-box">
+                    <ion-icon name="clipboard-outline"></ion-icon>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-content">
+                    <div class="number" id="folders"></div>
+                    <div class="card-name">Folders</div>
+                </div>
+                <div class="icon-box">
+                    <ion-icon name="person-outline"></ion-icon>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-content">
+                    <div class="number" id="reused"></div>
+                    <div class="card-name">Reused passwords</div>
+                </div>
+                <div class="icon-box">
+                    <ion-icon name="sync-circle-outline"></ion-icon>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-content">
+                    <div class="number" id="deleted"></div>
+                    <div class="card-name">Deleted Items</div>
+                </div>
+                <div class="icon-box">
+                    <ion-icon name="trash-outline"></ion-icon>
+                </div>
+            </div>
+        </div>
+
+        <div class="charts">
+            <div class="chart">
+                <h2>Account logins</h2>
+                    <canvas id="lineChart"></canvas>
+            </div>
+            <div class="chart" id="doughnut-chart">
+                <h2>Passwords strength</h2>
+                <canvas id="doughnut"></canvas>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="popup" id="popup">
+    <h2> Add new folder </h2>
+    <div class="closeBtn" ><ion-icon name="close-circle-outline"></ion-icon></div>
+    <h3> Enter new folder name:</h3>
+    <form id="addFolderForm">
+        <input type="text" name="newFolderName">
+        <div class="buttonC">
+            <button type="submit" id="addFolderBtn">Add Folder</button>
+        </div>
+    </form>
+</div>
+<script type="module" src="rendererAnalytics.js"></script>
+
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+<script>
+    let sidebar= document.querySelector('.sidebar');
+    let navbar=document.querySelector(".navbar");
+    let analytics=document.querySelector(".analytics");
+    
+
+    let MenuList= document.querySelectorAll('.MenuList li');
+    function activeLink(){
+        MenuList.forEach((item)=> 
+            item.classList.remove('active'));  
+            setTimeout(() => {
+        if (!this.classList.contains('dropdown')) {
+        this.classList.add('active');
+    }
+        }, 100);
+    }
+    MenuList.forEach((item)=> 
+    item.addEventListener('click',activeLink));
+
+    let button= document.querySelectorAll('.addPassword a');
+    button.forEach(btn =>{
+        btn.onmousemove= function(e){
+            let x= e.pageX - btn.offsetLeft;
+            let y= e.pageY - btn.offsetTop;
+
+            btn.style.setProperty('--x', x + 'px');
+            btn.style.setProperty('--y', y + 'px');
+
+        }
+    })
+    const arrowIcon = document.querySelector('.title .arrow');
+    const submenu = document.querySelector('.dropdown .submenu');
+    let dropdown=document.querySelector('.dropdown');
+    arrowIcon.addEventListener('click', function() {
+        submenu.classList.toggle('active');
+        dropdown.classList.toggle('active');
+        arrowIcon.classList.toggle('flip');
+    });
+
+    const foldersIcon=document.querySelector('.dropdown .title .icon');
+    const openPopup=document.querySelector('.openPopup');
+    const blur = document.getElementById('blur');
+    const popup = document.getElementById('popup');
+
+    openPopup.addEventListener("click",function(){
+            blur.classList.toggle('active'),
+            popup.classList.toggle('active')
+    });
+   
+    const closeAddFolder=document.querySelector('.popup .closeBtn');
+    closeAddFolder.addEventListener('click',function(){
+        popup.classList.toggle('active');
+        blur.classList.toggle('active');
+    })
+    
+</script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="chartA.js"></script>
+</body>
+</html>

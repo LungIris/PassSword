@@ -1,0 +1,10 @@
+{
+    "sqltools.useNodeRuntime": true,
+    "sqltools.connections": [
+        {
+            "driver": "SQLite",
+            "name": "database",
+            "database": "${workspaceFolder:PassSword}/data.db"
+        }
+    ]
+}
