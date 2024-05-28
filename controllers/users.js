@@ -133,9 +133,9 @@ ipcMain.on('update-browser-preference', async (event, { username, browser }) => 
         console.error('Failed to update database:', error);
     }
 });
-    ipcMain.on('update-touchID', async (event, { username, touchID }) => {
+    ipcMain.on('update-launchApp', async (event, { username, launchApp }) => {
         try {
-            const result = await users.update({ touchID }, { where: { username } });
+            const result = await users.update({ launchApp }, { where: { username } });
         } catch (error) {
             console.error('Failed to update database:', error);
         }
@@ -158,31 +158,30 @@ ipcMain.on('update-browser-preference', async (event, { username, browser }) => 
         }
     });
 
-    ipcMain.on('get-touchID-status', async (event, { username }) => {
+    ipcMain.on('get-launchApp-status', async (event, { username }) => {
         try {
             const user = await users.findOne({ where: { username } });
             if (user) {
-                event.reply('touchID-status-response', { touchID: user.touchID });
+                event.reply('launchApp-status-response', { launchApp: user.launchApp });
             } else {
-                event.reply('touchID-status-response', { touchID: '0' });
+                event.reply('launchApp-status-response', { launchApp: '0' });
             }
         }catch (error) {
-            console.error('Error fetching touchID status:', error);
-            event.reply('touchID-status-response', { touchID: '0' });
+            console.error('Error fetching launchApp status:', error);
+            event.reply('launchApp-status-response', { launchApp: '0' });
         }
     })
         ipcMain.on('signup-request', async (event, { username, email, password }) => {
             try {
                 const salt = await bcrypt.genSalt(10);
                 const hash = await bcrypt.hash(password, salt);
-                let master =await checkMaster();
                 await users.create({
                     username: username,
                     email: email,
                     hash: hash,
                     salt: salt,
                     browser: 'Google Chrome',
-                    masterUser: '${master}'
+                    launchApp: '0'
                 });
                 event.reply('signup-response', { success: true, message: 'User registered successfully',username });
 
@@ -192,15 +191,7 @@ ipcMain.on('update-browser-preference', async (event, { username, browser }) => 
 
             }
         })
-        async function checkMaster() {
-            try {
-                let items = await  users.count();
-                return items === 0 ? 1 : 0;
-            } catch (error) {
-                console.error('Error checking user count:', error);
-                return 0; 
-            }
-        }
+      
         
         ipcMain.on('change-email', async (event, { username }) => {
             try {
@@ -215,14 +206,7 @@ ipcMain.on('update-browser-preference', async (event, { username, browser }) => 
                 event.reply('email-response', { success: false, message: error.message });
             }
         });
-        ipcMain.on('check-master-user', async (event, { username }) => {
-            const user = await users.findOne({ where: { username } });
-            if (user) {
-                event.reply('check-master-user-response', { isMasterUser: user.masterUser === '1' });
-            } else {
-                event.reply('check-master-user-response', { isMasterUser: false });
-            }
-        });
+       
         
     }
 

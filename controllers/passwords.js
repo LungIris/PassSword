@@ -150,15 +150,7 @@ ipcMain.on('request-trash-data', async (event,{username}) => {
 
     ipcMain.on('update-password', async (event, {title,address, user, password ,username,sessionKey}) => {
         try {
-            console.log('entered update-password');
-            console.log(title);
-            console.log(address);
-            console.log(user);
-            console.log(password);
-            console.log(username);
-            console.log(sessionKey);
-
-
+        
             const key = Buffer.from(sessionKey, 'hex');
             const iv = crypto.randomBytes(16);
             const cipher = crypto.createCipheriv('aes-256-cbc', key, iv);
@@ -232,10 +224,8 @@ ipcMain.on('request-trash-data', async (event,{username}) => {
                 where: { folder: 'trash', username: username }
             });
             if (result > 0) {
-                console.log('Items deleted:', result);
                 event.reply('empty-trash-response', { success: true, message: 'Trash emptied successfully' });
             } else {
-                console.log('No items to delete');
                 event.reply('empty-trash-response', { success: false, message: 'No items found in trash' });
             }
         } catch (error) {
@@ -244,7 +234,6 @@ ipcMain.on('request-trash-data', async (event,{username}) => {
         }
     });
     ipcMain.on('password-request', async (event, { oldPassword, newPass, username , decryptedPasswords}) => {
-        console.log('entered change password');
         const user = await users.findOne({ where: { username } });
         if (!user || !await bcrypt.compare(oldPassword, user.hash)) {
             event.reply('change-password-response', { success: false, message: 'Invalid old password.' });

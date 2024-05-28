@@ -19,8 +19,7 @@ module.exports = (sequelize, DataTypes) => {
     hash: DataTypes.STRING,
     salt: DataTypes.STRING,
     browser: DataTypes.STRING,
-    masterUser: DataTypes.STRING,
-    touchID: DataTypes.STRING
+    launchApp: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'users',

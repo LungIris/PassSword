@@ -190,9 +190,7 @@ function updatePasswordStrengthChart(passwordStrength) {
             strengthCounts.weak++;
         }
     });
-    console.log('weak: ' + strengthCounts.weak);
-    console.log('medium: ' + strengthCounts.medium);
-    console.log('strong: ' + strengthCounts.strong);
+  
 
     const ctx2 = document.getElementById('doughnut');
     new Chart(ctx2, {

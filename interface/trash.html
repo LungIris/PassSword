@@ -249,11 +249,7 @@ function deleteItems(){
     ipcRenderer.send('empty-trash',{username});
 }
 ipcRenderer.on('empty-trash-response', (event, { success, message }) => {
-    if (success) {
-        console.log('Trash emptied successfully');
-    } else {
-        console.error('Failed to empty trash:', message);
-    }
+    
     window.location.reload(); 
 });
 </script>

@@ -75,7 +75,7 @@ h2 {
     font-size: 30px;
     color: #fff;
     text-align: center;
-
+    margin-bottom: 30px;
 }
 
 .title h1 {
@@ -191,6 +191,7 @@ button{
     border-radius:30px;
     border:none;
     outline:none;
+    margin-top:40px;
 }
 button:hover{
     background: #0031c4;
@@ -222,54 +223,10 @@ button:hover{
 
 
 
-.remember a{
-    color:#57e5ff;
-    text-decoration:none;
-    font-weight:500;
-}
-
-.remember a:hover{
-    text-decoration:underline;
-    color:#0031c4;
-}
-
 .signUp-link p a:hover{
     text-decoration:underline;
 }
 
-.fingerprint{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    gap: 15px;
-    cursor: pointer;
-}
-
-.fingerprint .fingerprintBox{
-    display: flex;
-    flex-direction: column; 
-    align-items: center; 
-    justify-content: center;
-    box-shadow: 5px 5px 10 px rgba(0,0,0,0.1),
-    -5px -5px 10 px #fff;
-    border: 3px solid #57e5ff;
-    padding: 10px 0px 10px;
-    border-radius: 15px;
-    background: linear-gradient(315deg, #282828,#413a3a);
-    max-width: 100px;
-    height:115px;
-}
-.fingerprint .fingerprintBox:hover
-{
-    background: #282828;
-}
-
-fingerprint .fingerprintBox img {
-    filter: invert(1);
-    animation: animate 1s linear infinite;
-    padding:20px;
-}
 @keyframes animate{
     0%,100%
     {

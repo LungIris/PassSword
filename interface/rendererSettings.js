@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
     addButton.addEventListener('click', () => {
         window.location.reload();
     })
-    ipcRenderer.send('get-touchID-status', { username });
+    ipcRenderer.send('get-launchApp-status', { username });
 });
 ipcRenderer.on('send-browser', (event, { browser }) => {
     if (browser) {
@@ -81,8 +81,8 @@ ipcRenderer.on('send-browser', (event, { browser }) => {
         reject('Failed to retrieve browser: ' + response.message); 
     }
 });
-ipcRenderer.on('touchID-status-response', (event, { touchID }) => {
-    if (touchID === '1') {
+ipcRenderer.on('launchApp-status-response', (event, { launchApp }) => {
+    if (launchApp === '1') {
         toggleBtn2.classList.add("active");
     } else {
         toggleBtn2.classList.remove("active");
@@ -98,9 +98,7 @@ document.getElementById('confirmChangePassword').addEventListener('click', () =>
             const username = sessionStorage.getItem('username')
             const sessionKey = keyResponse.sessionKey;
             const decryptedPasswords = response.data.map(item => {
-                console.log('password:' + item.dataValues.password);
-                console.log('iv:' + item.dataValues.iv);
-                console.log('title' + item.dataValues.title);
+                
                 return {
                     ...item,
                     title: item.dataValues.title,
@@ -172,7 +170,7 @@ toggleBtn2.addEventListener('click', () => {
     toggleBtn2.classList.toggle("active");
     const isActive = toggleBtn2.classList.contains("active") ? '1' : '0';
     const username = sessionStorage.getItem('username');
-    ipcRenderer.send('update-touchID', { username, touchID: isActive });
+    ipcRenderer.send('update-launchApp', { username, launchApp: isActive });
 
 })
 

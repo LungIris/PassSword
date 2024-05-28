@@ -31,7 +31,7 @@ const websites = [
     {"name": "Forbes", "url": "https://www.forbes.com"},
     {"name": "BuzzFeed", "url": "https://www.buzzfeed.com"},
     {"name": "HBO", "url": "https://www.hbo.com"},
-    {"name": "Disney+", "url": "https://www.disneyplus.com"},
+    {"name": "Disney+", "url": "https://www.disneyplus.com/identity/login/enter-email"},
     {"name": "Adobe", "url": "https://www.adobe.com"},
     {"name": "Dropbox", "url": "https://www.dropbox.com"},
     {"name": "GitHub", "url": "https://www.github.com"},
@@ -93,7 +93,6 @@ function removeElements() {
     });
 }
 function addPassword(e) {
-    console.log('entered addPassword');
     e.preventDefault();
     const formData = new FormData(addPasswordForm);
     const title = formData.get('title');

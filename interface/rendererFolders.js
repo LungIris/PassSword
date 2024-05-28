@@ -276,14 +276,7 @@ document.getElementById('remove-option').addEventListener('click', function (eve
 
 });
 
-ipcRenderer.on('folder-removed', (event, response) => {
-    if (response.success) {
-        console.log('Folder removal successful.');
-        
-    } else {
-        console.error('Failed to remove folder:', response.error);
-    }
-});
+
 
 function getBrowserPath(browserName) {
     switch (browserName) {

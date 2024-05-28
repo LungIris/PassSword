@@ -75,11 +75,9 @@ ipcRenderer.on('login-response', (event, response) => {
             logins[username][key] = 1; 
         }
         localStorage.setItem('monthlyLogins', JSON.stringify(logins));
-        console.log(localStorage.getItem('monthlyLogins'));
         window.location.href = 'dashboard.html';
 
     } else {
-        console.log(response.message); 
         alert("Login failed: " + response.message);
         location.reload();
 
