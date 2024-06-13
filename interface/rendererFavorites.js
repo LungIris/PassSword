@@ -78,13 +78,13 @@ ipcRenderer.on('favorites-data', (event, favoritesData) => {
     launchWebsiteBtn.addEventListener('click', async function (event) {
             event.stopPropagation();
             const itemTitle = password.dataValues.title;
-        const username = password.dataValues.user;
+            const username = password.dataValues.user;
             const encryptedPassword = password.dataValues.password;
             const iv = password.dataValues.iv;
             const sessionKey = await getSessionKey();
-        const decryptedPassword = decryptPassword(encryptedPassword, iv, sessionKey);
+            const decryptedPassword = decryptPassword(encryptedPassword, iv, sessionKey);
         
-        const browserPreference = await getBrowser();
+            const browserPreference = await getBrowser();
             const browserPath = getBrowserPath(browserPreference);
 
             const browser = await puppeteer.launch({
@@ -94,11 +94,10 @@ ipcRenderer.on('favorites-data', (event, favoritesData) => {
             const page = await  browser.newPage();
             await page.goto(password.dataValues.address);
             
-            //await page.waitForSelector('input[type="password"]');
-            const usernameSelectors = ['input[name="username"]', 'input[name="user"]', 'input[name="email"]','input[name="id"]','input[name="userLoginId"]'];
+        const usernameSelectors = ['input[name="username"]', 'input[name="user"]', 'input[name="email"]',
+            'input[name="id"]', 'input[name="userLoginId"]'];
             const passwordSelectors = ['input[type="password"]'];
 
-            
             const usernameField = await findWorkingSelector(page, usernameSelectors);
             if (usernameField) {
                 await page.type(usernameField, username);

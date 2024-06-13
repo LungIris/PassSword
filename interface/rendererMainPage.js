@@ -16,10 +16,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     loginForm.addEventListener('submit', function (event) {
         event.preventDefault();
-
         const username = document.getElementById('usernameLogin').value;
         const password = document.querySelector('.sign-in [type="password"]').value;
-            ipcRenderer.send('login-request', { username, password });
+        ipcRenderer.send('login-request', { username, password });
         
     });
 
@@ -38,7 +37,6 @@ ipcRenderer.once('check-username-email-response', (event, exists,username,email,
     if (exists) {
         alert("Username or Email already exists.");
     } else {
-
         ipcRenderer.send('signup-request', { username, email, password });
         ipcRenderer.once('signup-response', (event, response) => {
             
@@ -48,7 +46,7 @@ ipcRenderer.once('check-username-email-response', (event, exists,username,email,
                 const month = today.getMonth();
                 const year = today.getFullYear();
                 const key = `${year}-${month}`
-                 const username = response.username;
+                const username = response.username;
                 let logins = JSON.parse(localStorage.getItem('monthlyLogins')) || {}; 
                 logins[username][key] = 0; 
                 localStorage.setItem('monthlyLogins', JSON.stringify(logins));

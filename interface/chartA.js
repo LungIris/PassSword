@@ -8,8 +8,8 @@ function getLoginDataForChart() {
   const currentYear = new Date().getFullYear();
    for (let month = 0; month < 12; month++) { 
        const key = `${currentYear}-${month}`;
-       labels.push(new Date(currentYear, month).toLocaleString('default', { month: 'long' })); // Get month name
-       data.push(userLogins[key] || 0); // Push the number of logins for this month or 0 if none
+       labels.push(new Date(currentYear, month).toLocaleString('default', { month: 'long' })); 
+       data.push(userLogins[key] || 0); 
       }
   return { labels, data };
 
