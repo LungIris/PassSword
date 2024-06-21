@@ -97,10 +97,14 @@
         if(email.value.match(emailPattern)){
           emailBox.classList.add('valid');
           emailBox.classList.remove('invalid');
+    emailText.classList.add('valid');
+    emailText.classList.remove('invalid');
           emailText.innerHTML="Your email address is valid"
         }else{
           emailBox.classList.add('invalid');
           emailBox.classList.remove('valid');
+          emailText.classList.add('invalid');
+    emailText.classList.remove('valid');
           emailText.innerHTML="Must be a valid email address"
         }
       })

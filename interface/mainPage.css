@@ -237,11 +237,14 @@ button:hover{
     }
 }
 
-.emailText, .passText, .confirmPassText{
+.emailText.valid, .passText.valid, .confirmPassText.valid{
     
     color:#0ea015;
 }
- 
+.emailText.invalid, .passText.invalid, .confirmPassText.invalid{
+    
+    color: #ce0e0e;
+}
 label.valid::before,
 label.invalid::before{
     content:"";

@@ -89,14 +89,14 @@ function validateEmail(email) {
     return re.test(String(email).toLowerCase());
 }
 function validatePassword(password) {
-    const minLength = 15;
+    const minLength = 16;
     const hasNumbers = /\d/;
     const hasUpper = /[A-Z]/;
     const hasLower = /[a-z]/;
     const hasSpecial = /[!@#\$%\^\&*\)\(+=._-]/;
 
     if (password.length < minLength) {
-        alert("Password must be at least 15 characters long.");
+        alert("Password must be at least 16 characters long.");
         return false;
     }
     if (!hasNumbers.test(password)) {
