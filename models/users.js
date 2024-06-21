@@ -19,7 +19,6 @@ module.exports = (sequelize, DataTypes) => {
     hash: DataTypes.STRING,
     salt: DataTypes.STRING,
     browser: DataTypes.STRING,
-    launchApp: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'users',

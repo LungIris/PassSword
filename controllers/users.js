@@ -133,13 +133,7 @@ ipcMain.on('update-browser-preference', async (event, { username, browser }) => 
         console.error('Failed to update database:', error);
     }
 });
-    ipcMain.on('update-launchApp', async (event, { username, launchApp }) => {
-        try {
-            const result = await users.update({ launchApp }, { where: { username } });
-        } catch (error) {
-            console.error('Failed to update database:', error);
-        }
-    });
+    
     ipcMain.on('get-browser', async (event, { username }) => {
         try {
             const user = await users.findOne({
@@ -158,19 +152,7 @@ ipcMain.on('update-browser-preference', async (event, { username, browser }) => 
         }
     });
 
-    ipcMain.on('get-launchApp-status', async (event, { username }) => {
-        try {
-            const user = await users.findOne({ where: { username } });
-            if (user) {
-                event.reply('launchApp-status-response', { launchApp: user.launchApp });
-            } else {
-                event.reply('launchApp-status-response', { launchApp: '0' });
-            }
-        }catch (error) {
-            console.error('Error fetching launchApp status:', error);
-            event.reply('launchApp-status-response', { launchApp: '0' });
-        }
-    })
+   
         ipcMain.on('signup-request', async (event, { username, email, password }) => {
             try {
                 const salt = await bcrypt.genSalt(10);
@@ -181,7 +163,6 @@ ipcMain.on('update-browser-preference', async (event, { username, browser }) => 
                     hash: hash,
                     salt: salt,
                     browser: 'Google Chrome',
-                    launchApp: '0'
                 });
                 event.reply('signup-response', { success: true, message: 'User registered successfully',username });
 

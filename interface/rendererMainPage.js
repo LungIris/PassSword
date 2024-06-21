@@ -29,13 +29,24 @@ document.addEventListener('DOMContentLoaded', function() {
         const password = document.querySelector('.sign-up [type="password"]').value;
         if (!validateEmail(email) || !validatePassword(password)) {
             event.preventDefault();
-            alert("Invalid email or password.");
+            document.getElementById('fail-message').innerText = "Invalid email or password.";
+            showPopup('fail-popup');
+            setTimeout(function () {
+                hidePopup('fail-popup');
+            }, 2000);
+        } else {
+            ipcRenderer.send('check-username-email', { username, email, password });
         }
-        ipcRenderer.send('check-username-email', { username, email ,password});
     });  
 ipcRenderer.once('check-username-email-response', (event, exists,username,email,password) => {
     if (exists) {
-        alert("Username or Email already exists.");
+        document.getElementById('fail-message').innerText = "Username or email already exist";
+        showPopup('fail-popup');
+        setTimeout(function() {
+            hidePopup('fail-popup');
+        }, 2000);
+        const signupForm = document.querySelector('.sign-up form');
+        signupForm.reset();
     } else {
         ipcRenderer.send('signup-request', { username, email, password });
         ipcRenderer.once('signup-response', (event, response) => {
@@ -54,7 +65,15 @@ ipcRenderer.once('check-username-email-response', (event, exists,username,email,
         });
     }
 });
-    });
+});
+    
+    function showPopup(popupId) {
+        document.getElementById(popupId).style.display = "block";
+    }
+  function hidePopup(popupId) {
+    document.getElementById(popupId).style.display = "none";
+
+}
 ipcRenderer.on('login-response', (event, response) => {
     if (response.success) {
         sessionStorage.setItem('username', response.username)
@@ -76,10 +95,19 @@ ipcRenderer.on('login-response', (event, response) => {
         window.location.href = 'dashboard.html';
 
     } else {
-        alert("Login failed: " + response.message);
-        location.reload();
+        const loginForm = document.querySelector('.sign-in form');
+        document.getElementById('fail-message').innerText = "Invalid credentials.";
+        showPopup('fail-popup');
+        setTimeout(function() {
+            hidePopup('fail-popup');
+        }, 2000);
+        
+        loginForm.reset();
+
 
     }
+
+    
 });
 
     
@@ -95,25 +123,16 @@ function validatePassword(password) {
     const hasLower = /[a-z]/;
     const hasSpecial = /[!@#\$%\^\&*\)\(+=._-]/;
 
-    if (password.length < minLength) {
-        alert("Password must be at least 16 characters long.");
+    if (password.length < minLength ||!hasNumbers.test(password) || !hasUpper.test(password) || !hasLower.test(password) || !hasSpecial.test(password)) {
+        document.getElementById('fail-message').innerText = "Password does not meet requirements.";
+        showPopup('fail-popup');
+        setTimeout(function() {
+            hidePopup('fail-popup');
+        }, 3000);
+        const signupForm = document.querySelector('.sign-up form');
+        signupForm.reset();
         return false;
     }
-    if (!hasNumbers.test(password)) {
-        alert("Password must include at least one number.");
-        return false;
-    }
-    if (!hasUpper.test(password)) {
-        alert("Password must include at least one uppercase letter.");
-        return false;
-    }
-    if (!hasLower.test(password)) {
-        alert("Password must include at least one lowercase letter.");
-        return false;
-    }
-    if (!hasSpecial.test(password)) {
-        alert("Password must include at least one special character.");
-        return false;
-    }
+
     return true;
 }

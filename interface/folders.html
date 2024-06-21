@@ -293,16 +293,11 @@ document.addEventListener('DOMContentLoaded', function() {
 const actionButtons = document.querySelectorAll('.passwordTable tbody tr td:last-child button');
     actionButtons.forEach(button => {
         button.addEventListener('click', function(event) {
-            // Stop event propagation to prevent opening item info
             event.stopPropagation();
-            // Handle button click here
-            // You can add different functions for different buttons
+           
             if (button.contains('folder')) {
-                // Handle folder button click
             } else if (button.contains('rocket')) {
-                // Handle rocket button click
             } else if (button.contains('trash')) {
-                // Handle trash button click
             }
         });
     });
@@ -311,20 +306,15 @@ const actionButtons = document.querySelectorAll('.passwordTable tbody tr td:last
         var dropdownMenu = document.getElementById('dropdown-menu');
         dropdownMenu.classList.toggle('active');
     });
-    // Function to show popup
     function showPopup(popupId) {
         document.getElementById(popupId).style.display = "block";
     }
-
-
-    // Move to folder option
     document.getElementById('move-option').addEventListener('click', function(event) {
         event.preventDefault();
         showPopup('move-popup');
         blur.classList.toggle('active');
 
     });
-    // Function to hide popup
     function hidePopup(popupId) {
         document.getElementById(popupId).style.display = "none";
 
@@ -337,6 +327,8 @@ const actionButtons = document.querySelectorAll('.passwordTable tbody tr td:last
         setTimeout(function() {
             hidePopup('remove-popup');
         }, 1000);
+        window.location.reload();
+
     });
 
     document.getElementById('move-btn').addEventListener('click', function(event) {

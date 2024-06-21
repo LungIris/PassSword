@@ -255,3 +255,20 @@ label.invalid::before{
     right:5px;
     z-index:100;
 }
+.popupFail {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #b82424;
+    padding: 50px;
+    border-radius: 5px;
+    z-index: 1000;
+    display: none;
+    box-shadow: 0 0 10px #ce0e0e;
+    transition:0.5s;
+}
+.popupFail p{
+    color:#030303;
+    size: 20px;
+}
