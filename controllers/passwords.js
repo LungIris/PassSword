@@ -16,10 +16,11 @@ const newPassword = () => {
             const iv = crypto.randomBytes(16);
             const cipher = crypto.createCipheriv('aes-256-cbc', key, iv);
             let encryptedPassword = cipher.update(plainPassword, 'utf8', 'hex');
-
             encryptedPassword += cipher.final('hex');
-
-            await passwords.create({ title, address, user, password: encryptedPassword,iv: iv.toString('hex') , folder, username: username });
+            await passwords.create({
+                title, address, user, password: encryptedPassword,
+                iv: iv.toString('hex'), folder, username: username
+            });
             event.sender.send('password-created', { success: true });
         } catch (err) {
             console.error('Error in new-password handler:', err);
@@ -27,6 +28,8 @@ const newPassword = () => {
         }
     })
 }
+
+
 const populateTable = () => {
 
     ipcMain.on('request-passwords-data', async (event, { username }) => {

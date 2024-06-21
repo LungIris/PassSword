@@ -9,6 +9,7 @@ const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 
 const handleUsers = () => {
+
     ipcMain.on('login-request', async (event, { username, password }) => {
         const user = await users.findOne({ where: { username } });
         if (user && await bcrypt.compare(password, user.hash)) {
@@ -16,11 +17,13 @@ const handleUsers = () => {
                     success: true, message: 'Login successful', username: username
             });
         } else {
-            event.reply('login-response', { success: false, message: 'Invalid username or password' });
-
+            event.reply('login-response', {
+                success: false,
+                message: 'Invalid username or password'
+            });
         }
-        
     });
+    
     ipcMain.on('get-key', async (event, { username }) => {
             const user = await users.findOne({ where: { username } });
             if (user) {
@@ -164,12 +167,16 @@ ipcMain.on('update-browser-preference', async (event, { username, browser }) => 
                     salt: salt,
                     browser: 'Google Chrome',
                 });
-                event.reply('signup-response', { success: true, message: 'User registered successfully',username });
-
+                event.reply('signup-response', {
+                    success: true,
+                    message: 'User registered successfully', username
+                });
             } catch (error) {
                 console.error('Signup error: ', error);
-                event.reply('signup-response', { success: false, message: 'Error registering user' });
-
+                event.reply('signup-response', {
+                    success: false,
+                    message: 'Error registering user'
+                });
             }
         })
       

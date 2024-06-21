@@ -2,13 +2,14 @@
 process.on('unhandledRejection', (reason, promise) => {
     console.error('Unhandled Rejection at:', promise, 'reason:', reason);
 })
+if (require('electron-squirrel-startup')) return;
+
 const { app, BrowserWindow } = require('electron');
 const {sequelize} = require('./models');
 const path = require("path");
 const folders = require("./controllers/folders");
 const passwords = require("./controllers/passwords");
 const users = require("./controllers/users");
-
 const createWindow = () => {
     const mainWindow = new BrowserWindow({
         icon: 'images/logo2.png',
