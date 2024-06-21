@@ -70,7 +70,6 @@ document.addEventListener('DOMContentLoaded', () => {
     addButton.addEventListener('click', () => {
         window.location.reload();
     })
-    ipcRenderer.send('get-launchApp-status', { username });
 });
 ipcRenderer.on('send-browser', (event, { browser }) => {
     if (browser) {
@@ -81,13 +80,7 @@ ipcRenderer.on('send-browser', (event, { browser }) => {
         reject('Failed to retrieve browser: ' + response.message); 
     }
 });
-ipcRenderer.on('launchApp-status-response', (event, { launchApp }) => {
-    if (launchApp === '1') {
-        toggleBtn2.classList.add("active");
-    } else {
-        toggleBtn2.classList.remove("active");
-    }
-});
+
 document.getElementById('confirmChangePassword').addEventListener('click', () => {
     const username = sessionStorage.getItem('username');
     ipcRenderer.send('get-password-data',{username});
@@ -165,13 +158,6 @@ document.getElementById('browserPreference').addEventListener('change', async fu
     ipcRenderer.send('update-browser-preference', { username, browser: selectedBrowser });
 });
 
-const toggleBtn2 = document.getElementById("toggleBtn2");
-toggleBtn2.addEventListener('click', () => {
-    toggleBtn2.classList.toggle("active");
-    const isActive = toggleBtn2.classList.contains("active") ? '1' : '0';
-    const username = sessionStorage.getItem('username');
-    ipcRenderer.send('update-launchApp', { username, launchApp: isActive });
 
-})
 
 
