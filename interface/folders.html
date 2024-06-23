@@ -83,7 +83,6 @@
             </ul>
         </div>
         
-        <!--top bar-->
         <div class="navbar">
             <div class="MenuOptions">
             <form action="" method="get" class="search-bar">
@@ -116,7 +115,6 @@
         </div>
         
 
-         <!-- Add this div for item information -->
          <div class="itemInfo inactive">
             <div class="itemContent">
                 <div class="closeBtn"><ion-icon name="close-circle-outline"></ion-icon></div>
@@ -244,21 +242,18 @@
     })
    
     document.addEventListener('DOMContentLoaded', function() {
-    // Get the elements
     const itemInfo = document.querySelector('.itemInfo');
     const closeBtn = document.querySelector('.itemInfo .closeBtn');
     const tableRows = document.querySelectorAll('.passwordTable tbody tr');
 
    
 
-    // Function to close item info
     function closeItemInfo() {
         itemInfo.classList.remove('active');
         itemInfo.classList.add('inactive');    
     }
 
 
-    // Add click event listener to close button
     closeBtn.addEventListener('click', closeItemInfo);
 
 

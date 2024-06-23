@@ -354,13 +354,11 @@
     background:#413a3a;
   }
   
-  /* Style for option elements */
   #language select option {
     padding: 10px;
   }
   
   
-  /* Adjust margin between input elements */
   #language .input select {
     margin-top: 5px;
     background:#282828;

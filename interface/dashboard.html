@@ -84,7 +84,6 @@
         </ul>
     </div>
     
-    <!--top bar-->
     <div class="navbar">
         <div class="MenuOptions">
         <form action="" method="get" class="search-bar">
@@ -95,7 +94,6 @@
         </div>
     </div>
     
-    <!--add password-->
     <div class="addPassword">
         <a href="addPasswordForm.html" style="--clr: #57e5ff; "><span>Add Password</span></a>
         <div class="passwordTable" >
@@ -116,7 +114,6 @@
     </div>
 
 
-    <!-- Add this div for item information -->
     <div class="itemInfo inactive">
     <div class="itemContent">
         <div class="closeBtn"><ion-icon name="close-circle-outline"></ion-icon></div>
@@ -242,20 +239,13 @@
     })
     document.addEventListener('DOMContentLoaded', function() {
 
-     // Add click event listeners to buttons in the action column
      const actionButtons = document.querySelectorAll('.passwordTable tbody tr td:last-child button');
     actionButtons.forEach(button => {
         button.addEventListener('click', function(event) {
-            // Stop event propagation to prevent opening item info
             event.stopPropagation();
-            // Handle button click here
-            // You can add different functions for different buttons
             if (button.contains('star')) {
-                // Handle folder button click
             } else if (button.contains('rocket')) {
-                // Handle rocket button click
             } else if (button.contains('trash')) {
-                // Handle trash button click
             }
         });
     });
@@ -288,20 +278,17 @@
     });
 
 
-    // Function to show popup
     function showPopup(popupId) {
         document.getElementById(popupId).style.display = "block";
     }
   
 
-    // Move to folder option
     document.getElementById('move-option').addEventListener('click', function(event) {
         event.preventDefault();
         showPopup('move-popup');
         blur.classList.toggle('active');
 
     });
-    // Function to hide popup
     function hidePopup(popupId) {
         document.getElementById(popupId).style.display = "none";
 

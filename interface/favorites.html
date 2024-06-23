@@ -83,7 +83,6 @@
             </ul>
         </div>
         
-        <!--top bar-->
         <div class="navbar">
             <div class="MenuOptions">
             <form action="" method="get" class="search-bar">
@@ -94,7 +93,6 @@
             </div>
         </div>
         
-    <!--add password-->
     <div class="favorites">
         <a href="dashboard.html" style="--clr: #f5d545; "><span>Add Favorite</span></a>
         <div class="passwordTable">
@@ -114,7 +112,6 @@
         </div>
     </div>
 
-    <!-- Add this div for item information -->
     <div class="itemInfo inactive">
         <div class="itemContent">
             <div class="closeBtn"><ion-icon name="close-circle-outline"></ion-icon></div>
@@ -260,18 +257,14 @@
     const closeBtn = document.querySelector('.itemInfo .closeBtn');
     const tableRows = document.querySelectorAll('.passwordTable tbody tr');
 
-    // Function to open item info
     function openItemInfo() {
-        // Show item info
         itemInfo.classList.remove('inactive');
         itemInfo.classList.add('active');
-        // Get data from the clicked table row
         const title = this.querySelector('.tableTitle').textContent;
-        const website = ''; // You should add logic to fetch website address
-        const folder = ''; // You should add logic to fetch folder
-        const imageSrc = ''; // You should add logic to fetch image source
+        const website = ''; 
+        const folder = '';
+        const imageSrc = ''; 
 
-        // Populate item info
         itemInfo.querySelector('.itemTitle').textContent = title;
         itemInfo.querySelector('.itemWebsite').textContent = `Website: ${website}`;
         itemInfo.querySelector('.itemFolder').textContent = `Folder: ${folder}`;
@@ -280,34 +273,24 @@
         
     }
 
-    // Function to close item info
     function closeItemInfo() {
         itemInfo.classList.remove('active');
         itemInfo.classList.add('inactive');    
     }
 
-    // Add click event listeners to table rows
     tableRows.forEach(row => {
         row.addEventListener('click', openItemInfo);
     });
 
-    // Add click event listener to close button
     closeBtn.addEventListener('click', closeItemInfo);
     
-     // Add click event listeners to buttons in the action column
      const actionButtons = document.querySelectorAll('.passwordTable tbody tr td:last-child button');
     actionButtons.forEach(button => {
         button.addEventListener('click', function(event) {
-            // Stop event propagation to prevent opening item info
             event.stopPropagation();
-            // Handle button click here
-            // You can add different functions for different buttons
             if (button.contains('folder')) {
-                // Handle folder button click
             } else if (button.contains('rocket')) {
-                // Handle rocket button click
             } else if (button.contains('trash')) {
-                // Handle trash button click
             }
         });
     });
@@ -316,20 +299,17 @@
         var dropdownMenu = document.getElementById('dropdown-menu');
         dropdownMenu.classList.toggle('active');
     });
-    // Function to show popup
     function showPopup(popupId) {
         document.getElementById(popupId).style.display = "block";
     }
 
 
-    // Move to folder option
     document.getElementById('move-option').addEventListener('click', function(event) {
         event.preventDefault();
         showPopup('move-popup');
         blur.classList.toggle('active');
 
     });
-    // Function to hide popup
     function hidePopup(popupId) {
         document.getElementById(popupId).style.display = "none";
 

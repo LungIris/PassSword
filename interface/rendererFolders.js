@@ -91,7 +91,6 @@ ipcRenderer.on('folder-items-data', (event, passwordData) => {
             const page = await  browser.newPage();
             await page.goto(password.dataValues.address);
             
-            //await page.waitForSelector('input[type="password"]');
             const usernameSelectors = ['input[name="username"]', 'input[name="user"]', 'input[name="email"]','input[name="id"]','input[name="userLoginId"]'];
             const passwordSelectors = ['input[type="password"]'];
 
@@ -229,12 +228,10 @@ function openEditPage(title, website, user, password,imageSrc) {
     const url = `editPassword.html?title=${encodeURIComponent(title)}&website=${encodeURIComponent(website)}&user=${encodeURIComponent(user)}&password=${encodeURIComponent(password)}&image=${imageSrc}`;
     window.location.href = url;
 }
-// Function to close item info
 function closeItemInfo() {
     itemInfo.classList.remove('active');
     itemInfo.classList.add('inactive');    
 }
-    // Add click event listener to close button
     closeBtn.addEventListener('click', closeItemInfo);
 
  document.getElementById('move-btn').addEventListener('click', function(event) {
